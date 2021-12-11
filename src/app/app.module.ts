@@ -14,9 +14,11 @@ import { RouterModule } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import { UploadComponent } from './components/upload/upload.component';
 import { FormsModule } from '@angular/forms';
-import { ImageGridComponent } from './image-grid/image-grid.component';
+import { ImageGridComponent } from './components/image-grid/image-grid.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { ProfileComponent } from './components/profile/profile.component';
+import { WebcamComponent, WebcamModule } from 'ngx-webcam';
+import { WebcamCaptureComponent } from './components/webcam-capture/webcam-capture.component';
 
 
 
@@ -30,6 +32,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     UploadComponent,
     ImageGridComponent,
     ProfileComponent,
+    WebcamCaptureComponent,
     
   ],
   imports: [
@@ -40,7 +43,9 @@ import { ProfileComponent } from './components/profile/profile.component';
     RouterModule,
     MatIconModule,
     FormsModule,
-    MatGridListModule
+    MatGridListModule,
+    WebcamModule
+    
 
 
   ],
