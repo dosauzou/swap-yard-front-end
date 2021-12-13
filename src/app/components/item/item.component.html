@@ -1,0 +1,41 @@
+  <mat-form-field appearance="fill">
+    <mat-label>Condition</mat-label>
+    <input matInput [(ngModel)]="data.condition">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Size</mat-label>
+    <mat-select [(ngModel)]="data.size">
+      <mat-option value="one">First option</mat-option>
+      <mat-option value="two">Second option</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Color</mat-label>
+    <mat-select [(ngModel)]="data.color">
+        <mat-option value="one">First option</mat-option>
+        <mat-option value="two">Second option</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Material</mat-label>
+    <mat-select [(ngModel)]="data.material">
+        <mat-option value="one">First option</mat-option>
+        <mat-option value="two">Second option</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Photos</mat-label>
+    <mat-select [(ngModel)]="data.posts">
+      <mat-option value="one">First option</mat-option>
+      <mat-option value="two">Second option</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div mat-dialog-actions>
+    <button mat-fab (click)="onNoClick()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+  </div>

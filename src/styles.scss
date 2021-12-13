@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap");
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 
 * {
   box-sizing: border-box;
@@ -76,3 +78,5 @@ body {
   flex: 2;
   height: 20px;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

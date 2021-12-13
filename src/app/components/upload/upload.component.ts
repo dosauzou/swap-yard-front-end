@@ -34,6 +34,7 @@ export class UploadComponent implements OnInit {
         const formData = new FormData();
 
         formData.append("file", file);
+        console.log()
 
         // const upload$ = this.http.post("/api/thumbnail-upload", formData);
 
@@ -49,17 +50,17 @@ export class UploadComponent implements OnInit {
           })
         }
       }
-      // getImage() {
+      getImage() {
 
-      //       this.userService.getFile(this.imageName).subscribe(
-      //         res=>{
-      //           this.retrieveResonse = res;
-      //           this.blobData = this.retrieveResonse.data;
-      //           this.retrievedImage = 'data:image/jpeg;base64,' + this.blobData;
-      //           console.log(this.retrievedImage);
+            this.userService.getFile(this.imageName).subscribe(
+              res=>{
+                this.retrieveResonse = res;
+                this.blobData = this.retrieveResonse.data;
+                this.retrievedImage = 'data:image/jpeg;base64,' + this.blobData;
+                console.log(this.retrievedImage);
 
-      //         });
-      //       }
+              });
+            }
 
           
     }

@@ -14,11 +14,18 @@ import { RouterModule } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import { UploadComponent } from './components/upload/upload.component';
 import { FormsModule } from '@angular/forms';
-import { ImageGridComponent } from './image-grid/image-grid.component';
+import { ImageGridComponent } from './components/image-grid/image-grid.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { ProfileComponent } from './components/profile/profile.component';
-
-
+import { WebcamComponent, WebcamModule } from 'ngx-webcam';
+import { WebcamCaptureComponent } from './components/webcam-capture/webcam-capture.component';
+import { ItemComponent } from './components/item/item.component';
+import { SlickCarouselModule } from 'ngx-slick-carousel';  
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import {IvyCarouselModule} from 'angular-responsive-carousel';
+import { NgImageSliderModule } from 'ng-image-slider';
+import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +37,9 @@ import { ProfileComponent } from './components/profile/profile.component';
     UploadComponent,
     ImageGridComponent,
     ProfileComponent,
+    WebcamCaptureComponent,
+    ItemComponent,
+    
     
   ],
   imports: [
@@ -38,13 +48,23 @@ import { ProfileComponent } from './components/profile/profile.component';
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule,
-    MatIconModule,
     FormsModule,
-    MatGridListModule
+    MatGridListModule,
+    WebcamModule,
+    SlickCarouselModule,
+    BrowserAnimationsModule,
+    IvyCarouselModule,
+    NgImageSliderModule,
+    MaterialModule
+    
+
+
+
+    
 
 
   ],
-  providers: [UserServiceService],
+  providers: [UserServiceService, {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
