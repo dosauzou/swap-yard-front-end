@@ -6,7 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
   title = 'Swapyard';
 
   public slides = [
@@ -16,3 +15,4 @@ export class AppComponent {
     { src: "https://image4.com" }
   ];
 }
+
