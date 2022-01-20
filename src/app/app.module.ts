@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { ReactiveFormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http'
+import {HttpClientModule, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS} from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -26,6 +26,21 @@ import {IvyCarouselModule} from 'angular-responsive-carousel';
 import { NgImageSliderModule } from 'ng-image-slider';
 import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 import { MaterialModule } from './material.module';
+import { AppService } from './services/app-service.service';
+import { Observable } from 'rxjs';
+
+@Injectable()
+export class XhrInterceptor implements HttpInterceptor {
+
+  intercept(req: HttpRequest<any>, next: HttpHandler):
+  Observable<HttpEvent<any>> {
+    console.log('Intercepted request' + req.url);
+    const xhr = req.clone({
+      headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
+    });
+    return next.handle(xhr);
+  }
+}
 
 @NgModule({
   declarations: [
@@ -57,14 +72,16 @@ import { MaterialModule } from './material.module';
     NgImageSliderModule,
     MaterialModule
     
+  ],
 
-
-
-    
-
+  providers: [
+    UserServiceService, AppService, 
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},
+    //interceptor works fine
+    { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true }
 
   ],
-  providers: [UserServiceService, {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

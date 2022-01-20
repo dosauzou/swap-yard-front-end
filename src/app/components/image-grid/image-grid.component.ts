@@ -22,6 +22,7 @@ export class ImageGridComponent implements OnInit {
     { src: "https://image3.com" },
     { src: "https://image4.com" }
   ];
+  
   newArray: any[];
   
   imageObject: Array<object> ;
