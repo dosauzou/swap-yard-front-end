@@ -39,29 +39,29 @@ export class ImageGridComponent implements OnInit {
 // }
 // ];
 
-  display(){
-    this.userService.getPosts().subscribe(
-      data=>{
-        this.mediaArray = new Array
-        this.newArray = new Array
+  // display(){
+  //   this.userService.getPosts().subscribe(
+  //     data=>{
+  //       this.mediaArray = new Array
+  //       this.newArray = new Array
 
-        for(let x in data){
-          this.images = new ContentInterface
+  //       for(let x in data){
+  //         this.images = new ContentInterface
 
-          this.images.fileName=data[x].fileName;
-          this.images.fileType=data[x].fileType;
-          this.images.data= 'data:image/jpeg;base64,'+ data[x].data;
+  //         this.images.fileName=data[x].fileName;
+  //         this.images.fileType=data[x].fileType;
+  //         this.images.data= 'data:image/jpeg;base64,'+ data[x].data;
        
           
-          this.mediaArray.push(this.images)
+  //         this.mediaArray.push(this.images)
 
 
-        }
-     } ,
-      error => { 
-        console.log("exception occured");
-    })
-  }
+  //       }
+  //    } ,
+  //     error => { 
+  //       console.log("exception occured");
+  //   })
+  // }
   slideConfig = {  
     "slidesToShow": 3,  
     "slidesToScroll": 3,  
@@ -73,7 +73,7 @@ export class ImageGridComponent implements OnInit {
   constructor(private userService: UserServiceService) { }
 
   ngOnInit(): void {
-    this.display()
+    // this.display()
   }
 
 }

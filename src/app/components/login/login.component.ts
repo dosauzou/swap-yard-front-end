@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       this.credentials.password= this.getPassword;
       this.credentials.username = this.getUsername
 
-      this.app.authenticate(this.credentials, () => {
+      this.app.authenticate(this.credentials, () =>  {
           this.router.navigateByUrl('/profile');
       });
       return false;

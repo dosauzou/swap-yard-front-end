@@ -7,7 +7,8 @@ export class Item {
         color: String;
         material: String;
         condition: String;
-        images: Array<ContentInterface>;
+        formData : FormData;
+        images: Array<FormData>;
 }
     
 

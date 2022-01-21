@@ -1,4 +1,8 @@
-  <mat-form-field appearance="fill">
+ 
+ <!-- center form and style to black -->
+ <div [ngSwitch]="form">
+  <div *ngSwitchDefault>
+ <mat-form-field appearance="fill">
     <mat-label>Condition</mat-label>
     <input matInput [(ngModel)]="data.condition">
   </mat-form-field>
@@ -27,15 +31,22 @@
       </mat-select>
     </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Photos</mat-label>
-    <mat-select [(ngModel)]="data.posts">
-      <mat-option value="one">First option</mat-option>
-      <mat-option value="two">Second option</mat-option>
-    </mat-select>
-  </mat-form-field>
-
   <div mat-dialog-actions>
     <button mat-fab (click)="onNoClick()">No Thanks</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+    <!-- change color to black -->
+    <button mat-fab (click)="next()" cdkFocusInitial>Next</button>
   </div>
+  </div>
+  <div *ngSwitchCase="'switch'">  
+    <app-upload></app-upload>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+
+
+
+  </div>
+</div>
+
+  <!-- <div *ngIf="ohWHat()">Content to render when condition is true.</div> -->
+
+
+  <!-- //ngSwitchCase for images -->

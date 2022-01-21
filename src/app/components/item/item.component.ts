@@ -8,7 +8,7 @@ export interface DialogData {
   color: String;
   material: String;
   condition: String;
-  posts: Array<ContentInterface>;
+  posts: FormData;
 }
 
 @Component({
@@ -17,12 +17,16 @@ export interface DialogData {
   styleUrls: ['./item.component.scss']
 })
 export class ItemComponent implements OnInit {
+    form: String;
 
   constructor( public dialogRef: MatDialogRef<ItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
    
     onNoClick(): void {
       this.dialogRef.close();
+    }
+    next(): void {
+      this.form = 'switch';
     }
   ngOnInit(): void {
   }

@@ -16,25 +16,14 @@ export class UserServiceService {
   constructor(private http:HttpClient) { }
 
 
-  createUser(user: object): Observable <object>{
-    return this.http.post('server/register', user);
-  }
-
-  loginUser(user: User): Observable <any>{
-    return this.http.post('/server/api/v1/users/login', user)
-
-  }
-  getUsers(){
-    return this.http.get('/server/api/v1/users/users-list')
-
-  }
+ 
   createPost(post: object): Observable <object>{
     return this.http.post('server/api/v1/post/uploadRaw', post);
   }
 
- 
-  getPosts(){
-    return this.http.get('server/api/v1/post/downloads')
+ //by user so add in userid
+  getPosts(id : any){
+    return this.http.get('server/api/v1/post/downloads/',id)
 
   }
  

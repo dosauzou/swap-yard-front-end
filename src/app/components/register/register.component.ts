@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserServiceService } from 'src/app/services/user-service.service';
+import { AppService } from 'src/app/services/app-service.service';
 import { User } from 'src/app/classes/user';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 @Component({
@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
   });
   submitted: boolean;
 
-  constructor(private userService: UserServiceService, private fb: FormBuilder) { }
+  constructor(private userService: AppService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.submitted = false;
