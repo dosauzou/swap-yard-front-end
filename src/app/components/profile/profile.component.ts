@@ -5,8 +5,9 @@ import { ItemComponent } from '../item/item.component';
 import { UserServiceService } from 'src/app/services/user-service.service';
 import { ContentInterface } from 'src/app/classes/content';
 import {AppService} from 'src/app/services/app-service.service';
-import {ItemService} from 'src/app/services/item-service'
+import {ItemService} from 'src/app/services/item-service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {UploadService} from 'src/app/services/upload-service.service';
 
 @Component({
   selector: 'app-profile',
@@ -18,8 +19,9 @@ export class ProfileComponent implements OnInit {
   mediaArray: any[];
   greeting = {};
   id= sessionStorage.getItem('id');
+  images: ContentInterface;
 
-  constructor(public dialog: MatDialog, private userService: UserServiceService, private app: AppService, private http: HttpClient, private itemS: ItemService) { 
+  constructor(public dialog: MatDialog, private userService: UserServiceService, private app: AppService, private http: HttpClient, private itemS: ItemService, private upload: UploadService) { 
     http.get('server/api/v1/token').subscribe(data => {
       const token = data['token'];
       // console.log(token);
@@ -28,7 +30,7 @@ export class ProfileComponent implements OnInit {
 
   openDialog():void{
     this.item = new Item()
-    this.item.images = new Array()
+    this.item.images = new ContentInterface
     
     const dialogRef = this.dialog.open(
       ItemComponent,{
@@ -40,18 +42,25 @@ export class ProfileComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
 
-        console.log(result)
+        // console.log(result)
         this.item.color=result.color
-        this.item.size=result.size
+        this.item.size=0
         this.item.condition = result.condition
         this.item.material=result.material
         this.item.formData = result.posts
         // this.item.images.push(result.posts)
         if(result){
-          this.itemS.createPost(this.item, this.id).subscribe(
-            data => console.log(data), error => console.log(error))
-          console.log("Created")
-        }
+          this.upload.uploadFile(this.item.formData)
+          .subscribe(data => 
+             {
+              this.item.images = data
+              this.itemS.createPost(this.item, this.id)
+              .subscribe(
+              data => console.log(data), 
+              error => console.log(error))
+            })
+           
+          }
 
       });
 
@@ -60,33 +69,33 @@ export class ProfileComponent implements OnInit {
 
   //this display method will retrieve
   //get by logged in user
-  // display(){
-  //   this.userService.getPosts(this.data).subscribe(
-  //     data=>{
 
-  //       //we might have to retireve item instead, have a nestsed slideshow
-  //       this.mediaArray= new Array()
-  //       console.log(data)
+  display(){
+    this.userService.getPosts(this.id).subscribe(
+      data=>{
+
+        //we might have to retireve item instead, have a nestsed slideshow
+        this.mediaArray= new Array()
+        console.log(data)
 
 
 
-  //       for(let x in data){
+        for(let x in data){
         
-  //         this.images = new ContentInterface
-  //         this.images.fileName=data[x].fileName;
-  //         this.images.fileType=data[x].fileType;
-  //         this.images.data= 'data:image/jpeg;base64,'+ data[x].data;
+          this.images = new ContentInterface
+          this.images.fileName=data[x].fileName;
+          this.images.fileType=data[x].fileType;
+          this.images.data= 'data:image/jpeg;base64,'+ data[x].data;
        
-        
-  //         this.mediaArray.push(this.images)
+          this.mediaArray.push(this.images)
 
 
-  //       }
-  //    } ,
-  //     error => { 
-  //       console.log("exception occured");
-  //   })
-  // }
+        }
+     } ,
+      error => { 
+        console.log("exception occured");
+    })
+  }
 
   authenticated() { return this.app.authenticated; }
 

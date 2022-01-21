@@ -8,7 +8,7 @@ export class Item {
         material: String;
         condition: String;
         formData : FormData;
-        images: Array<FormData>;
+        images: ContentInterface;
 }
     
 

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class UploadServiceService {
+export class UploadService {
   
   createPost(post: object): Observable <object>{
     return this.http.post('server/api/v1/post/uploadRaw', post);

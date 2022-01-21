@@ -23,7 +23,7 @@ export class UserServiceService {
 
  //by user so add in userid
   getPosts(id : any){
-    return this.http.get('server/api/v1/post/downloads/',id)
+    return this.http.get('server/api/v1/post/downloads/'+id)
 
   }
  
