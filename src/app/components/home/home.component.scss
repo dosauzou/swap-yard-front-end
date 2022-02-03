@@ -1,0 +1,33 @@
+.example-card {
+    float:left;
+    max-width: 600px;
+
+  }
+
+  .card-size {
+    max-width: 600px;
+    max-height: 400px;
+
+  }
+  
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+  .main-div{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.button{
+    float:right;
+    padding: 15px 32px;
+    font-size: 100px;
+}
+.button1{
+    float:left;
+    padding: 15px 32px;
+    font-size: 100px;
+}

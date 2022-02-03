@@ -11,10 +11,18 @@ import { finalize } from "rxjs/operators";
 })
 export class AppComponent {
   title = 'Swapyard';
+  auth: Boolean;
+
   constructor(private app: AppService, private http: HttpClient, private router: Router) {
     //checks to see if user is logged in 
-    // this.app.authenticate(undefined, undefined);
+
+    this.app.authenticate(undefined, undefined);
+
   }
+
+    getAuth(){
+      return this.app.authenticated
+    }
   logout() {
     this.http.post('logout', {}).pipe(
       finalize(() => {

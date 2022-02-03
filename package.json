@@ -20,6 +20,7 @@
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
+    "@auth0/angular-jwt": "^5.0.2",
     "@types/jquery": "^3.5.13",
     "angular-responsive-carousel": "^2.1.2",
     "bootstrap": "^5.1.3",

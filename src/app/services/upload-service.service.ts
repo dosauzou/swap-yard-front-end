@@ -12,8 +12,8 @@ export class UploadService {
   }
 
   getPosts(){
-    return this.http.get('server/api/v1/post/downloads')
 
+    return this.http.get('server/api/v1/post/downloads')
   }
 
   uploadFile(formData: FormData): Observable <any>{

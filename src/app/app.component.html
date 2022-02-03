@@ -1,3 +1,8 @@
-<app-header></app-header>
-
-<!-- <app-profile></app-profile> -->
+<!-- <div *ngIf="getAuth() then thenBlock else elseBlock"></div>
+<ng-template #thenBlock><app-user-header></app-user-header></ng-template>
+<ng-template #elseBlock><app-header></app-header></ng-template> -->
+<container-element [ngSwitch]="getAuth()">
+    <ng-container *ngSwitchCase="true"><app-user-header></app-user-header></ng-container>
+    <ng-container *ngSwitchDefault><app-header></app-header></ng-container>
+    <!-- <some-element *ngSwitchDefault>...</some-element> -->
+ </container-element>

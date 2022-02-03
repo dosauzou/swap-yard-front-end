@@ -1,1 +1,39 @@
-<p>home works!</p>
+<!-- <ng-container *ngFor="let  item of itemArray"> -->
+
+<div class="main-div" > 
+
+    <div class="button1" (click)="onLeft()">
+        <button mat-fab color="primary" aria-label="Example icon button with a delete icon">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+
+  <!-- ng for works, url is not safe though?? -->
+<mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{item.images.fileName}}</mat-card-title>
+      <!-- <mat-card-subtitle>{{this.item.size}}</mat-card-subtitle> -->
+    </mat-card-header>
+
+<img mat-card-image [src]="item.images.data" class="card-size" alt="Photo of a Shiba Inu">
+    <mat-card-content>
+      <p>
+        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+        bred for hunting.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <!-- sert likes (click)="onRight() -->
+      <button mat-button>LIKE</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- //onclick button, should store ther Swipe -->
+  <div class="button">
+    <button mat-fab aria-label="Example icon button with a heart icon" (click)="onRight()">
+      <mat-icon>favorite</mat-icon>
+    </button>
+  </div>
+</div>

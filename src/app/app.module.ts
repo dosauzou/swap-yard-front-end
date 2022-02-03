@@ -28,7 +28,7 @@ import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dia
 import { MaterialModule } from './material.module';
 import { AppService } from './services/app-service.service';
 import { Observable } from 'rxjs';
-
+import {UserHeaderComponent} from 'src/app/components/user-header/user-header.component'
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
 
@@ -54,6 +54,8 @@ export class XhrInterceptor implements HttpInterceptor {
     ProfileComponent,
     WebcamCaptureComponent,
     ItemComponent,
+    UserHeaderComponent
+
     
     
   ],
