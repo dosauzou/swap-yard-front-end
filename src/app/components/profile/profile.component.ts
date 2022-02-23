@@ -22,7 +22,7 @@ export class ProfileComponent implements OnInit {
   id= sessionStorage.getItem('id');
   images: ContentInterface;
 
-  constructor(public dialog: MatDialog, private userService: UserServiceService, private app: AppService, private http: HttpClient, private itemS: ItemService, private upload: UploadService, public domSanitizationService: DomSanitizer,) { 
+  constructor(public dialog: MatDialog, private userService: UserServiceService, private app: AppService, private http: HttpClient, private itemS: ItemService, private upload: UploadService, public domSanitizationService: DomSanitizer) { 
     http.get('server/api/v1/token').subscribe(data => {
       const token = data['token'];
       }, () => {});
@@ -36,15 +36,17 @@ export class ProfileComponent implements OnInit {
       ItemComponent,{
         width: '500px',
         height: '500px',
-                data:{color: this.item.color, size: this.item.size, material: this.item.material, condition: this.item.condition, posts: this.item.formData},
+                data:{color: this.item.color, size: this.item.size, material: this.item.material, condition: this.item.clothingCondition, posts: this.item.formData, description: this.item.description},
       });
       dialogRef.afterClosed().subscribe(result => {
 
         this.item.color=result.color
-        this.item.size=0
-        this.item.condition = result.condition
+        this.item.size=result.size
+        console.log(result.condition)
+        this.item.clothingCondition = result.condition
         this.item.material=result.material
         this.item.formData = result.posts
+        this.item.description = result.description
         if(result){
           this.upload.uploadFile(this.item.formData)
           .subscribe(data => 
@@ -71,7 +73,9 @@ export class ProfileComponent implements OnInit {
           this.images.fileName=data[x].fileName;
           this.images.fileType=data[x].fileType;
           this.images.data= this.domSanitizationService.bypassSecurityTrustUrl('data:image/jpeg;base64,'+ data[x].data);
+          // this.images.data= 'data:image/jpeg;base64,'+ data[x].data;
           this.mediaArray.push(this.images)
+          console.log(this.images.data)
         }
      } ,
       error => { 

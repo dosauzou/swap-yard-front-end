@@ -34,6 +34,9 @@ export class UploadComponent implements OnInit {
         this.fileName = file.name;
         const formData = new FormData();
         formData.append("file", file);
+        console.log(file.text)
+        console.log(file.size)
+
         this.data.posts=formData;
 
         // const upload$ = this.http.post("/api/thumbnail-upload", formData);

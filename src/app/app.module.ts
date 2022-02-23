@@ -28,7 +28,9 @@ import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dia
 import { MaterialModule } from './material.module';
 import { AppService } from './services/app-service.service';
 import { Observable } from 'rxjs';
-import {UserHeaderComponent} from 'src/app/components/user-header/user-header.component'
+import {UserHeaderComponent} from 'src/app/components/user-header/user-header.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment'
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
 
@@ -72,7 +74,19 @@ export class XhrInterceptor implements HttpInterceptor {
     BrowserAnimationsModule,
     IvyCarouselModule,
     NgImageSliderModule,
-    MaterialModule
+    MaterialModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      // registrationStrategy: 'registerWhenStable:30000'
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
     
   ],
 

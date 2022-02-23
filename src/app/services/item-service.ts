@@ -13,8 +13,6 @@ export class ItemService{
   
     }
 
-
-
     createPost(item: object, id:any): Observable <object>{
         return this.http.post('server/api/v1/newItem/' + id, item);
       }

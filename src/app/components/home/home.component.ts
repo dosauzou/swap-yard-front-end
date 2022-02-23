@@ -39,10 +39,10 @@ console.log('huh')
           this.item.images = new ContentInterface
           this.item.id = data[x].id;
           this.item.color = data[x].color;
-          this.item.condition = data[x].condition;
+          this.item.clothingCondition = data[x].clothingCondition;
           this.item.material = data[x].material;
           this.item.size = data[x].size;
-    
+          this.item.description = data[x].description
           this.item.images.fileName=data[x].images.fileName;
           this.item.images.fileType=data[x].images.fileType;
           this.item.images.data= this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,'+ data[x].images.data);

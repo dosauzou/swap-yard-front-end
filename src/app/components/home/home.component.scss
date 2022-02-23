@@ -1,17 +1,20 @@
 .example-card {
     float:left;
-    max-width: 600px;
+    width: 500px;
+    max-width: 500px;
 
   }
 
   .card-size {
-    max-width: 600px;
-    max-height: 400px;
+    max-width: 500px;
+    width: 500px;
+    max-height: 500px;
+    height: 500px;
 
   }
   
   .example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-image: url('https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces');
     background-size: cover;
   }
   .main-div{

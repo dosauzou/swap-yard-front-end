@@ -7,7 +7,8 @@ export class Item {
         type: String
         color: String;
         material: String;
-        condition: String;
+        description: String;
+        clothingCondition: String;
         formData : FormData;
         images: ContentInterface;
         id: Number;

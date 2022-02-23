@@ -1,39 +1,88 @@
  
  <!-- center form and style to black -->
- <div [ngSwitch]="form">
+ <div fxFlexAlign="stretch" [ngSwitch]="form" class="parent">
   <div *ngSwitchDefault>
- <mat-form-field appearance="fill">
-    <mat-label>Condition</mat-label>
-    <input matInput [(ngModel)]="data.condition">
-  </mat-form-field>
+    <p>
 
+    <mat-form-field appearance="fill">
+    <mat-label>Condition</mat-label>
+    <mat-select [(ngModel)]="data.condition">
+      <mat-option value="new">New</mat-option>
+      <mat-option value="likeNew"> Like New</mat-option>
+      <mat-option value="good"> Good</mat-option>
+      <mat-option value="fair"> Fair</mat-option>
+      <mat-option value="poor"> Poor</mat-option>
+    </mat-select>
+  </mat-form-field>
+</p>
+<p>
   <mat-form-field appearance="fill">
     <mat-label>Size</mat-label>
     <mat-select [(ngModel)]="data.size">
-      <mat-option value="one">First option</mat-option>
-      <mat-option value="two">Second option</mat-option>
+      <mat-option value="4">EU 4</mat-option>
+      <mat-option value="6">EU 6</mat-option>
+      <mat-option value="8">EU 8</mat-option>
+      <mat-option value="10">EU 10</mat-option>
+      <mat-option value="12">EU 12</mat-option>
+      <mat-option value="14">EU 14</mat-option>
+      <mat-option value="16">EU 16</mat-option>
+      <mat-option value="18">EU 18</mat-option>
     </mat-select>
   </mat-form-field>
+</p>
+<p>
 
   <mat-form-field appearance="fill">
     <mat-label>Color</mat-label>
-    <mat-select [(ngModel)]="data.color">
-        <mat-option value="one">First option</mat-option>
-        <mat-option value="two">Second option</mat-option>
-      </mat-select>
+    <input type="text"
+           [(ngModel)]="data.color"
+           placeholder="Pick one"
+           aria-label="Color"
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
     </mat-form-field>
+  </p>
+  <p>
 
   <mat-form-field appearance="fill">
     <mat-label>Material</mat-label>
-    <mat-select [(ngModel)]="data.material">
-        <mat-option value="one">First option</mat-option>
-        <mat-option value="two">Second option</mat-option>
-      </mat-select>
+    <input type="text"
+    [(ngModel)]="data.material"
+    placeholder="Pick one"
+    aria-label="Material"
+    matInput
+    [formControl]="myControl1"
+    [matAutocomplete]="auto">
+<mat-autocomplete #auto="matAutocomplete">
+<mat-option *ngFor="let option of filteredOptions1 | async" [value]="option">
+ {{option}}
+</mat-option>
+</mat-autocomplete>
+
     </mat-form-field>
+  </p>
+  <p>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <input matInput [(ngModel)]="data.description">
+    </mat-form-field>
+  </p>
+
+    <!-- <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <mat-input [(ngModel)]="data.description">
+      </mat-input>
+    </mat-form-field> -->
 
   <div mat-dialog-actions>
     <button mat-fab (click)="onNoClick()">No Thanks</button>
-    <!-- change color to black -->
     <button mat-fab (click)="next()" cdkFocusInitial>Next</button>
   </div>
   </div>
