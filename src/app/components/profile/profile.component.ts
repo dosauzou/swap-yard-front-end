@@ -9,6 +9,8 @@ import {ItemService} from 'src/app/services/item-service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {UploadService} from 'src/app/services/upload-service.service';
 import {DomSanitizer} from '@angular/platform-browser';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { SwPush } from '@angular/service-worker';
 
 @Component({
   selector: 'app-profile',
@@ -21,9 +23,12 @@ export class ProfileComponent implements OnInit {
   greeting = {};
   id= sessionStorage.getItem('id');
   images: ContentInterface;
+  readonly VAPID_PUBLIC_KEY = "BJg6B8jvIIRupMBM-XnbpwuYBc9AQlJvwLM1G3NDRaaSGaRee8HvWXadnu34eeXRu-7VaHjmfJo3dbCZT9rc7_Y";
 
-  constructor(public dialog: MatDialog, private userService: UserServiceService, private app: AppService, private http: HttpClient, private itemS: ItemService, private upload: UploadService, public domSanitizationService: DomSanitizer) { 
-    http.get('server/api/v1/token').subscribe(data => {
+
+  constructor(public dialog: MatDialog, private userService: UserServiceService, private app: AppService, private http: HttpClient, private itemS: ItemService, private upload: UploadService, public domSanitizationService: DomSanitizer,   private swPush: SwPush,
+    private notifications: NotificationsService) { 
+    http.get('api/v1/token').subscribe(data => {
       const token = data['token'];
       }, () => {});
   }
@@ -82,7 +87,14 @@ export class ProfileComponent implements OnInit {
         console.log("exception occured");
     })
   }
+  subscribeToNotifications() {
 
+    this.swPush.requestSubscription({
+        serverPublicKey: this.VAPID_PUBLIC_KEY
+    })
+    .then(sub => this.notifications.addPushSubscriber(sub, this.id).subscribe())
+    .catch(err => console.error("Could not subscribe to notifications", err));
+}
   authenticated() { return this.app.authenticated; }
 
   ngOnInit(): void {

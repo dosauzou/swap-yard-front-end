@@ -20,7 +20,7 @@ export class AppService {
         //     {credentials ? { Authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password) } : {});
 
         //403 error wont make request
-        this.http.get('server/api/v1/login',{headers: headers}).subscribe(response => {
+        this.http.get('api/v1/login',{headers: headers}).subscribe(response => {
          
             if (response) {
                 console.log(response)
@@ -45,12 +45,12 @@ export class AppService {
     
 
     createUser(user: object): Observable <object>{
-        return this.http.post('server/api/v1/register', user);
+        return this.http.post('api/v1/register', user);
       }
     
     
     getUsers(){
-        return this.http.get('/server/api/v1/users-list')
+        return this.http.get('api/v1/users-list')
     
       }
 

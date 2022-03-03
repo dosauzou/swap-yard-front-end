@@ -8,20 +8,20 @@ import { Observable } from 'rxjs';
 export class UploadService {
   
   createPost(post: object): Observable <object>{
-    return this.http.post('server/api/v1/post/uploadRaw', post);
+    return this.http.post('api/v1/post/uploadRaw', post);
   }
 
   getPosts(){
 
-    return this.http.get('server/api/v1/post/downloads')
+    return this.http.get('api/v1/post/downloads')
   }
 
   uploadFile(formData: FormData): Observable <any>{
-    return this.http.post('/server/api/v1/post/upload', formData)
+    return this.http.post('api/v1/post/upload', formData)
 
   }
   getFile(imageName: any) {
-    return this.http.get('server/api/v1/post/download/' + imageName)  
+    return this.http.get('api/v1/post/download/' + imageName)  
   }
 
   constructor(private http:HttpClient) { }

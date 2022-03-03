@@ -19,21 +19,21 @@ export class UserServiceService {
 
  
   createPost(post: object): Observable <object>{
-    return this.http.post('server/api/v1/post/uploadRaw', post);
+    return this.http.post('api/v1/post/uploadRaw', post);
   }
 
  //by user so add in userid
   getPosts(id : any){
-    return this.http.get('server/api/v1/post/downloads/'+id)
+    return this.http.get('api/v1/post/downloads/'+id)
 
   }
  
   uploadFile(formData: FormData): Observable <any>{
-    return this.http.post('/server/api/v1/post/upload', formData)
+    return this.http.post('api/v1/post/upload', formData)
 
   }
   getFile(imageName: any) {
-    return this.http.get('server/api/v1/post/download/' + imageName)  
+    return this.http.get('api/v1/post/download/' + imageName)  
   }
 
 }

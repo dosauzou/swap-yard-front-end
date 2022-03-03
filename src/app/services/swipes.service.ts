@@ -7,7 +7,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http'
 export class SwipesService {
   createSwipe(id: any, userId: any){
    
-    return this.http.get('server/api/v1/'+userId+'/swiped/' + id)
+    return this.http.get('api/v1/'+userId+'/swiped/' + id)
   }
   constructor(private http:HttpClient) { }
 }

@@ -13,27 +13,19 @@ import { NotificationsService } from './services/notifications.service';
 })
 export class AppComponent {
 
-  readonly VAPID_PUBLIC_KEY = "BML5900JoWc0u-T3gqrNNJoRJCsKobqI4uWLeBNsvjItyrSebQAmTnlBbggotMB7OAmxoQztc657WKI7Vd5SGV0";
   title = 'Swapyard';
   auth: Boolean;
+  id= sessionStorage.getItem('id');
 
 
 
-  constructor(private app: AppService, private http: HttpClient, private router: Router,   private swPush: SwPush,
-    private notifications: NotificationsService) {
+  constructor(private app: AppService, private http: HttpClient, private router: Router) {
     //checks to see if user is logged in 
 
     this.app.authenticate(undefined, undefined);
 
   }
-  subscribeToNotifications() {
 
-    this.swPush.requestSubscription({
-        serverPublicKey: this.VAPID_PUBLIC_KEY
-    })
-    .then(sub => this.notifications.addPushSubscriber(sub).subscribe())
-    .catch(err => console.error("Could not subscribe to notifications", err));
-}
 
     getAuth(){
       return this.app.authenticated
