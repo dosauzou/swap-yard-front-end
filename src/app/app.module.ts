@@ -1,6 +1,6 @@
 import { Injectable, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { NotificationComponent } from './components/notification/notification.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS} from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
@@ -28,9 +28,19 @@ import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dia
 import { MaterialModule } from './material.module';
 import { AppService } from './services/app-service.service';
 import { Observable } from 'rxjs';
+import {MatListModule} from '@angular/material/list';
 import {UserHeaderComponent} from 'src/app/components/user-header/user-header.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment'
+import { environment } from '../environments/environment';
+import { CarouselComponent } from './components/carousel/carousel.component';
+import { MatchComponent } from './components/match/match.component';
+import { MatchHeaderComponent } from './components/match-header/match-header.component';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import { MatchProfileComponent } from './components/match-profile/match-profile.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { UnmatchComponent } from './components/unmatch/unmatch.component';
+import { UnaryOperator } from '@angular/compiler';
+import { DisplayItemComponent } from './components/display-item/display-item.component';
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
 
@@ -56,8 +66,16 @@ export class XhrInterceptor implements HttpInterceptor {
     ProfileComponent,
     WebcamCaptureComponent,
     ItemComponent,
-    UserHeaderComponent
-
+    UserHeaderComponent,
+    NotificationComponent,
+    CarouselComponent,
+    MatchComponent,
+    MatchHeaderComponent,
+    EditProfileComponent,
+    MatchProfileComponent,
+    ChatComponent,
+  UnmatchComponent,
+  DisplayItemComponent
     
     
   ],
@@ -75,13 +93,15 @@ export class XhrInterceptor implements HttpInterceptor {
     IvyCarouselModule,
     NgImageSliderModule,
     MaterialModule,
-
+    MatListModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    })
+    }),
+
+ 
     
   ],
 

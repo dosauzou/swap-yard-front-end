@@ -1,0 +1,65 @@
+
+<header>
+	<div class="container">
+		<div class="profile">
+			<div class="profile-image">
+                <!-- //retrieve from db, on click change from -->
+				<img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="">
+
+			</div>
+
+			<div class="profile-user-settings">
+                    <!-- // set to retieve for db -->
+				<h1 class="profile-user-name">{{username}}</h1>
+                    <!-- //add on click -->
+
+			</div>
+
+			<div class="profile-stats">
+
+				<ul>   
+                    <!-- //retrieve from db -->
+					<li><span class="profile-stat-count">0</span> posts</li>
+					<li><span class="profile-stat-count">188</span> followers</li>
+					<li><span class="profile-stat-count">206</span> following</li>
+				</ul>
+
+			</div>
+
+			<div class="profile-bio">
+                        <!-- //send to db and retrieve fr -->
+				<p><span class="profile-real-name">Polly</span> Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️</p>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</header>
+<main>
+    <div class="container">
+        <div class="gallery">
+
+            <!-- //creates a popup where it shows the rest of the details and images -->
+<mat-grid-list cols="3" rowHeight="1:1" [gutterSize]="'15px'" >
+    <!-- <mat-grid-tile 
+        *ngFor="let media of mediaArray">
+        <div class = "gallery-item" tabindex="0">
+            <img [src]="media.data" class = "gallery-image">
+            <div class="gallery-item-info">
+
+                <ul>
+                    <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 56</li>
+                    <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 2</li>
+                </ul>
+
+            </div>
+        </div>
+        </mat-grid-tile> -->
+  </mat-grid-list>
+  </div>
+    </div>
+
+    
+</main>

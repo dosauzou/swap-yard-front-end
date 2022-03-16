@@ -1,0 +1,79 @@
+<!-- 
+<div *ngFor="let message of messageList">
+    <li>
+        {{message}}
+    </li>  
+</div>
+
+<input [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()" />
+<button (click)="sendMessage()">Send Message</button> -->
+<section style="background-color: #eee;">
+    <div class="container py-5">
+       
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-6">
+  
+          <div class="card" id="chat2">
+            <div class="card-header d-flex justify-content-between align-items-center p-3">
+              <h5 class="mb-0">Polly</h5>
+              <a (click)="settings()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+              </svg>
+            </a>
+            </div>
+            <div class="card-body" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px">
+  
+
+  
+              <!-- <div class="d-flex flex-row justify-content-end mb-4">
+                <div>
+                  <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Do you have pictures of Matley
+                    Marriage?</p>
+                  <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:11</p>
+                </div>
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp" alt="avatar 1"
+                  style="width: 45px; height: 100%;">
+              </div> -->
+  
+              <div class="d-flex flex-row justify-content-end mb-4" *ngFor="let message of messageList">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp" alt="avatar 1"
+                  style="width: 45px; height: 100%;">
+                <div>
+                    <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">{{message}}</p>
+                  <p class="small ms-3 mb-3 rounded-3 text-muted">{{getTime()}}</p>
+                </div>
+              </div>
+  
+            </div>
+            <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp" alt="avatar 3"
+                  style="width: 40px; height: 100%;">
+                  <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1" [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()"
+                  placeholder="Type message">
+                <a class="ms-3 text-muted" href="#!"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+                    <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
+                  </svg></a>
+                <a class="ms-3" (click)="sendMessage()"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                    <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+                  </svg></a>
+              </div>
+            <!-- <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp" alt="avatar 3"
+                style="width: 40px; height: 100%;">
+              <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1" [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()">
+              <button (click)="sendMessage()">Send Message</button>
+                placeholder="Type message">
+              <a class="ms-1 text-muted" href="#!"><i class="fas fa-paperclip"></i></a>
+              <a class="ms-3" href="#!"><i class="fas fa-paper-plane"></i></a>
+            </div> -->
+          </div>
+  
+        </div>
+      </div>
+  
+    </div>
+  </section>
+
+
+ 

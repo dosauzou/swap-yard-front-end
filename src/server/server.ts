@@ -61,6 +61,8 @@ app.listen(3000, () => {
         }
     };
 
+    console.log(JSON.stringify(notificationPayload))
+
     Promise.all(allSubscriptions.map(sub => webpush.sendNotification(
         sub, JSON.stringify(notificationPayload) )))
         .then(() => res.status(200).json({message: 'Newsletter sent successfully.'}))

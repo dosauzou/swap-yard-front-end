@@ -19,7 +19,7 @@ export class AppComponent {
 
 
 
-  constructor(private app: AppService, private http: HttpClient, private router: Router) {
+  constructor(private app: AppService, private http: HttpClient, private router: Router, private _swPush: SwPush) {
     //checks to see if user is logged in 
 
     this.app.authenticate(undefined, undefined);

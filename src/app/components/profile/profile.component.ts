@@ -11,6 +11,7 @@ import {UploadService} from 'src/app/services/upload-service.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { SwPush } from '@angular/service-worker';
+import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 
 @Component({
   selector: 'app-profile',
@@ -31,6 +32,14 @@ export class ProfileComponent implements OnInit {
     http.get('api/v1/token').subscribe(data => {
       const token = data['token'];
       }, () => {});
+  }
+
+  editProfile():void{
+    const dialogRef = this.dialog.open(
+      EditProfileComponent,{
+        width: '500px',
+        height: '500px',
+      });
   }
 
   openDialog():void{
@@ -75,6 +84,7 @@ export class ProfileComponent implements OnInit {
         console.log(data)
         for(let x in data){
           this.images = new ContentInterface
+          
           this.images.fileName=data[x].fileName;
           this.images.fileType=data[x].fileType;
           this.images.data= this.domSanitizationService.bypassSecurityTrustUrl('data:image/jpeg;base64,'+ data[x].data);
@@ -98,6 +108,7 @@ export class ProfileComponent implements OnInit {
   authenticated() { return this.app.authenticated; }
 
   ngOnInit(): void {
+    this.subscribeToNotifications();
     this.display()
   }
 

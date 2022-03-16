@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
     "server": "ts-node -P src/server/server.tsconfig.json src/server/server.ts",
+    "server1": "ts-node -P src/server/server.tsconfig.json src/server/socket.ts",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -27,6 +28,7 @@
     "@types/jquery": "^3.5.13",
     "angular-responsive-carousel": "^2.1.2",
     "bootstrap": "^5.1.3",
+    "bootstrap-icons": "^1.8.1",
     "express": "^4.17.3",
     "jquery": "^3.6.0",
     "ng-image-slider": "^2.8.0",
@@ -34,6 +36,8 @@
     "ngx-webcam": "^0.4.1",
     "rxjs": "~6.6.0",
     "slick-carousel": "^1.8.1",
+    "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1",
     "web-push": "^3.4.5",
     "zone.js": "~0.11.4"
   },

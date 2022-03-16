@@ -13,6 +13,10 @@ export class NotificationsService {
     return this.http.post('api/v1/notifications/'+id, sub);
 }
 
+doNotification(id:any){
+  return this.http.get('api/v1/notifications/'+id);
+}
+
 send() {
     return this.http.post('api/v1/newsletter', null);
 }
