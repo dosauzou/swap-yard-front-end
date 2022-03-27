@@ -30,6 +30,7 @@ openDialog():void{
   
   const dialogRef = this.dialog.open(
     ItemComponent,{
+      panelClass: 'my-outlined-dialog',
       width: '500px',
       height: '500px',
               data:{color: this.item.color, size: this.item.size, material: this.item.material, condition: this.item.clothingCondition, posts: this.item.formData, description: this.item.description},

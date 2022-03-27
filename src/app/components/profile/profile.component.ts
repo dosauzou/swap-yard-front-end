@@ -12,6 +12,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { SwPush } from '@angular/service-worker';
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
+import { EditComponent } from '../edit/edit.component';
 
 @Component({
   selector: 'app-profile',
@@ -24,7 +25,7 @@ export class ProfileComponent implements OnInit {
   greeting = {};
   id= sessionStorage.getItem('id');
   images: ContentInterface;
-  readonly VAPID_PUBLIC_KEY = "BJg6B8jvIIRupMBM-XnbpwuYBc9AQlJvwLM1G3NDRaaSGaRee8HvWXadnu34eeXRu-7VaHjmfJo3dbCZT9rc7_Y";
+  readonly VAPID_PUBLIC_KEY = 'BI1hXbInwBYDsij14G5aCAXxn4IxcuI4jeOrUFTFIfVfVr6TCgvOCSgjLyuh1Who00G4QsdggDkOTGiF2VM1I1s';
 
 
   constructor(public dialog: MatDialog, private userService: UserServiceService, private app: AppService, private http: HttpClient, private itemS: ItemService, private upload: UploadService, public domSanitizationService: DomSanitizer,   private swPush: SwPush,
@@ -36,7 +37,8 @@ export class ProfileComponent implements OnInit {
 
   editProfile():void{
     const dialogRef = this.dialog.open(
-      EditProfileComponent,{
+      EditComponent,{
+        panelClass: 'my-outlined-dialog',
         width: '500px',
         height: '500px',
       });
@@ -97,14 +99,16 @@ export class ProfileComponent implements OnInit {
         console.log("exception occured");
     })
   }
-  subscribeToNotifications() {
-
+  subscribeToNotifications=() => {
+    if(this.swPush.isEnabled){
+    
     this.swPush.requestSubscription({
         serverPublicKey: this.VAPID_PUBLIC_KEY
     })
     .then(sub => this.notifications.addPushSubscriber(sub, this.id).subscribe())
     .catch(err => console.error("Could not subscribe to notifications", err));
-}
+    }
+  }
   authenticated() { return this.app.authenticated; }
 
   ngOnInit(): void {

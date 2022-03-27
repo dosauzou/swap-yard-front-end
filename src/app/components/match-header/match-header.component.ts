@@ -1,5 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Match } from 'src/app/classes/match';
 import { DialogData } from '../item/item.component';
 import { NotificationComponent } from '../notification/notification.component';
 
@@ -10,10 +11,12 @@ import { NotificationComponent } from '../notification/notification.component';
 })
 export class MatchHeaderComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<NotificationComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+
+
+  constructor(@Inject(MAT_DIALOG_DATA) public dialogData: {itemArray: Array<Match>, username: string}) { }
 
   ngOnInit(): void {
+    console.log(this.dialogData.itemArray)
   }
 
 }

@@ -10,9 +10,10 @@ import { NotificationComponent } from '../notification/notification.component';
 })
 export class MatchComponent implements OnInit {
 
-  constructor() { }
+  constructor(@Inject(MAT_DIALOG_DATA) public dialogData: {itemArray: any}) { }
 
   ngOnInit(): void {
+    console.log(this.dialogData.itemArray)
   }
 
 }

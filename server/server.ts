@@ -4,9 +4,10 @@ const app = express();
 const bodyParser = require("body-parser");
 const webpush = require('web-push');
 const allSubscriptions : string[] = [];
-const vapidKeys = {
-    "publicKey":"BJg6B8jvIIRupMBM-XnbpwuYBc9AQlJvwLM1G3NDRaaSGaRee8HvWXadnu34eeXRu-7VaHjmfJo3dbCZT9rc7_Y",
-    "privateKey":"k4JLDba2z_t6lcgeu9ZGmB4ddfvqm81ORwopr1hFlDI"
+const vapidKeys = 
+{
+  publicKey: 'BI1hXbInwBYDsij14G5aCAXxn4IxcuI4jeOrUFTFIfVfVr6TCgvOCSgjLyuh1Who00G4QsdggDkOTGiF2VM1I1s',
+  privateKey: 'ndihhY4sSmyAg42Va-cXKyKoyUUzdKeRvJzytvKNNvg'
 };
 
 
@@ -46,18 +47,18 @@ app.listen(3000, () => {
  
     {
         "notification": {
-            "title": "New match",
-            "body": "A new match has been made!",
-            "icon": "assets/main-page-logo-small-hat.png",
-            "vibrate": [100, 50, 100],
-            "data": {
-                "dateOfArrival": Date.now(),
-                "primaryKey": 1
-            },
-            "actions": [{
-                "action": "explore",
-                "title": "Go to the site"
-            }]
+            "title": "New match"
+            // "body": "A new match has been made!",
+            // "icon": "assets/main-page-logo-small-hat.png",
+            // "vibrate": [100, 50, 100],
+            // "data": {
+            //     "dateOfArrival": Date.now(),
+            //     "primaryKey": 1
+            // },
+            // "actions": [{
+            //     "action": "explore",
+            //     "title": "Go to the site"
+            // }]
         }
     };
 

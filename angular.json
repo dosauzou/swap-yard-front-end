@@ -37,6 +37,8 @@
               "src/manifest.webmanifest",
               "src/manifest.webmanifest",
               "src/manifest.webmanifest",
+              "src/manifest.webmanifest",
+              "src/manifest.webmanifest",
               "src/manifest.webmanifest"
  
             ],
@@ -120,6 +122,8 @@
               "src/favicon.ico",
               "src/assets",
               "src/manifet.webmanifest",
+              "src/manifest.webmanifest",
+              "src/manifest.webmanifest",
               "src/manifest.webmanifest",
               "src/manifest.webmanifest"
             ],

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Message } from 'src/app/classes/message';
 import { ChatService } from 'src/app/services/messaging.service';
 import { UnmatchComponent } from '../unmatch/unmatch.component';
 
@@ -10,11 +11,15 @@ import { UnmatchComponent } from '../unmatch/unmatch.component';
 })
 export class ChatComponent implements OnInit {
 
-  newMessage: string;
-  messageList: string[] = [];
+  chat: Message
+  newMessage: string
+  @Input() username = '';
+
+
+  messageList: Message[] = [];
   hour: any;
   minute:any;
-  realTime: any;
+  realTime = this.getTime();
 
 
   constructor(public dialog: MatDialog,private chatService: ChatService){
@@ -39,7 +44,10 @@ export class ChatComponent implements OnInit {
   ngOnInit(){
     this.chatService.getNewMessage().subscribe((message: string) => {
       if(message!=''){
-      this.messageList.push(message);
+        this.chat = new Message()
+        this.chat.content = message;
+        this.chat.time = this.getTime();
+        this.messageList.push(this.chat);
       }
     })
 }
@@ -47,7 +55,7 @@ export class ChatComponent implements OnInit {
   sendMessage() {
     if(this.newMessage || typeof this.newMessage!='undefined' ){
       this.chatService.sendMessage(this.newMessage);
-    this.newMessage = '';
+      this.newMessage = '';
     }
   }
 }

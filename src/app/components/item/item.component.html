@@ -1,10 +1,13 @@
  
  <!-- center form and style to black -->
- <div fxFlexAlign="stretch" [ngSwitch]="form" class="parent">
-  <div *ngSwitchDefault>
-    <p>
+ <mat-toolbar color="black">
+  <span  class="fill-remaining-space" style="width: 100%;text-align: center">Item upload</span>
+</mat-toolbar>
 
-    <mat-form-field appearance="fill">
+ <div [ngSwitch]="form" class="parent" >
+  <div *ngSwitchDefault>
+
+    <mat-form-field class="form-element">
     <mat-label>Condition</mat-label>
     <mat-select [(ngModel)]="data.condition">
       <mat-option value="new">New</mat-option>
@@ -14,9 +17,8 @@
       <mat-option value="poor"> Poor</mat-option>
     </mat-select>
   </mat-form-field>
-</p>
-<p>
-  <mat-form-field appearance="fill">
+
+  <mat-form-field class="form-element">
     <mat-label>Size</mat-label>
     <mat-select [(ngModel)]="data.size">
       <mat-option value="4">EU 4</mat-option>
@@ -29,10 +31,9 @@
       <mat-option value="18">EU 18</mat-option>
     </mat-select>
   </mat-form-field>
-</p>
-<p>
 
-  <mat-form-field appearance="fill">
+
+  <mat-form-field class="form-element">
     <mat-label>Color</mat-label>
     <input type="text"
            [(ngModel)]="data.color"
@@ -47,10 +48,9 @@
       </mat-option>
     </mat-autocomplete>
     </mat-form-field>
-  </p>
-  <p>
 
-  <mat-form-field appearance="fill">
+
+  <mat-form-field class="form-element">
     <mat-label>Material</mat-label>
     <input type="text"
     [(ngModel)]="data.material"
@@ -66,14 +66,13 @@
 </mat-autocomplete>
 
     </mat-form-field>
-  </p>
-  <p>
 
-    <mat-form-field appearance="fill">
+
+    <mat-form-field class="form-element">
       <mat-label>Description</mat-label>
       <input matInput [(ngModel)]="data.description">
     </mat-form-field>
-  </p>
+ 
 
     <!-- <mat-form-field appearance="fill">
       <mat-label>Description</mat-label>
@@ -81,16 +80,15 @@
       </mat-input>
     </mat-form-field> -->
 
-  <div mat-dialog-actions>
-    <button mat-fab (click)="onNoClick()">No Thanks</button>
-    <button mat-fab (click)="next()" cdkFocusInitial>Next</button>
+  <div mat-dialog-actions class="form-element" class="example-button-row">
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button (click)="next()" cdkFocusInitial>Next</button>
   </div>
   </div>
   <div *ngSwitchCase="'switch'">  
     <app-upload></app-upload>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
-
-
+    <button mat-button (click)="onNoClick()">Exit</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Complete</button>
 
   </div>
 </div>

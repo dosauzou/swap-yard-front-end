@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { data } from 'jquery';
 import { DialogData } from '../item/item.component';
@@ -11,9 +11,10 @@ import { NotificationComponent } from '../notification/notification.component';
 })
 export class MatchProfileComponent implements OnInit {
 
-username:any;
+// username:any;
+@Input() username = '';
 
-  constructor(){}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {name: string}){}
    
 
   ngOnInit(): void {

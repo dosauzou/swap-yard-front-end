@@ -41,6 +41,11 @@ import { ChatComponent } from './components/chat/chat.component';
 import { UnmatchComponent } from './components/unmatch/unmatch.component';
 import { UnaryOperator } from '@angular/compiler';
 import { DisplayItemComponent } from './components/display-item/display-item.component';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { SettingsComponent } from './components/settings/settings.component';
+import { EditComponent } from './components/edit/edit.component';
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
 
@@ -74,8 +79,10 @@ export class XhrInterceptor implements HttpInterceptor {
     EditProfileComponent,
     MatchProfileComponent,
     ChatComponent,
-  UnmatchComponent,
-  DisplayItemComponent
+    UnmatchComponent,
+    DisplayItemComponent,
+    SettingsComponent,
+    EditComponent
     
     
   ],
@@ -88,6 +95,10 @@ export class XhrInterceptor implements HttpInterceptor {
     FormsModule,
     MatGridListModule,
     WebcamModule,
+    CommonModule,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
     SlickCarouselModule,
     BrowserAnimationsModule,
     IvyCarouselModule,
@@ -96,10 +107,10 @@ export class XhrInterceptor implements HttpInterceptor {
     MatListModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
-      // Register the ServiceWorker as soon as the app is stable
+      // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    }),
+    })
 
  
     

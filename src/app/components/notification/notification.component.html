@@ -8,7 +8,7 @@
           <span> {{match.user.firstName}} </span>
           <span class="demo-2"> -- {{match.user.firstName}} </span>
         </p>
-        <button mat-icon-button (click)="save()">  
+        <button mat-icon-button (click)="save(match.user.username)">  
             <mat-icon>info</mat-icon>
         </button>
 

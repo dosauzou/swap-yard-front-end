@@ -1,16 +1,17 @@
-<mat-card class="example-card" >
+<mat-toolbar color="black">
+  <span  class="fill-remaining-space" style="width: 100%;text-align: center">Items you liked from {{username}}</span>
+</mat-toolbar>
+<div fxLayout='row' fxLayoutWrap class="cards">
+<mat-card class="example-card" fxFlex="20" *ngFor="let item of itemList">
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
       <mat-card-title>Michael Kors top</mat-card-title>
-      <mat-card-subtitle>Fair condition</mat-card-subtitle>
+      <mat-card-subtitle>{{item.clothingCondition}}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image src="https://img01.ztat.net/article/spp-media-p1/c6b61dbecdaf440aa665d45f5f184c69/d05d8dd1e4cb4fa794ea2b2eac33fbf8.jpg?imwidth=1800&filter=packshot" alt="Photo of a Shiba Inu">
+    <img mat-card-image [src]="item.images.data" >
     <mat-card-content>
       <p>
-        No defects
-        Presence of original tags or labels (you must attach photos of these)
-        No modifications or alterations
-        Does not belong to the Lifestyle category
+        {{item.description}}
       </p>
     </mat-card-content>
     <mat-card-actions>

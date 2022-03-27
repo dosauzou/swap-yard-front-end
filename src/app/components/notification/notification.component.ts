@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Match } from 'src/app/classes/match';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { ItemComponent } from '../item/item.component';
+import { MatchHeaderComponent } from '../match-header/match-header.component';
 import { MatchComponent } from '../match/match.component';
 
 @Component({
@@ -14,21 +15,25 @@ export class NotificationComponent implements OnInit {
   id= sessionStorage.getItem('id');
   match: Match;
   x: any
-  array : any
+  array : Array<Match>
   username: any;
   itemList: any;
+
 
 
   constructor(private notifications: NotificationsService, public dialog: MatDialog) { }
 
 
-  save():void{
+  save(username):void{
     const dialogRef = this.dialog.open(
-    MatchComponent,{
+    MatchHeaderComponent,{
+      panelClass: 'my-outlined-dialog',
       width: '500px',
       height: '600px',
+      data:{itemArray: this.array, username: username}
 
-    })};
+    }
+    )};
 
   loadMatches(){
     this.match = new Match;
@@ -38,15 +43,16 @@ export class NotificationComponent implements OnInit {
 
   for (let b in data){
     console.log(data[b].user)
-          this.itemList = new Array();
-          this.itemList.push(data[b].items)
+  
           this.match = new Match
           this.match.user = data[b].user
-          console.log(this.itemList)
+          this.match.itemList = data[b].items
+          console.log(this.match.itemList.length)
           this.array.push(this.match)
+          console.log(this.array)
         
       }})
-
+      return this.array
   }
   ngOnInit(): void {
     this.loadMatches()
