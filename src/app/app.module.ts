@@ -46,6 +46,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { SettingsComponent } from './components/settings/settings.component';
 import { EditComponent } from './components/edit/edit.component';
+import {FooterComponent} from 'src/app/components/footer/footer.component'
+import {NgbCollapse, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
 
@@ -82,7 +84,8 @@ export class XhrInterceptor implements HttpInterceptor {
     UnmatchComponent,
     DisplayItemComponent,
     SettingsComponent,
-    EditComponent
+    EditComponent,
+    FooterComponent
     
     
   ],
@@ -95,6 +98,7 @@ export class XhrInterceptor implements HttpInterceptor {
     FormsModule,
     MatGridListModule,
     WebcamModule,
+    NgbModule,
     CommonModule,
     MatCardModule,
     MatIconModule,

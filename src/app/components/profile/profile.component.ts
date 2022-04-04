@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
   greeting = {};
   id= sessionStorage.getItem('id');
   images: ContentInterface;
-  readonly VAPID_PUBLIC_KEY = 'BI1hXbInwBYDsij14G5aCAXxn4IxcuI4jeOrUFTFIfVfVr6TCgvOCSgjLyuh1Who00G4QsdggDkOTGiF2VM1I1s';
+  readonly VAPID_PUBLIC_KEY = 'BGIyTkZ-m877Ik7N6nSAtBaWuM05G6FaMEwBvCHIWJpwnJG6NDLMxGJxRudQ3AcfJeKF6Bvai0uZoHQjecbBeoI';
 
 
   constructor(public dialog: MatDialog, private userService: UserServiceService, private app: AppService, private http: HttpClient, private itemS: ItemService, private upload: UploadService, public domSanitizationService: DomSanitizer,   private swPush: SwPush,

@@ -6,12 +6,10 @@ const webpush = require('web-push');
 const allSubscriptions : string[] = [];
 const vapidKeys = 
 {
-  publicKey: 'BI1hXbInwBYDsij14G5aCAXxn4IxcuI4jeOrUFTFIfVfVr6TCgvOCSgjLyuh1Who00G4QsdggDkOTGiF2VM1I1s',
-  privateKey: 'ndihhY4sSmyAg42Va-cXKyKoyUUzdKeRvJzytvKNNvg'
-};
-
-
-//successfully hit the node express endpoint
+    publicKey: 'BGIyTkZ-m877Ik7N6nSAtBaWuM05G6FaMEwBvCHIWJpwnJG6NDLMxGJxRudQ3AcfJeKF6Bvai0uZoHQjecbBeoI',
+    privateKey: 'VoPKvRTuJbgbVP3ng9mmGjgm-F3AvtWcAQxGbkyAD-4'
+  };
+// console.log(webpush.generateVAPIDKeys()); //successfully hit the node express endpoint
 webpush.setVapidDetails(
     'mailto:d.osauzou@gmail.com',
     vapidKeys.publicKey,

@@ -23,6 +23,9 @@ export class HomeComponent implements OnInit {
   item: Item;
   swipe: Swipe;
   id= sessionStorage.getItem('id');
+  filteredList: any[];
+  public isCollapsed = false;
+
 
 //call the backedn to populate an arraylist
   constructor(private itemService: ItemService, private http: HttpClient, private itemS: ItemService, public sanitizer: DomSanitizer,
@@ -55,6 +58,11 @@ console.log('huh')
         console.log("exception occured");
     })
   }
+
+  filterByPrefrence(prefernce, item){
+    return item >= prefernce
+  }
+
   onRight(){
     this.swipe = new Swipe()
     this.swipe.swipedItem = this.item
