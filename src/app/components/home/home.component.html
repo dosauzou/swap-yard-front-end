@@ -1,11 +1,109 @@
 <!-- <ng-container *ngFor="let  item of itemArray"> -->
 
   <body>
-
   <main>
+    <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+      <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+        <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+        <span class="fs-5 fw-semibold">Refine Items</span>
+      </a>
+      <ul class="list-unstyled ps-0">
+        <li class="mb-1">
+          <button class="btn btn-toggle align-items-center rounded collapsed" (click)="collapse1.toggle()" [attr.aria-expanded]="!isCollapsed">
+            Colour
+          </button>
+          <section class="example-section" [formGroup]="colour">
 
+          <div class="collapse show" id="home-collapse" #collapse1="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+           
+            <li class="form-check"> 
+              <p>  <mat-checkbox formControlName="green" (click)="filterByColour('Green')">Green</mat-checkbox></p>
+          </li>
+          <li class="form-check"> 
+            <p>  <mat-checkbox formControlName="black" (click)="filterByColour('Black')">Black</mat-checkbox></p>
+        </li>
+        <li class="form-check"> 
+          <p>   <mat-checkbox formControlName="orange" (click)="filterByColour('Orange')">Orange</mat-checkbox></p>
+      </li>
+      <li class="form-check"> 
+        <p>  <mat-checkbox formControlName="brown" (click)="filterByColour('Brown')">Brown</mat-checkbox></p>
+    </li>
+    <li class="form-check"> 
+      <p> <mat-checkbox formControlName="yellow" (click)="filterByColour('Yellow')">Yellow</mat-checkbox></p>
+  </li>
+       
+            </ul>
+          </div>
+          </section>
+        </li>
+        <li class="mb-1">
+          <button class="btn btn-toggle align-items-center rounded collapsed" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed"
+          aria-controls="collapseExample">
+            Size
+          </button>
+          <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <li class="form-check"> 
+                <p>  <mat-checkbox formControlName="6">6</mat-checkbox></p>
+            </li>
+            <!-- <li class="form-check"> 
+              <p>  <mat-checkbox formControlName="8">8</mat-checkbox></p>
+          </li>
+          <li class="form-check"> 
+            <p>   <mat-checkbox formControlName="10">10</mat-checkbox></p>
+        </li>           
+        <li class="form-check"> 
+          <p>  <mat-checkbox formControlName="12">12</mat-checkbox></p>
+      </li>
+      <li class="form-check"> 
+        <p> <mat-checkbox formControlName="14">14</mat-checkbox></p>
+    </li>         
+    <li class="form-check"> 
+      <p>  <mat-checkbox formControlName="16">16</mat-checkbox></p>
+  </li>        
+  <li class="form-check"> 
+    <p>  <mat-checkbox formControlName="18">18</mat-checkbox></p>
+  </li> -->
+  
+  
+            </ul>
+          </div>
+        </li>
+        <li class="mb-1">
+          <button class="btn btn-toggle align-items-center rounded collapsed" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed">
+            Category
+          </button>
+          <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <!-- <li class="form-check"> 
+                <p>   <mat-checkbox formControlName="accessories">Accessories</mat-checkbox></p>
+            </li>           
+            <li class="form-check"> 
+              <p>  <mat-checkbox formControlName="activewear">Activewear</mat-checkbox></p>
+          </li>           -->
+          <!-- <li class="form-check"> 
+            <p>  <mat-checkbox formControlName="dresses">Dresses</mat-checkbox></p>
+        </li>           
+                  <li class="form-check"> 
+                    <p>  <mat-checkbox formControlName="footwear">Footwear</mat-checkbox></p>
+          </li>    
+          <li class="form-check"> 
+            <p>   <mat-checkbox formControlName="tops">Tops</mat-checkbox></p>
+        </li>  
+        <li class="form-check"> 
+          <p>   <mat-checkbox formControlName="trousers">Trousers</mat-checkbox></p>
+      </li>
+      <li class="form-check"> 
+        <p>  <mat-checkbox formControlName="jackets">Jackets/Coats</mat-checkbox></p>
+    </li> -->
+    </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
 
-  <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+  <!-- <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
     <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
       <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
       <span class="fs-5 fw-semibold">Refine Items</span>
@@ -13,59 +111,157 @@
     <ul class="list-unstyled ps-0">
       <li class="mb-1">
         <button class="btn btn-toggle align-items-center rounded collapsed" (click)="collapse1.toggle()" [attr.aria-expanded]="!isCollapsed">
-          Home
+          Colour
         </button>
         <div class="collapse show" id="home-collapse" #collapse1="ngbCollapse" [(ngbCollapse)]="isCollapsed">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">Overview</a></li>
-            <li><a href="#" class="link-dark rounded">Updates</a></li>
-            <li><a href="#" class="link-dark rounded">Reports</a></li>
+            <li class="form-check"> 
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+              <label class="form-check-label" for="flexCheckDefault">
+                Green
+              </label>
+          </li>
+          <li class="form-check"> 
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Blue
+            </label>
+        </li>
+        <li class="form-check"> 
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Black
+          </label>
+      </li>
+      <li class="form-check"> 
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">
+          Orange
+        </label>
+    </li>
+    <li class="form-check"> 
+      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+      <label class="form-check-label" for="flexCheckDefault">
+        Brown
+      </label>
+  </li>
+  <li class="form-check"> 
+    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+    <label class="form-check-label" for="flexCheckDefault">
+      Yellow
+    </label>
+</li>
+     
           </ul>
         </div>
       </li>
       <li class="mb-1">
         <button class="btn btn-toggle align-items-center rounded collapsed" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed"
         aria-controls="collapseExample">
-          Dashboard
+          Size
         </button>
         <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">Overview</a></li>
-            <li><a href="#" class="link-dark rounded">Weekly</a></li>
-            <li><a href="#" class="link-dark rounded">Monthly</a></li>
-            <li><a href="#" class="link-dark rounded">Annually</a></li>
+          <li class="form-check"> 
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+              <label class="form-check-label" for="flexCheckDefault">
+                4
+              </label>
+          </li>
+          <li class="form-check"> 
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              8
+            </label>
+        </li>
+        <li class="form-check"> 
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            10
+          </label>
+      </li>            
+      <li class="form-check"> 
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">
+          12
+        </label>
+    </li>
+    <li class="form-check"> 
+      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+      <label class="form-check-label" for="flexCheckDefault">
+        14
+      </label>
+  </li>            
+  <li class="form-check"> 
+    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+    <label class="form-check-label" for="flexCheckDefault">
+      16
+    </label>
+</li>            
+<li class="form-check"> 
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+  <label class="form-check-label" for="flexCheckDefault">
+    18
+  </label>
+</li>
+
+
           </ul>
         </div>
       </li>
       <li class="mb-1">
         <button class="btn btn-toggle align-items-center rounded collapsed" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed">
-          Orders
+          Category
         </button>
         <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">New</a></li>
-            <li><a href="#" class="link-dark rounded">Processed</a></li>
-            <li><a href="#" class="link-dark rounded">Shipped</a></li>
-            <li><a href="#" class="link-dark rounded">Returned</a></li>
-          </ul>
-        </div>
-      </li>
-      <li class="border-top my-3"></li>
-      <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed">
-          Account
-        </button>
-        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">New...</a></li>
-            <li><a href="#" class="link-dark rounded">Profile</a></li>
-            <li><a href="#" class="link-dark rounded">Settings</a></li>
-            <li><a href="#" class="link-dark rounded">Sign out</a></li>
-          </ul>
+            <li class="form-check"> 
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+              <label class="form-check-label" for="flexCheckDefault">
+                Accesories
+              </label>
+          </li>            
+          <li class="form-check"> 
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Activewear
+            </label>
+        </li>            
+        <li class="form-check"> 
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Dresses
+          </label>
+      </li>            
+      <li class="form-check"> 
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">
+          Footwear
+        </label>
+    </li>      
+    <li class="form-check"> 
+      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+      <label class="form-check-label" for="flexCheckDefault">
+        Tops
+      </label>
+  </li>    
+  <li class="form-check"> 
+    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+    <label class="form-check-label" for="flexCheckDefault">
+      Trousers
+    </label>
+</li>
+<li class="form-check"> 
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+  <label class="form-check-label" for="flexCheckDefault">
+    Jackets/Coats
+  </label>
+</li>
+  </ul>
         </div>
       </li>
     </ul>
-  </div>
+  </div> -->
  
 
 <div class="main-div" > 

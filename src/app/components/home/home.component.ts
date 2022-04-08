@@ -10,6 +10,7 @@ import { last } from 'rxjs/operators';
 import { Swipe } from 'src/app/classes/swipe';
 import { SwipesService } from 'src/app/services/swipes.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -19,19 +20,68 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class HomeComponent implements OnInit {
   images: ContentInterface;
-  itemArray: any[];
+  itemArray:  Array<Item>
   item: Item;
   swipe: Swipe;
   id= sessionStorage.getItem('id');
   filteredList: any[];
+  size: FormGroup;
+  category: FormGroup;
+  colour: FormGroup;
+  colorFilter: String[];
+  itemArray2: Array<Item>
+  arrayCopy: Array<Item>
   public isCollapsed = false;
 
 
 //call the backedn to populate an arraylist
   constructor(private itemService: ItemService, private http: HttpClient, private itemS: ItemService, public sanitizer: DomSanitizer,
-    private swiped: SwipesService
-    ) { }
+    private swiped: SwipesService, fb: FormBuilder
+    ) { 
+      this.colorFilter = new Array()
+      this.arrayCopy = new Array()
+
+
+      this.size = fb.group({
+        6: 6,
+        8: 8,
+        10: 10,
+        12: 12,
+        14: 14,
+        16: 16,
+        18: 18
+      });
+
+      this.colour = fb.group({
+        green: false,
+        blue: false,
+        black: false,
+        orange: false,
+        yellow: false,
+      });
+    }
+
+    filterByColour(selected:any){
+      if(!this.colorFilter.includes(selected)){
+        this.colorFilter.push(selected)
+      }else for(var i=0; i<this.colorFilter.length; i++){
+        if(this.colorFilter[i]===selected){
+          this.colorFilter.splice(i,1)
+          i--
+        }
+      }
+
+        this.itemArray2 = this.itemArray.filter(item => item.color === this.colorFilter.find(e => e === item.color))
+        console.log(this.itemArray2)
+        this.arrayCopy=[...this.itemArray2]
+        console.log(this.arrayCopy)
+    }
+
+    
+//filter by size, condiition,  material
+
   display(){
+
     //retrieve the items 
 console.log('huh')
     this.itemService.getItems().subscribe(
@@ -51,7 +101,7 @@ console.log('huh')
           this.item.images.data= this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,'+ data[x].images.data);
           this.itemArray.push(this.item)
           console.log(this.itemArray)
-
+          this.arrayCopy=[...this.itemArray]
         }
      } ,
       error => { 
@@ -59,9 +109,8 @@ console.log('huh')
     })
   }
 
-  filterByPrefrence(prefernce, item){
-    return item >= prefernce
-  }
+
+
 
   onRight(){
     this.swipe = new Swipe()
@@ -71,14 +120,14 @@ console.log('huh')
     //   data => {
     //     this.swipe.swipedItem
     console.log(this.swipe)
-    this.itemArray.pop()
+    this.arrayCopy.pop()
     this.swiped.createSwipe(this.swipe.swipedItem.id, this.id).subscribe(data=>{
       console.log(data)
     })
     
     //should we retrieve the item first and then post to swipe, fid
 
-    this.item = this.itemArray[this.itemArray.length-1]
+    this.item = this.arrayCopy[this.arrayCopy.length-1]
     //users swipe plus the users id, so
     //post request to store the users swipes, then amethod that doesnt allow swipes to popup again
     //store the stuff, when you reach the end change the sceen to annimation
@@ -100,9 +149,8 @@ console.log('huh')
   //   //store the stuff, when you reach the end change the sceen to annimation
   // }
   onLeft(){
-    this.itemArray.pop()
-    this.item = this.itemArray[this.itemArray.length-1]
-
+    this.arrayCopy.pop()
+    this.item = this.arrayCopy[this.arrayCopy.length-1]
   }
   
   ngOnInit(): void {
