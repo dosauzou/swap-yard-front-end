@@ -42,14 +42,13 @@ export class NotificationComponent implements OnInit {
       data=>{
 
   for (let b in data){
-    console.log(data[b].user)
+    console.log(data[b])
   
           this.match = new Match
           this.match.user = data[b].user
+          this.match.swap = data[b].swap
           this.match.itemList = data[b].items
-          console.log(this.match.itemList.length)
           this.array.push(this.match)
-          console.log(this.array)
         
       }})
       return this.array
@@ -58,5 +57,6 @@ export class NotificationComponent implements OnInit {
     this.loadMatches()
    
   }
+  //pass this match to the swap scheduler and say each match is going to have a swapid
 
 }

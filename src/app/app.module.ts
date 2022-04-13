@@ -48,6 +48,9 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { EditComponent } from './components/edit/edit.component';
 import {FooterComponent} from 'src/app/components/footer/footer.component'
 import {NgbCollapse, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { StatusComponent } from './components/status/status.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
+import { SchedulerComponent } from './components/scheduler/scheduler.component';
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
 
@@ -85,7 +88,10 @@ export class XhrInterceptor implements HttpInterceptor {
     DisplayItemComponent,
     SettingsComponent,
     EditComponent,
-    FooterComponent
+    FooterComponent,
+    StatusComponent,
+    CalendarComponent,
+    SchedulerComponent
     
     
   ],

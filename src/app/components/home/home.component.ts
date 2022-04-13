@@ -155,6 +155,7 @@ console.log('huh')
   
   ngOnInit(): void {
     this.display();
+
   }
 
 }

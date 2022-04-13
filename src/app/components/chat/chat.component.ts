@@ -50,6 +50,7 @@ export class ChatComponent implements OnInit {
         this.messageList.push(this.chat);
       }
     })
+
 }
 
   sendMessage() {
