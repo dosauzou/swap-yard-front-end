@@ -1,0 +1,37 @@
+.demo-inline-calendar-card {
+    position: inherit
+  }
+
+//   .example-container {
+//     width: 800px;
+//     height: 600px;
+//     // border: 1px solid rgba(0, 0, 0, 0.5);
+//   }
+.float-container {
+    border: 3px ;
+    padding: 20px;
+}
+
+.float-child {
+    width: 50%;
+    float: left;
+    padding: 20px;
+    border: 2px ;
+}  
+  
+  .example-events {
+    width: 300px;
+    height: 200px;
+    overflow: auto;
+    border: 1px solid #555;
+  }
+  .example-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .example-sidenav {
+    padding: 20px;
+  }
