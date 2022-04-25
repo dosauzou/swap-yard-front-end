@@ -1,10 +1,6 @@
 <mat-list role="list" *ngFor="let match of array">
     
-    <mat-list-item    role="listitem" ><!-- Calendly link widget begin -->
-        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-        <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-        <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/swapyard/swap-1'});return false;">Schedule time with me</a>
-        <!-- Calendly link widget end -->
+    <mat-list-item    role="listitem" >View Details
         <!-- <li class="list-group-item">{{match.user.firstName}}></li> -->
         <img matListAvatar src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="...">
         <h3 matLine> {{match.user.username}} </h3>
@@ -19,5 +15,3 @@
     <mat-divider></mat-divider>
 
 </mat-list>
-<!-- <app-status></app-status> -->
-<app-calendar></app-calendar>

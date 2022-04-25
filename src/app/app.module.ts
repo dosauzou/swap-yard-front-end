@@ -51,6 +51,7 @@ import {NgbCollapse, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { StatusComponent } from './components/status/status.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { SchedulerComponent } from './components/scheduler/scheduler.component';
+import { ChannelComponent } from './components/channel/channel.component';
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
 
@@ -91,7 +92,8 @@ export class XhrInterceptor implements HttpInterceptor {
     FooterComponent,
     StatusComponent,
     CalendarComponent,
-    SchedulerComponent
+    SchedulerComponent,
+    ChannelComponent
     
     
   ],

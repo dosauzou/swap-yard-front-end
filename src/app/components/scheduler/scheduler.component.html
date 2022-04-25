@@ -25,4 +25,4 @@
 
 </div> -->
 <div *ngIf="status; else elseBlock">Content to render when condition is true.</div>
-<ng-template #elseBlock><app-calendar></app-calendar></ng-template>
+<ng-template #elseBlock><app-calendar [itemArray] = itemArray [username]=username></app-calendar></ng-template>

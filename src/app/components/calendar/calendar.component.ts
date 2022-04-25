@@ -1,35 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { executionAsyncResource } from 'async_hooks';
+import { Match } from 'src/app/classes/match';
+import { Swap } from 'src/app/classes/swap';
+import { SwapDetails } from 'src/app/classes/swap-details';
+import { SwapService } from 'src/app/services/swap.service';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
+
+
 export class CalendarComponent implements OnInit {
-  selected: Date | null;
+
+  @Input() itemArray = new Array<Match>();
+  @Input() username = '';
+
+  locationForm = this.fb.group({
+    inputAddress: ['', Validators.required],
+    inputCity: ['', Validators.required],
+    inputCounty: ['', Validators.required],
+    inputZip: ['', Validators.required]
+  })
+  selected: Date;
   showFiller = false;
   opened: boolean;
   clicker = false
   events: string[] = [];
   process: string;
-  shouldRun = /(^|.)(stackblitz|webcontainer).(io|com)$/.test(window.location.host);
   time = 'time'
   confirm = 'confirm'
   meetingTime = { hour: 13, minute: 30 };
   location = 'location'
-  CLIENT_ID = '343081254203-2a7m2g4crfbfji5uo4jo6hll8d6m42hb.apps.googleusercontent.com';
-  API_KEY = 'AIzaSyBKHxE_AHRt9mOsUt1vaUE0lyBqeuk56ts';
-  API_VERSION = 'v3';
   event: any;
+  argArray: Array<any>
+  userEmail: String;
+  swap: Swap
+  userMatch: Match
+  matchArray: Array<Match>
+  userd: Promise<Match | void>;
+  user: Promise<void | Match>;
 
-
-  // Array of API discovery doc URLs for APIs used by the quickstart
-  DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/people/v1/rest"];
-
-  // Authorization scopes required by the API; multiple scopes can be
-  // included, separated by spaces.
-  SCOPES = "https://www.googleapis.com/auth/calendar";
 
   execute() {
     return gapi.client.calendar.events.insert({
@@ -41,9 +55,8 @@ export class CalendarComponent implements OnInit {
         console.log("Response", response);
       },
         function (err) { console.error("Execute error", err); });
-
-
   }
+
   authenticate() {
 
     return gapi.auth2.getAuthInstance()
@@ -52,8 +65,13 @@ export class CalendarComponent implements OnInit {
         function (err) { console.error("Error signing in", err); });
   }
 
+  // add in user emils
+  initClient(any) {
+    console.log(any[0])
+    console.log(any[1])
+    console.log(any[2])
 
-  initClient() {
+
     gapi.client.setApiKey("AIzaSyBKHxE_AHRt9mOsUt1vaUE0lyBqeuk56ts");
     return gapi.client.load("calendar", "v3")
       .then(() => {
@@ -64,86 +82,164 @@ export class CalendarComponent implements OnInit {
           "maxAttendees": 3,
           "sendNotifications": true,
           "sendUpdates": "all",
-          "resource": this.getEvent()
-      
+          "resource":
+          {
+            'location': any[2],
+            'summary': 'Swapyard I/O 2022',
+            'description': 'You\'ve scheduled a swap!',
+            "end": {
+              "dateTime": any[0],
+              "timeZone": "Europe/Dublin"
+            },
+            "start": {
+              "dateTime": any[0],
+              "timeZone": "Europe/Dublin"
+            },
+            'attendees': [
+              { 'email': any[1] },
+              { 'email': 'tadeduntan@gmail.com' }
+            ],
+            'reminders': {
+              'useDefault': false,
+              'overrides': [
+                { 'method': 'email', 'minutes': 24 * 60 },
+                { 'method': 'popup', 'minutes': 10 }
+              ]
+            }
+          }
         })
-          .then(function (response) {
+          .then((response) => {
+            this.swap = new Swap
+            this.swap.status = true
+            this.swap.details = new SwapDetails
+            this.swap.details.date = any[0]
+            this.swap.details.location = any[2]
+            this.swap.details.time = any[1]
+            this.matchArray = new Array
+            this.matchArray = any[3].slice()
+
+            //persist swap to database
+            for (let x in this.matchArray) {
+              console.log(this.matchArray)
+              if (this.matchArray[x].user.username == any[4]) {
+                this.matchArray[x].swap = this.swap
+                this.userMatch = this.matchArray[x]
+                // this.setMatch(this.matchArray[x])
+
+
+                //persist this match back to the database along with the id of the current logged in user
+                //then find match by id of logged in user that has a corresponding match of the user persistsed
+                //set the swap status and details of that match
+                //next time we recieve info from the database
+                //it will be letting us know whether the progress of the match is true or false
+                //if its true which it will be, the match should be move to a different section of the page
+                //also if its true, the confirmaation details of the swap will be shown
+                //in place of the swap scheduler
+
+
+              }
+
+            }
+
+
             // Handle the results here (response.result has the parsed body).
             console.log("Response", response);
+            return this.userMatch
+
           },
             function (err) { console.error("Execute error", err); });
+        return this.userMatch
+
       },
         function (err) { console.error("Error loading GAPI client for API", err); });
+    return this.userMatch
 
   }
-  
-  getEvent(){
-  return this.event = {
-    'summary': 'Swapyard I/O 2022',
-    'location': this.getLocation + '',
-    'description': 'You\'ve scheduled a swap!',
-    'start': {
-      'dateTime': this.getDate + '' + this.getTime,
-      'timeZone': 'Ireland/Dublin'
-    },
-    'end': {
-      'dateTime': this.getDate + '' + this.getTime,
-      'timeZone': 'Ireland/Dublin'
-    },
-    'recurrence': [
-      'RRULE:FREQ=DAILY;COUNT=2'
-    ],
-    'attendees': [
-      { 'email': 'dizooxo@gmail.com' },
-      { 'email': 'isioje12@gmail.com' }
-    ],
-    'reminders': {
-      'useDefault': false,
-      'overrides': [
-        { 'method': 'email', 'minutes': 24 * 60 },
-        { 'method': 'popup', 'minutes': 10 }
-      ]
-    }
-
-  };}
-
 
   getTime() {
-    return this.meetingTime
+    return this.meetingTime.hour + ':' + this.meetingTime.minute
   }
-
+  setMatch(any) {
+    this.userMatch = any
+  }
+  getMatch() {
+    return this.userMatch
+  }
   getLocation() {
-    return 'location'
+    return this.locationForm.get('inputAddress')?.value + ', '
+      + this.locationForm.get('inputCity')?.value + ', '
+      + this.locationForm.get('inputCounty')?.value + ', '
+      + this.locationForm.get('inputZip')?.value
   }
 
   getDate() {
     return this.selected
   }
-
+  getStringDate() {
+    return this.selected.toDateString()
+  }
   setProcess(any) {
     this.process = any
-    console.log(this.process)
   }
 
   getProcess() {
     return this.process
   }
 
-  constructor() { }
+  getDateTime() {
+    this.getDate().setHours(this.meetingTime.hour)
+    this.getDate().setMinutes(this.meetingTime.minute)
+    return this.getDate().toISOString()
+  }
 
 
-  sendToCalendar() {
+  getUserEmails() {
 
+    for (let x in this.itemArray) {
+      if (this.itemArray[x].user.username == this.username) {
+
+        this.userEmail = this.itemArray[x].user.email
+
+      }
+
+    }
+    return this.userEmail
+  }
+  constructor(private fb: FormBuilder, private http: HttpClient, private swapService: SwapService) { }
+
+
+  sendToCalendar(any) {
+    this.userMatch = new Match()
+
+    this.process = any
+    //pass in user emails
+    //pass in the location
+    this.argArray = new Array
+    this.argArray.push(this.getDateTime())
+    this.argArray.push(this.getUserEmails())
+    this.argArray.push(this.getLocation())
+    this.argArray.push(this.itemArray)
+    this.argArray.push(this.username)
+    user: Match
+
+
+    gapi.load("client:auth2", () => {
+      gapi.auth2.init({ client_id: "343081254203-pspbr0oed01hee8c3i8p66cfa12n6s9j.apps.googleusercontent.com" })
+      // this.swapService.postSwap(this.authenticate().then(this.initClient.bind(this.getDate(), this.argArray)), sessionStorage.getItem('id')).subscribe(data=>{
+      //   console.log(data)
+      // })
+      this.authenticate().then(this.initClient.bind(this.getDate(), this.argArray)).then(data => {
+        this.swapService.postSwap(data, sessionStorage.getItem('id')).subscribe(data => {
+          console.log(data)
+        })
+        console.log(data)
+      })
+
+    })
   }
 
   ngOnInit(): void {
-    gapi.load("client:auth2", () => {
-      gapi.auth2.init({ client_id: "343081254203-pspbr0oed01hee8c3i8p66cfa12n6s9j.apps.googleusercontent.com" });
-      this.authenticate().then(this.initClient)
-    });
-
   }
 
 }
 
-// Property 'auth2' does not exist on type 'typeof gapi'. Did you mean 'auth'?
