@@ -9,7 +9,7 @@
         "files": [
           "/favicon.ico",
           "/index.html",
-          "/manifest.json",
+          "/manifest.webmanifest",
           "/*.css",
           "/*.js"
         ]
@@ -25,6 +25,7 @@
           "/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
         ]
       }
+      
     }
   ]
 }

@@ -48,6 +48,7 @@ export class NotificationComponent implements OnInit {
           this.match.user = data[b].user
           this.match.swap = data[b].swap
           this.match.itemList = data[b].items
+          this.match.chatId = data[b].chatId
           this.array.push(this.match)
         
       }})

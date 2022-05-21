@@ -25,8 +25,8 @@ export class ProfileComponent implements OnInit {
   greeting = {};
   id= sessionStorage.getItem('id');
   images: ContentInterface;
-  readonly VAPID_PUBLIC_KEY = 'BGIyTkZ-m877Ik7N6nSAtBaWuM05G6FaMEwBvCHIWJpwnJG6NDLMxGJxRudQ3AcfJeKF6Bvai0uZoHQjecbBeoI';
-
+  VAPID_PUBLIC_KEY: string = process.env.publicVapidKey!;
+  // readonly VAPID_PUBLIC_KEY = 'BB_WkKNOcmJQSAub5Q_A_Cg3e4_qSSgkwZ6IouAitsX59ulO6DdE3s8Ihaz2lk9WCoPuwnDMYkOEF1HVpW0yZuM';
 
   constructor(public dialog: MatDialog, private userService: UserServiceService, private app: AppService, private http: HttpClient, private itemS: ItemService, private upload: UploadService, public domSanitizationService: DomSanitizer,   private swPush: SwPush,
     private notifications: NotificationsService) { 
@@ -36,6 +36,7 @@ export class ProfileComponent implements OnInit {
   }
 
   editProfile():void{
+    console.log(this.VAPID_PUBLIC_KEY)
     const dialogRef = this.dialog.open(
       EditComponent,{
         panelClass: 'my-outlined-dialog',
@@ -99,9 +100,10 @@ export class ProfileComponent implements OnInit {
         console.log("exception occured");
     })
   }
+
   subscribeToNotifications=() => {
+
     if(this.swPush.isEnabled){
-    
     this.swPush.requestSubscription({
         serverPublicKey: this.VAPID_PUBLIC_KEY
     })
@@ -109,7 +111,8 @@ export class ProfileComponent implements OnInit {
     .catch(err => console.error("Could not subscribe to notifications", err));
     }
   }
-  authenticated() { return this.app.authenticated; }
+  authenticated() {console.log(this.app.authenticated) 
+    return this.app.authenticated; }
 
   ngOnInit(): void {
     this.subscribeToNotifications();

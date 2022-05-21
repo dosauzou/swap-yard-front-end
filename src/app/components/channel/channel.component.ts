@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import axios from 'axios';
+import { Match } from 'src/app/classes/match';
 import { StreamChat, ChannelData, Message, User, Channel, UserFromToken } from 'stream-chat';
-
 @Component({
   selector: 'app-channel',
   templateUrl: './channel.component.html',
   styleUrls: ['./channel.component.scss']
 })
 export class ChannelComponent implements OnInit {
+  @Input() match = '';
+  @Input() itemArray = new Array<Match>();
+
   title = 'angular-chat';
   channel: Channel;
   username = sessionStorage.getItem('id');
@@ -17,13 +20,20 @@ export class ChannelComponent implements OnInit {
   chatClient: any;
   b: any
   currentUser: User;
+  chatId : any;
+  time: Date;
+
 
   async joinChat() {
-    console.log(this.username)
+    this.chatId = this.sortArray()
     const { username } = this;
+    const  chatId = this.chatId;
+    console.log(chatId)
+
     try {
       const response = await axios.post('http://localhost:5500/join', {
         username,
+        chatId
       });
       const { token } = response.data;
       const apiKey = response.data.api_key;
@@ -38,21 +48,22 @@ export class ChannelComponent implements OnInit {
         token
         );
         this.b = this.currentUser['me'] as User
-
+          //channel should be the session id + users name
       //create specific channel per person
-      const channel = this.chatClient.channel('team', 'talkshop');
+      const channel = this.chatClient.channel('messaging', this.chatId);
       await channel.watch();
       this.channel = channel;
       this.messages = channel.state.messages;
-      this.channel.on('message.new', event => {
-        
-        this.messages = [...this.messages, event]
+      this.channel.on('message.new', event => {    
+  
+        this.messages = [...this.messages, event.message as Message]
       });
-      
+      console.log(this.time)
+
 
       const filter = {
-        type: 'team',
-        members: { $in: [`${this.currentUser.id}`] },
+        type: 'messaging',
+        members: { $in: [`${this.b.id}`] },
       };
       const sort = { last_message_at: -1 };
 
@@ -65,6 +76,25 @@ export class ChannelComponent implements OnInit {
       return;
     }
   }
+  sortArray(){
+
+    for (let x in this.itemArray){
+    
+      if(this.itemArray[x].user.username == this.match){
+        // this.itemList = new Array();
+      this.chatId = this.itemArray[x]['chatId'];
+      
+        // for(let x in this.itemList){
+        //   this.itemList[x].images.data =this.sanitizer.bypassSecurityTrustResourceUrl(this.itemList[x].images.data);
+        // }
+
+      }
+      return this.chatId
+
+    }
+  }
+
+
 
   async sendMessage() {
     if (this.newMessage.trim() === '') {
@@ -78,9 +108,14 @@ export class ChannelComponent implements OnInit {
       });
 
       this.newMessage = '';
+      this.messages = [...this.messages]
+      console.log(this.messages[this.messages.length-1]['message'])
+      // this.joinChat()
+
     } catch (err) {
       console.log(err);
     }
+
   }
 
   constructor() { }

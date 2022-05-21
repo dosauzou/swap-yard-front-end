@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AppService } from './services/app-service.service';
-import { finalize } from "rxjs/operators";
+import { finalize, map, take } from "rxjs/operators";
 import { SwPush } from '@angular/service-worker';
 import { NotificationsService } from './services/notifications.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -27,9 +28,12 @@ export class AppComponent {
   }
 
 
-    getAuth(){
+  
+
+    getAuth() {
       return this.app.authenticated
     }
+
   logout() {
     this.http.post('logout', {}).pipe(
       finalize(() => {

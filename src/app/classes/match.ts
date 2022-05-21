@@ -6,4 +6,5 @@ export class Match {
     user: User;
     itemList : Array<Item>
     swap: Swap;
+  chatId: any;
 }

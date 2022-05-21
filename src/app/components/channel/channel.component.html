@@ -19,7 +19,7 @@
         <div class="inbox_people"> -->
         </div>
         <!-- <div class="mesgs"> -->
-          <div class="msg_history">
+          <div class="msg_history" style="overflow: scroll; height: xyz;" #scrollMe [scrollTop]="scrollMe.scrollHeight">
             <li class="message" *ngFor="let message of messages">
               <div
                 *ngIf="
@@ -28,19 +28,18 @@
                   else outgoing_msg
                 "
               ></div>
+              
               <ng-template #incoming_msg>
                 <div class="incoming_msg">
-                  <div class="incoming_msg_img">
-                    <img
-                      src="https://i.imgur.com/k2PZLZa.png"
-                      alt="User avatar"
-                    />
-                  </div>
+      
                   <div class="received_msg">
                     <div class="received_withd_msg">
                       <p>{{ message.text }}</p>
                     </div>
+
                   </div>
+                  
+
                 </div>
               </ng-template>
               <ng-template #outgoing_msg>

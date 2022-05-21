@@ -17,24 +17,29 @@ const serverSideClient = new StreamChat(
   process.env.STREAM_API_KEY,
   process.env.STREAM_APP_SECRET
 );
+//create a unique match id, so like 
 
 app.post('/join', async (req, res) => {
-  const { username } = req.body;
+    //add another const
+  const { username } = req.body.username;
+  console.log(username)
+  const { chatId } = req.body.chatId;
+
   const token = serverSideClient.createToken(username);
-  try {
-    await serverSideClient.updateUser(
-      {
-        id: username,
-        name: username,
-      },
-      token
-    );
-  } catch (err) {
-    console.log(err);
-  }
+//   try {
+//     await serverSideClient.updateUser(
+//       {
+//         id: username,
+//         name: username,
+//       },
+//       token
+//     );
+//   } catch (err) {
+//     console.log(err);
+//   }
 
   const admin = { id: 'admin' };
-  const channel = serverSideClient.channel('team', 'talkshop', {
+  const channel = serverSideClient.channel('messaging', chatId, {
     name: 'Talk Shop',
     created_by: admin,
   });
