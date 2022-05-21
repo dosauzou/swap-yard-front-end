@@ -18,6 +18,7 @@ export class NotificationComponent implements OnInit {
   array : Array<Match>
   username: any;
   itemList: any;
+  panelOpenState = true;
 
 
 

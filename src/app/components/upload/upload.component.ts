@@ -19,6 +19,8 @@ export class UploadComponent implements OnInit {
   retrievedImage: any;
   imageName: any;
   contentArray: any[];
+  selectedFiles: FileList;
+  progressInfos: never[];
 
   constructor(private http: HttpClient, private userService: UserServiceService, public domSanitizationService: DomSanitizer,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
@@ -56,6 +58,11 @@ export class UploadComponent implements OnInit {
     // console.log(file);
     //       })
         }
+      }
+
+      selectFiles(event) {
+        this.progressInfos = [];
+        this.selectedFiles = event.target.files;
       }
       // getImage() {
 

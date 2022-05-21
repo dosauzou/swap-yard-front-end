@@ -1,10 +1,12 @@
-import { Injectable, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Injectable, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NotificationComponent } from './components/notification/notification.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS} from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UserServiceService } from './services/user-service.service';
@@ -52,6 +54,8 @@ import { StatusComponent } from './components/status/status.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { ChannelComponent } from './components/channel/channel.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { MatNativeDateModule } from '@angular/material/core';
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
 
@@ -78,6 +82,7 @@ export class XhrInterceptor implements HttpInterceptor {
     WebcamCaptureComponent,
     ItemComponent,
     UserHeaderComponent,
+    SpinnerComponent,
     NotificationComponent,
     CarouselComponent,
     MatchComponent,
@@ -110,6 +115,7 @@ export class XhrInterceptor implements HttpInterceptor {
     CommonModule,
     MatCardModule,
     MatIconModule,
+    NgxSpinnerModule,
     MatButtonModule,
     SlickCarouselModule,
     BrowserAnimationsModule,
@@ -117,6 +123,13 @@ export class XhrInterceptor implements HttpInterceptor {
     NgImageSliderModule,
     MaterialModule,
     MatListModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    MatNativeDateModule,
+    MaterialModule,
+    ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
@@ -127,6 +140,8 @@ export class XhrInterceptor implements HttpInterceptor {
  
     
   ],
+
+  schemas:[CUSTOM_ELEMENTS_SCHEMA], // This is new to version 13 as well,
 
   providers: [
     UserServiceService, AppService, 

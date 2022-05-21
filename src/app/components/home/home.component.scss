@@ -8,14 +8,38 @@
   
 
   }
-
+  .container {
+    max-width: 500px;
+    margin: 30px auto;
+    overflow: auto;
+    min-height: 600px;
+    border: 0px;
+    background: rgba(153, 155, 181, 0.8);
+    padding: 30px;
+    border-radius: 5px;
+}
   .card-size {
     max-width: 500px;
     max-height: 500px;
 
 
   }
+  .example-list {
+    border-radius: 5px;
+    background: #fff;
+    padding: 10px;
+    margin: 0;
+  }
   
+  .example-list > li {
+    list-style-type: none;
+    border-bottom: solid 1px #8b8b8b;
+    padding: 8px 0;
+  }
+  
+  .example-list > li:last-child {
+    border-bottom: none;
+  }
   .example-header-image {
     background-image: url('https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces');
     background-size: cover;
@@ -25,9 +49,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 50px;
-    margin: 20px;
+
+
   }
+  .child {
+    width: 100px;
+    height: 100px;
+    }
 
 .button{
     float:right;
@@ -56,6 +84,8 @@ main {
   max-height: 100vh;
   overflow-x: auto;
   overflow-y: hidden;
+  justify-content: center;
+  align-items: center;
 }
 
 .b-example-divider {

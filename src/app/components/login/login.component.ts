@@ -26,10 +26,12 @@ export class LoginComponent implements OnInit {
 
 
   constructor(private app: AppService, private http: HttpClient, private router: Router, private fb: FormBuilder) {
+    localStorage.clear()
+    sessionStorage.clear()
   }
 
   ngOnInit(): void {
-
+  
     this.submitted = false;
   }
 

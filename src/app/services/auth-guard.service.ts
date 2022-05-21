@@ -10,6 +10,14 @@ import { map, take } from 'rxjs/operators';
 })
 export class AuthGuardService implements CanActivate {
 
+  // canActivate(): boolean {
+  //   if(!this.auth.isAuthenticated()){
+  //       this.router.navigate(['login']);
+  //       return false;
+  //   }  
+  //   return true;
+  // }
+  
   canActivate(): Observable<boolean> {
     return this.auth.isLoggedIn.pipe(
       take(1), map((isLoggedIn: boolean)=>{

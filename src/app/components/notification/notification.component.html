@@ -1,17 +1,38 @@
-<mat-list role="list" *ngFor="let match of array">
-    
-    <mat-list-item    role="listitem" >View Details
-        <!-- <li class="list-group-item">{{match.user.firstName}}></li> -->
-        <img matListAvatar src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="...">
-        <h3 matLine> {{match.user.username}} </h3>
-        <p matLine>
-          <span> {{match.user.firstName}} </span>
-          <span class="demo-2"> -- {{match.user.firstName}} </span>
-        </p>
-        <button mat-icon-button (click)="save(match.user.username)">  
-            <mat-icon>info</mat-icon>
-        </button>
-    </mat-list-item>
-    <mat-divider></mat-divider>
 
-</mat-list>
+
+<mat-accordion>
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Swaps in progress
+        </mat-panel-title>
+        <mat-list role="list" *ngFor="let match of array">
+    
+            <mat-list-item    role="listitem" >View Details
+                <!-- <li class="list-group-item">{{match.user.firstName}}></li> -->
+                <img matListAvatar src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="...">
+                <h3 matLine> {{match.user.username}} </h3>
+                <p matLine>
+                  <span> {{match.user.firstName}} </span>
+                  <span class="demo-2"> -- {{match.user.firstName}} </span>
+                </p>
+                <button mat-icon-button (click)="save(match.user.username)">  
+                    <mat-icon>info</mat-icon>
+                </button>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        
+        </mat-list>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Completed Swaps
+        </mat-panel-title>
+    
+      </mat-expansion-panel-header>
+      <p>I'm visible because I am open</p>
+    </mat-expansion-panel>
+  </mat-accordion>

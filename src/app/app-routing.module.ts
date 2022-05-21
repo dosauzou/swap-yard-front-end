@@ -7,6 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { MessagingComponent } from './components/messaging/messaging.component';
 import { NotificationComponent } from './components/notification/notification.component';
+import { UserHeaderComponent } from './components/user-header/user-header.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
   {path: 'chats', component: MessagingComponent, canActivate: [AuthGuardService]},
   {path: 'matches', component: NotificationComponent, canActivate: [AuthGuardService]},
+  // {component: UserHeaderComponent,canActivate[AuthGuardService] }
 
   { path: '**', redirectTo: '' }
 

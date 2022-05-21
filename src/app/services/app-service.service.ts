@@ -1,4 +1,4 @@
-import { Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -6,47 +6,69 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 @Injectable()
 export class AppService {
 
-  authenticated = localStorage.getItem("isLoggedIn") as unknown as boolean;
+    authenticated = false;
 
-  private loggedIn = new BehaviorSubject<boolean>(localStorage.getItem("isLoggedIn") === "true");
+    private loggedIn = new BehaviorSubject<boolean>(localStorage.getItem("isLoggedIn") === "true");
 
-  constructor(private http: HttpClient) {
-  }
+    constructor(private http: HttpClient) {
+    }
 
-  get isLoggedIn(){
-      return this.loggedIn.asObservable();
-  }
+    get isLoggedIn() {
+        return this.loggedIn.asObservable();
+    }
 
-  authenticate(credentials, callback) {
-    console.log(this.authenticated)
+    authenticate(credentials, callback) {
 
-      //my users resource is unreachable 
-      const headers = new HttpHeaders(credentials ? {
-        authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
-    } : {});
+        //my users resource is unreachable 
+        const headers = new HttpHeaders(credentials ? {
+            authorization: 'Basic ' + btoa(credentials.username + ':' + credentials.password)
+        } : {});
         // const headers = new HttpHeaders(
         //     {credentials ? { Authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password) } : {});
 
         //403 error wont make request
-        this.http.get('api/v1/login',{headers: headers}).subscribe(response => {
-         
-            if (response) { 
-            
+
+        this.http.get('api/v1/login', { headers: headers }).subscribe(response => {
+
+            console.log(response)
+            if (response['name']) {
                 localStorage.setItem("isLoggedIn", "true");
                 sessionStorage.setItem('id', credentials.username);
-                this.loggedIn.next(true);
+                this.loggedIn.next(true)
                 this.authenticated = true;
-            } else {
-                this.authenticated = false;
-            }
-            return callback && callback();
-        });
+                console.log(this.authenticated)
 
+            }else{
+                this.authenticated = false;
+                this.loggedIn.next(false)
+                localStorage.setItem("isLoggedIn", "false");
+                console.log(localStorage)
+    
+            }
+
+            return callback && callback();
+        }, error => {
+            this.authenticated = false;
+            this.loggedIn.next(false)
+            localStorage.setItem("isLoggedIn", "false");
+            console.log(localStorage)
+
+
+        }
+        )
     }
 
-    isAuthenticated() { 
+
+
+
+
+
+
+    isAuthenticated() {
         console.log(this.authenticated)
-        return this.authenticated; }
+
+        return this.authenticated;
+    }
 
     // isAuthenticated(): boolean {
     //     const token = sessionStorage.getItem('token');
@@ -54,16 +76,16 @@ export class AppService {
     //     // true or false
     //     return !this.jwtHelper.isTokenExpired(token);
     //   }
-    
 
-    createUser(user: object): Observable <object>{
+
+    createUser(user: object): Observable<object> {
         return this.http.post('api/v1/register', user);
-      }
-    
-    
-    getUsers(){
+    }
+
+
+    getUsers() {
         return this.http.get('api/v1/users-list')
-    
-      }
+
+    }
 
 }

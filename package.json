@@ -2,7 +2,6 @@
   "name": "swapyard",
   "version": "0.0.0",
   "scripts": {
-
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
     "server": "ts-node -P server/server.tsconfig.json server/server.ts",
@@ -48,6 +47,7 @@
     "jquery": "^3.6.0",
     "ng-image-slider": "^2.8.0",
     "ngx-slick-carousel": "^0.5.1",
+    "ngx-spinner": "^13.1.1",
     "ngx-webcam": "^0.4.1",
     "nylas": "^6.2.2",
     "rxjs": "~6.6.0",

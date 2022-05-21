@@ -17,6 +17,7 @@ export class AppComponent {
   title = 'Swapyard';
   auth: Boolean;
   id= sessionStorage.getItem('id');
+  authenticated: boolean;
 
 
 
@@ -31,8 +32,18 @@ export class AppComponent {
   
 
     getAuth() {
-      return this.app.authenticated
-    }
+      var o = localStorage.getItem("isLoggedIn");
+      // JSON.parse(o)
+
+      if( o == 'true'){
+        console.log(o)
+        return true
+
+      }else return false
+    //  console.log(localStorage.getItem("isLoggedIn") as unknown as boolean)
+    //   return localStorage.getItem("isLoggedIn") as unknown as boolean
+
+      }
 
   logout() {
     this.http.post('logout', {}).pipe(
