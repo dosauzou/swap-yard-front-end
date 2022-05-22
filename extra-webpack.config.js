@@ -2,9 +2,11 @@ module.exports = {
   configureWebpack: {
     resolve: {
       fallback: {
-        "crypto": require.resolve('crypto-browserify'), //if you want to use this module also don't forget npm i crypto-browserify 
-      } 
-    }
+        "fs": false,
+        "path": false,
+        "os": false
+      },
+  }
     ,
     module: {
       

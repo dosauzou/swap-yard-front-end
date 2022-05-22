@@ -56,7 +56,7 @@ export class ChannelComponent implements OnInit {
       this.messages = channel.state.messages;
       this.channel.on('message.new', event => {    
   
-        this.messages = [...this.messages, event.message as Message]
+        this.messages = [...this.messages, event.message as unknown as Message]
       });
       console.log(this.time)
 

@@ -26,6 +26,9 @@
               "replaceDuplicatePlugins": true
 
            },
+           "allowedCommonJsDependencies": [
+            "lodash"
+         ],
             "outputPath": "dist/Swapyard",
             "index": "src/index.html",
             "main": "src/main.ts",

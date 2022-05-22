@@ -7,6 +7,7 @@
     "esModuleInterop": true,
     "useUnknownInCatchVariables": false,
     "allowSyntheticDefaultImports": true,
+    "strictNullChecks": false,
 
 
     "paths": {
