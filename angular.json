@@ -18,8 +18,14 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+            "customWebpackConfig": {
+              "path": "extra-webpack.config.js",
+              "mergeStrategies": {"optimization":"replace"},
+              "replaceDuplicatePlugins": true
+
+           },
             "outputPath": "dist/Swapyard",
             "index": "src/index.html",
             "main": "src/main.ts",
