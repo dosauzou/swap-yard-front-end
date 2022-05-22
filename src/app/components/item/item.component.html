@@ -11,7 +11,7 @@
     <mat-label>Condition</mat-label>
     <mat-select [(ngModel)]="data.condition">
       <mat-option value="new">New</mat-option>
-      <mat-option value="likeNew"> Like New</mat-option>
+      <mat-option value="likeNew"> Like new</mat-option>
       <mat-option value="good"> Good</mat-option>
       <mat-option value="fair"> Fair</mat-option>
       <mat-option value="poor"> Poor</mat-option>
@@ -85,12 +85,29 @@
     <button mat-button (click)="next()" cdkFocusInitial>Next</button>
   </div>
   </div>
-  <div *ngSwitchCase="'switch'">  
-    <app-upload></app-upload>
-    <button mat-button (click)="onNoClick()">Exit</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Complete</button>
-
+  <div *ngSwitchCase="'switch'"> 
+    <div class= "container border-0 margin-10"><app-upload></app-upload></div> 
+      <div class="col-md-12 text-center">
+          <button type="button" (click)="onNoClick()" class="btn btn-primary">Cancel</button>
+          <button type="button" [mat-dialog-close]="data"class="btn btn-primary">Next</button>
   </div>
+</div>
+<!-- <div *ngSwitchCase="'analyse'"> 
+  <div class= "container border-0 margin-10"><app-upload></app-upload></div> 
+    <div class="col-md-12 text-center">
+        <button type="button" (click)="onNoClick()" class="btn btn-primary">Cancel</button>
+        <button type="button" [mat-dialog-close]="data"class="btn btn-primary">Upload</button>
+</div>
+</div> -->
+<!-- <div style="text-align: center;">
+    <div style="z-index:5; position : fixed; display : flex; align-content : flex-end;bottom : 10%; margin-bottom : 68px; justify-self: center; ">
+    <div class="btn-group btn-group-lg vertical-center" role="group" aria-label="Basic example">
+      <button type="button" (click)="onNoClick()" class="btn btn-primary">Cancel</button>
+      <button type="button" [mat-dialog-close]="data"class="btn btn-primary">Upload Item</button>
+    </div>
+    </div>
+  </div> -->
+ 
 </div>
 
   <!-- <div *ngIf="ohWHat()">Content to render when condition is true.</div> -->

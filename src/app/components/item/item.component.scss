@@ -38,4 +38,18 @@
   .example-button-row {
     display: table-cell;
     width: 490px;
+  }.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }.container {
+    max-width: 500px;
+    margin: 10px auto;
+    overflow: auto;
+    min-height: 300px;
+    border: 0px;
+    padding: 30px;
+    border-radius: 5px;
   }

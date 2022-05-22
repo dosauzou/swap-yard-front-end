@@ -10,7 +10,7 @@ export class Item {
         description: String;
         clothingCondition: String;
         formData : FormData;
-        images: ContentInterface;
+        images: Array<ContentInterface>;
         id: Number;
 
 }

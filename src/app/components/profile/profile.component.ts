@@ -26,6 +26,7 @@ export class ProfileComponent implements OnInit {
   id= sessionStorage.getItem('id');
   images: ContentInterface;
   VAPID_PUBLIC_KEY: string = process.env.publicVapidKey!;
+  itemArray: any[];
   // readonly VAPID_PUBLIC_KEY = 'BB_WkKNOcmJQSAub5Q_A_Cg3e4_qSSgkwZ6IouAitsX59ulO6DdE3s8Ihaz2lk9WCoPuwnDMYkOEF1HVpW0yZuM';
 
   constructor(public dialog: MatDialog, private userService: UserServiceService, private app: AppService, private http: HttpClient, private itemS: ItemService, private upload: UploadService, public domSanitizationService: DomSanitizer,   private swPush: SwPush,
@@ -47,7 +48,7 @@ export class ProfileComponent implements OnInit {
 
   openDialog():void{
     this.item = new Item()
-    this.item.images = new ContentInterface
+    this.item.images = new Array()
     
     const dialogRef = this.dialog.open(
       ItemComponent,{
@@ -68,6 +69,7 @@ export class ProfileComponent implements OnInit {
           this.upload.uploadFile(this.item.formData)
           .subscribe(data => 
              {
+               console.log(data)
               this.item.images = data
               this.itemS.createPost(this.item, this.id)
               .subscribe(
@@ -79,22 +81,33 @@ export class ProfileComponent implements OnInit {
 
       });
   }
+  zoomIn(item: Item){
+    console.log(item)
+
+  }
 
   display(){
     this.userService.getPosts(this.id).subscribe(
       data=>{
-        this.mediaArray= new Array()
-        console.log(data)
-        for(let x in data){
-          this.images = new ContentInterface
-          
-          this.images.fileName=data[x].fileName;
-          this.images.fileType=data[x].fileType;
-          this.images.data= this.domSanitizationService.bypassSecurityTrustUrl('data:image/jpeg;base64,'+ data[x].data);
-          // this.images.data= 'data:image/jpeg;base64,'+ data[x].data;
-          this.mediaArray.push(this.images)
-          console.log(this.images.data)
-        }
+        this.itemArray= data as Array<Item>;
+     for(var j in this.itemArray){
+for(var o in this.itemArray[j].images){
+      const b = this.domSanitizationService.bypassSecurityTrustUrl('data:image/jpeg;base64,'+ this.itemArray[j].images[o].data)
+  this.itemArray[j].images[o].data = b
+
+}}
+        console.log(this.itemArray)
+
+        // for(let x in data){
+        //   console.log(data[x])
+        //   this.images = new ContentInterface
+        //   this.images.fileName=data[x][0].fileName;
+        //   this.images.fileType=data[x][0].fileType;
+        //   this.images.data= this.domSanitizationService.bypassSecurityTrustUrl('data:image/jpeg;base64,'+ data[x][0].data);
+        //   // this.images.data= 'data:image/jpeg;base64,'+ data[x].data;
+        //   this.mediaArray.push(this.images)
+        //   console.log(this.images.data)
+        // }
      } ,
       error => { 
         console.log("exception occured");

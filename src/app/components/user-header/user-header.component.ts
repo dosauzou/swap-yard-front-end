@@ -30,7 +30,7 @@ export class UserHeaderComponent implements OnInit {
 // }
 openDialog():void{
   this.item = new Item()
-  this.item.images = new ContentInterface
+  this.item.images = new Array()
   
   const dialogRef = this.dialog.open(
     ItemComponent,{
@@ -48,10 +48,12 @@ openDialog():void{
       this.item.material=result.material
       this.item.formData = result.posts
       this.item.description = result.description
+      console.log(this.item.formData)
       if(result){
         this.upload.uploadFile(this.item.formData)
         .subscribe(data => 
            {
+             console.log(data)
             this.item.images = data
             this.itemS.createPost(this.item, this.id)
             .subscribe(

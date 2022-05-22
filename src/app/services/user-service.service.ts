@@ -25,7 +25,6 @@ export class UserServiceService {
  //by user so add in userid
   getPosts(id : any){
     return this.http.get('api/v1/post/downloads/'+id)
-
   }
  
   uploadFile(formData: FormData): Observable <any>{

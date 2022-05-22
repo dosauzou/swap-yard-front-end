@@ -23,8 +23,8 @@ export class CarouselComponent implements OnInit {
         // this.itemList = new Array();
         this.itemList=new Array()
         for(let b in this.itemArray[x].itemList){
-          this.itemArray[x].itemList[b].images.data = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,'+this.itemArray[x].itemList[b].images.data);
-          console.log(this.itemArray[x].itemList[b].images.data)
+          this.itemArray[x].itemList[b].images[0].data = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,'+this.itemArray[x].itemList[b].images[0].data);
+          console.log(this.itemArray[x].itemList[b].images[0].data)
         }
         console.log(this.itemArray[x].itemList)
         this.itemList = this.itemArray[x].itemList

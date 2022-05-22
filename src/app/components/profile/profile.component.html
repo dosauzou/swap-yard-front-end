@@ -22,7 +22,7 @@
 
 				<ul>   
                     <!-- //retrieve from db -->
-					<li><span class="profile-stat-count">{{mediaArray.length}}</span> posts</li>
+					<li><span class="profile-stat-count">{{itemArray.length}}</span> posts</li>
 					<li><span class="profile-stat-count">188</span> followers</li>
 					<li><span class="profile-stat-count">206</span> following</li>
 				</ul>
@@ -46,14 +46,14 @@
 
             <!-- //creates a popup where it shows the rest of the details and images -->
 <mat-grid-list cols="3" rowHeight="1:1" [gutterSize]="'15px'" >
-    <mat-grid-tile 
-        *ngFor="let media of mediaArray">
-        <div class = "gallery-item" tabindex="0">
-            <img [src]="media.data" class = "gallery-image">
+    <mat-grid-tile  
+        *ngFor="let media of itemArray">
+        <div (click)="zoomIn(media)" class = "gallery-item" tabindex="0">
+            <img  [src]="media.images[0].data" class = "gallery-image">
             <div class="gallery-item-info">
 
                 <ul>
-                    <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 56</li>
+                    <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> {{media.swipes.length}}</li>
                     <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 2</li>
                 </ul>
 
