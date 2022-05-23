@@ -33,7 +33,7 @@
   </mat-form-field>
 
 
-  <mat-form-field class="form-element">
+  <!-- <mat-form-field class="form-element">
     <mat-label>Color</mat-label>
     <input type="text"
            [(ngModel)]="data.color"
@@ -47,7 +47,7 @@
         {{option}}
       </mat-option>
     </mat-autocomplete>
-    </mat-form-field>
+    </mat-form-field> -->
 
 
   <mat-form-field class="form-element">
@@ -80,25 +80,26 @@
       </mat-input>
     </mat-form-field> -->
 
-  <div mat-dialog-actions class="form-element" class="example-button-row">
-    <button mat-button (click)="onNoClick()">No Thanks</button>
-    <button mat-button (click)="next()" cdkFocusInitial>Next</button>
+  <div  class="col-md-12 text-center">
+    <button type="button" class="btn btn-primary" (click)="onNoClick()">No Thanks</button>
+    <button type="button" class="btn btn-primary" (click)="next()" cdkFocusInitial>Next</button>
   </div>
   </div>
+
   <div *ngSwitchCase="'switch'"> 
     <div class= "container border-0 margin-10"><app-upload></app-upload></div> 
       <div class="col-md-12 text-center">
           <button type="button" (click)="onNoClick()" class="btn btn-primary">Cancel</button>
-          <button type="button" [mat-dialog-close]="data"class="btn btn-primary">Next</button>
+          <button type="button" (click)="analyser()" class="btn btn-primary">Next</button>
   </div>
 </div>
-<!-- <div *ngSwitchCase="'analyse'"> 
-  <div class= "container border-0 margin-10"><app-upload></app-upload></div> 
+<div *ngSwitchCase="'analyse'"> 
+  <div class= "container border-0 margin-10"><app-image-analyser></app-image-analyser></div> 
     <div class="col-md-12 text-center">
         <button type="button" (click)="onNoClick()" class="btn btn-primary">Cancel</button>
         <button type="button" [mat-dialog-close]="data"class="btn btn-primary">Upload</button>
 </div>
-</div> -->
+</div>
 <!-- <div style="text-align: center;">
     <div style="z-index:5; position : fixed; display : flex; align-content : flex-end;bottom : 10%; margin-bottom : 68px; justify-self: center; ">
     <div class="btn-group btn-group-lg vertical-center" role="group" aria-label="Basic example">

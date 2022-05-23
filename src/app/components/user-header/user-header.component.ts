@@ -48,7 +48,7 @@ openDialog():void{
       this.item.material=result.material
       this.item.formData = result.posts
       this.item.description = result.description
-      console.log(this.item.formData)
+      console.log(this.item.formData.getAll('files'))
       if(result){
         this.upload.uploadFile(this.item.formData)
         .subscribe(data => 

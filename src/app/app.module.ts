@@ -56,6 +56,7 @@ import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { ChannelComponent } from './components/channel/channel.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ImageAnalyserComponent } from './components/image-analyser/image-analyser.component';
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
 
@@ -80,6 +81,7 @@ export class XhrInterceptor implements HttpInterceptor {
     ImageGridComponent,
     ProfileComponent,
     WebcamCaptureComponent,
+    ImageAnalyserComponent,
     ItemComponent,
     UserHeaderComponent,
     SpinnerComponent,

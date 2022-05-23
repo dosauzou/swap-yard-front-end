@@ -50,9 +50,9 @@ this.options = new Array()
     }
   ngOnInit(): void {
 
-      for(var i in namer('#F9F6EE').basic ){
-        console.log(namer('#F9F6EE').basic[i].name)
-        this.options.push(namer('#F9F6EE').basic[i].name as string)
+      for(var i in namer('#2e3645').basic ){
+        console.log(namer('#2e3645'))
+        this.options.push(namer('#2e3645').basic[i].name as string)
         console.log(this.options)
   
       }

@@ -96,8 +96,7 @@ export class CalendarComponent implements OnInit {
               "timeZone": "Europe/Dublin"
             },
             'attendees': [
-              { 'email': any[1] },
-              { 'email': 'tadeduntan@gmail.com' }
+              { 'email': any[1] }
             ],
             'reminders': {
               'useDefault': false,
@@ -124,6 +123,9 @@ export class CalendarComponent implements OnInit {
               if (this.matchArray[x].user.username == any[4]) {
                 this.matchArray[x].swap = this.swap
                 this.userMatch = this.matchArray[x]
+                this.userMatch.user=this.userMatch.user.username
+                this.userMatch.itemId = this.userMatch.itemList.map(e=>e.id);
+                this.userMatch.itemList = null;
                 // this.setMatch(this.matchArray[x])
 
 
@@ -143,16 +145,13 @@ export class CalendarComponent implements OnInit {
 
 
             // Handle the results here (response.result has the parsed body).
-            console.log("Response", response);
             return this.userMatch
 
           },
             function (err) { console.error("Execute error", err); });
-        return this.userMatch
 
       },
         function (err) { console.error("Error loading GAPI client for API", err); });
-    return this.userMatch
 
   }
 
@@ -229,10 +228,9 @@ export class CalendarComponent implements OnInit {
       //   console.log(data)
       // })
       this.authenticate().then(this.initClient.bind(this.getDate(), this.argArray)).then(data => {
-        this.swapService.postSwap(data, sessionStorage.getItem('id')).subscribe(data => {
-          console.log(data)
-        })
         console.log(data)
+        this.swapService.postSwap(data, sessionStorage.getItem('id')).subscribe(data => {
+        })
       })
 
     })

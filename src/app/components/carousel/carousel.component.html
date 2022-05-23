@@ -6,16 +6,27 @@
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
       <mat-card-title>Michael Kors top</mat-card-title>
-      <mat-card-subtitle>{{item.clothingCondition}}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image [src]="item.images.data" >
-    <mat-card-content>
-      <p>
-        {{item.description}}
-      </p>
-    </mat-card-content>
+    <img mat-card-image [src]="item.images[0].data" >
+ 
     <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
+      <button mat-fab color (click)="open(content)" (click)="setItem(item)">        	<mat-icon>thumb_down</mat-icon>
+      </button>
     </mat-card-actions>
   </mat-card>
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Deleting item..</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+     <p class ="lead">Are you sure you want to remove this item from the swap?</p> 
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" (click)="deleteItem()">Yes</button>
+    </div>
+  </ng-template>
+  
+  
+  

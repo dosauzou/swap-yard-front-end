@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Item } from 'src/app/classes/item';
 import { Match } from 'src/app/classes/match';
 
@@ -14,7 +15,32 @@ export class CarouselComponent implements OnInit {
   @Input() username = '';
 
   itemList: any [];
+  closeResult: string;
+  itemTodelete: Item;
+  open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
 
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+  setItem(item: Item){
+    this.itemTodelete = item;
+  }
+
+  deleteItem(){
+    console.log(this.itemTodelete)
+  }
   sortArray(){
 
     console.log(this.itemArray)
@@ -38,7 +64,7 @@ export class CarouselComponent implements OnInit {
     }
   }
 
-  constructor(public sanitizer: DomSanitizer) { }
+  constructor(public sanitizer: DomSanitizer, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.sortArray()

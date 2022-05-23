@@ -46,6 +46,8 @@ export class SchedulerComponent implements OnInit {
         console.log(this.itemArray[x])
       
         //if this .swap status = null
+        console.log(this.swap + 'hey')
+
         if(!this.swap){
           this.status = false
 
@@ -64,6 +66,9 @@ export class SchedulerComponent implements OnInit {
       
 
     }
+    console.log('this is the status:'+ this.swap)
+    return this.status
+
   }
   //if the swap hasnt been scheduled
 

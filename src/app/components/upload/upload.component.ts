@@ -59,65 +59,10 @@ images: Array<any>;
 
   };
 
-  async retrieveDetails(data) {
-    var image: any
-    image = this.getColours(data)
-    console.log(image)
-    this.getCategories(image)
-  }
-  //Retrieve the possible colours from the image
-  //using vibrant js a
-  getColours(data): any {
-    var image = new Image()
-    image.src = data
-    this.list = new Array()
-    var img = document.createElement('img');
-    img.append(image)
 
-    //Acquires colour palette
-    let v = new Vibrant(image, 64, 1)
-    v.getPalette().then((palette) => {
-      for (var i in palette) {
-        var swatch = palette[i] as Swatch
-        this.list.push(swatch)
-      }
-  
-
-    }
-
-    )
-    return image
-
-
-  }
 
   //Using color-namer api
-  matchPossibleColours(){
-    //compares to colour list api
-      this.list.sort((a, b) => (a.population < b.population) ? 1 : -1)
-      console.log(this.list)
-      var names = namer(this.list[0].hex)
-      //posibiliies
-      console.log(names.basic)
-      console.log(names.roygbiv)
-      console.log(names.html)
-      console.log(names.x11)
-      console.log(names.pantone)
-      console.log(names.ntc)
-  }
 
-//using tensorflow js
-  getCategories(image) {
-    setTimeout(async () => {
-      this.predictions = await this.model.classify(image);
-      for (var i in this.predictions) {
-        if (this.predictions[i].probability > 0.5) {
-          console.log(this.predictions[i])
-
-        }
-      }
-    });
-  }
 
   async onFileSelected(event) {
     for (var i = 0; i < event.target.files.length; i++) { 
@@ -139,31 +84,31 @@ for(var a in this.myFiles){
       const reader = new FileReader();
       reader.readAsDataURL(file);
       
-      const toBase64 = file => new Promise((resolve, reject) => {
-       const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-
-      });
-
-      image.src = await toBase64(file) as string
+      image.src = await this.toBase64(file) as string
       var o = {path: image.src}
 
       this.images.push(o)
-      console.log(this.images)
+ 
 
       this.getArray = true
 
+
       }
 
-      // this.retrieveDetails(await toBase64(file))
     }
-    console.log(this.formData)
+    console.log(this.formData.get('files'))
     this.data.posts=this.formData
 
 
   }
+
+  toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+     reader.readAsDataURL(file);
+     reader.onload = () => resolve(reader.result);
+     reader.onerror = error => reject(error);
+
+   });
 
 }
 

@@ -230,24 +230,31 @@ export class HomeComponent implements OnInit {
     console.log('huh')
     this.itemService.getItems().subscribe(
       data => {
-        this.itemArray = new Array()
-        for (let x in data) {
-          console.log(data)
-          this.item = new Item;
-          this.item.images = new Array()
-          this.item.id = data[x].id;
-          this.item.color = data[x].color;
-          this.item.clothingCondition = data[x].clothingCondition;
-          this.item.material = data[x].material;
-          this.item.size = data[x].size;
-          this.item.description = data[x].description
-          // this.item.images.fileName = data[x].images[0].fileName;
-          // this.item.images.fileType = data[x].images.fileType;
-          // this.item.images.data = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + data[x].images.data);
-          this.itemArray.push(this.item)
-          console.log(this.itemArray)
-          this.arrayCopy = [...this.itemArray]
-        }
+        this.itemArray = data as Array<Item>
+        for(var j in this.itemArray){
+          for(var o in this.itemArray[j].images){
+                const b = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,'+ this.itemArray[j].images[o].data)
+            this.itemArray[j].images[o].data = b
+          
+          }}
+        // for (let x in data) {
+        //   console.log(data)
+        //   this.item = new Item;
+        //   this.item.images = new Array()
+        //   this.item.id = data[x].id;
+        //   this.item.color = data[x].color;
+        //   this.item.clothingCondition = data[x].clothingCondition;
+        //   this.item.material = data[x].material;
+        //   this.item.size = data[x].size;
+        //   this.item.description = data[x].description
+        //   // this.item.images.fileName = data[x].images[0].fileName;
+        //   // this.item.images.fileType = data[x].images.fileType;
+        //   // this.item.images.data = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + data[x].images.data);
+        //   this.itemArray.push(this.item)
+        // }
+
+        this.arrayCopy = [...this.itemArray]
+        console.log(this.arrayCopy)
         this.arrayProxy = new Proxy(this.itemArray, this.setHandler());
         this.colours = new Set(this.arrayCopy.map(o => o.color))
         this.conditions = new Set(this.arrayCopy.map(o => o.clothingCondition))
@@ -265,6 +272,8 @@ export class HomeComponent implements OnInit {
 
   onRight() {
     this.swipe = new Swipe()
+    this.item = this.arrayCopy[this.arrayCopy.length - 1]
+
     this.swipe.swipedItem = this.item
     //all i need is for the backend to persist the swipes to a user
     // this.itemService.findById(this.item.id).subscribe(
@@ -280,7 +289,6 @@ export class HomeComponent implements OnInit {
 
     //should we retrieve the item first and then post to swipe, fid
 
-    this.item = this.arrayCopy[this.arrayCopy.length - 1]
     //users swipe plus the users id, so
     //post request to store the users swipes, then amethod that doesnt allow swipes to popup again
     //store the stuff, when you reach the end change the sceen to annimation

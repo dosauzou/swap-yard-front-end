@@ -19,6 +19,8 @@ export class NotificationComponent implements OnInit {
   username: any;
   itemList: any;
   panelOpenState = true;
+  scheduled: any;
+  itemArray: any;
 
 
 
@@ -31,7 +33,7 @@ export class NotificationComponent implements OnInit {
       panelClass: 'my-outlined-dialog',
       width: '500px',
       height: '600px',
-      data:{itemArray: this.array, username: username}
+      data:{itemArray: this.itemArray, username: username}
 
     }
     )};
@@ -39,6 +41,8 @@ export class NotificationComponent implements OnInit {
   loadMatches(){
     this.match = new Match;
     this.array = new Array();
+    this.itemArray = new Array()
+    this.scheduled = new Array();
     this.notifications.doNotification(this.id).subscribe(
       data=>{
 
@@ -50,13 +54,19 @@ export class NotificationComponent implements OnInit {
           this.match.swap = data[b].swap
           this.match.itemList = data[b].items
           this.match.chatId = data[b].chatId
-          this.array.push(this.match)
+          this.itemArray.push(this.match)
+          if(!this.match.swap){
+            this.array.push(this.match)
+          }else{this.scheduled.push(this.match)}
+          
         
       }})
       return this.array
   }
   ngOnInit(): void {
     this.loadMatches()
+    console.log('this is the array',this.array)
+
    
   }
   //pass this match to the swap scheduler and say each match is going to have a swapid
