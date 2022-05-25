@@ -22,7 +22,7 @@ const serverSideClient = new StreamChat(
 app.post('/join', async (req, res) => {
   console.log(  process.env.STREAM_API_KEY
     )
-    console.log(req.body.chatId)
+    console.log(req.body.username)
 
     //add another const
   const username  = req.body.username as string;
@@ -42,8 +42,9 @@ app.post('/join', async (req, res) => {
 //     console.log(err);
 //   }
 
-  const admin = { id: 'admin' };
-  const channel = serverSideClient.channel('messaging', chatId);
+  const channel = serverSideClient.channel('messaging', chatId, {
+    name: 'Talk Shop'
+  });
 
   try {
     await channel.addMembers([username, 'user']);
