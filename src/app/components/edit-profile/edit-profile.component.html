@@ -10,7 +10,7 @@
           <input type="file" class="file-input"
           (change)="onFileSelected($event)" #fileUpload class="form-control form-control-lg" id="formFileLg" type="file" formControlName ="profilepic"[ngClass]="{ 'is-invalid': submitted && f.profilepic.errors }"  id="inputEmail4">
           <div *ngIf="submitted && f.profilepic.errors" class="invalid-feedback">
-            <div *ngIf="f.profilepic.errors.required"> JPEG/PNG Image is required</div>
+            <div *ngIf="f.profilepic.errors.required"> <small class="label text-white">JPEG/PNG Image is required</small></div>
             </div>
             </div>
             </div>

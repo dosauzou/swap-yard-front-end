@@ -13,7 +13,7 @@ export class MatchHeaderComponent implements OnInit {
 
 
 
-  constructor(@Inject(MAT_DIALOG_DATA) public dialogData: {itemArray: Array<Match>, username: string}) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public dialogData: {itemArray: Array<Match>, allMatches: Array<Match>, username: string}) { }
 
   ngOnInit(): void {
     console.log(this.dialogData.itemArray)

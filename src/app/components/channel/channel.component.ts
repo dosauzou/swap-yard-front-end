@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import axios from 'axios';
+import { Console } from 'console';
 import { Match } from 'src/app/classes/match';
 import { StreamChat, ChannelData, Message, User, Channel, UserFromToken } from 'stream-chat';
 @Component({
@@ -9,7 +10,7 @@ import { StreamChat, ChannelData, Message, User, Channel, UserFromToken } from '
 })
 export class ChannelComponent implements OnInit {
   @Input() match = '';
-  @Input() itemArray = new Array<Match>();
+  @Input() allMatches = new Array<Match>();
 
   title = 'angular-chat';
   channel: Channel;
@@ -25,10 +26,11 @@ export class ChannelComponent implements OnInit {
 
 
   async joinChat() {
+
+
     this.chatId = this.sortArray()
     const { username } = this;
     const  chatId = this.chatId;
-    console.log(chatId)
 
     try {
       const response = await axios.post('http://localhost:5500/join', {
@@ -37,9 +39,10 @@ export class ChannelComponent implements OnInit {
       });
       const { token } = response.data;
       const apiKey = response.data.api_key;
-
+      console.log('joining chat...')
+      console.log(apiKey)
       this.chatClient = new StreamChat(apiKey)
-
+console.log('heres the chat client',this.chatClient)
       this.currentUser = await this.chatClient.connectUser({
         //set equal to username
         name: sessionStorage.getItem('id'),
@@ -51,6 +54,7 @@ export class ChannelComponent implements OnInit {
           //channel should be the session id + users name
       //create specific channel per person
       const channel = this.chatClient.channel('messaging', this.chatId);
+      console.log(channel)
       await channel.watch();
       this.channel = channel;
       this.messages = channel.state.messages;
@@ -58,8 +62,6 @@ export class ChannelComponent implements OnInit {
   
         this.messages = [...this.messages, event.message as unknown as Message]
       });
-      console.log(this.time)
-
 
       const filter = {
         type: 'messaging',
@@ -76,23 +78,20 @@ export class ChannelComponent implements OnInit {
       return;
     }
   }
-  sortArray(){
+  sortArray(){let z : Match;
+    var x = this.allMatches.length;
+    var b = this.allMatches.map(p=>{
+      p.user.username == this.match
+      z = p
+    })
 
-    for (let x in this.itemArray){
+    this.chatId = z.chatId
     
-      if(this.itemArray[x].user.username == this.match){
-        // this.itemList = new Array();
-      this.chatId = this.itemArray[x]['chatId'];
-      
-        // for(let x in this.itemList){
-        //   this.itemList[x].images.data =this.sanitizer.bypassSecurityTrustResourceUrl(this.itemList[x].images.data);
-        // }
-
-      }
+  
       return this.chatId
 
     }
-  }
+  
 
 
 
@@ -100,7 +99,6 @@ export class ChannelComponent implements OnInit {
     if (this.newMessage.trim() === '') {
       return;
     }
-    console.log(this.newMessage)
 
     try {
       await this.channel.sendMessage({

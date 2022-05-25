@@ -1,117 +1,99 @@
- 
- <!-- center form and style to black -->
- <mat-toolbar color="black">
-  <span  class="fill-remaining-space" style="width: 100%;text-align: center">Item upload</span>
+<!-- center form and style to black -->
+<mat-toolbar color="black">
+  <span class="fill-remaining-space" style="width: 100%;text-align: center">Item upload</span>
 </mat-toolbar>
 
- <div [ngSwitch]="form" class="parent" >
+<div [ngSwitch]="form">
+
   <div *ngSwitchDefault>
+    <form [formGroup]="inputForm">
+      <mat-form-field class="form-element">
+        <mat-label>Condition</mat-label>
+        <mat-select formControlName="condition">
+          <mat-option value="New">New</mat-option>
+          <mat-option value="Like new"> Like new</mat-option>
+          <mat-option value="Good"> Good</mat-option>
+          <mat-option value="Fair"> Fair</mat-option>
+          <mat-option value="Poor"> Poor</mat-option>
+        </mat-select>
+        <mat-error *ngIf="inputForm.get('condition').hasError('required')">Please select a condition</mat-error>
 
-    <mat-form-field class="form-element">
-    <mat-label>Condition</mat-label>
-    <mat-select [(ngModel)]="data.condition">
-      <mat-option value="new">New</mat-option>
-      <mat-option value="likeNew"> Like new</mat-option>
-      <mat-option value="good"> Good</mat-option>
-      <mat-option value="fair"> Fair</mat-option>
-      <mat-option value="poor"> Poor</mat-option>
-    </mat-select>
-  </mat-form-field>
+      </mat-form-field>
 
-  <mat-form-field class="form-element">
-    <mat-label>Size</mat-label>
-    <mat-select [(ngModel)]="data.size">
-      <mat-option value="4">EU 4</mat-option>
-      <mat-option value="6">EU 6</mat-option>
-      <mat-option value="8">EU 8</mat-option>
-      <mat-option value="10">EU 10</mat-option>
-      <mat-option value="12">EU 12</mat-option>
-      <mat-option value="14">EU 14</mat-option>
-      <mat-option value="16">EU 16</mat-option>
-      <mat-option value="18">EU 18</mat-option>
-    </mat-select>
-  </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Size</mat-label>
+        <mat-select formControlName="size">
+          <mat-option value="4">EU 4</mat-option>
+          <mat-option value="6">EU 6</mat-option>
+          <mat-option value="8">EU 8</mat-option>
+          <mat-option value="10">EU 10</mat-option>
+          <mat-option value="12">EU 12</mat-option>
+          <mat-option value="14">EU 14</mat-option>
+          <mat-option value="16">EU 16</mat-option>
+          <mat-option value="18">EU 18</mat-option>
+        </mat-select>
+        <mat-error *ngIf="inputForm.get('size').hasError('required')">Please select a size</mat-error>
 
-
-  <!-- <mat-form-field class="form-element">
-    <mat-label>Color</mat-label>
-    <input type="text"
-           [(ngModel)]="data.color"
-           placeholder="Pick one"
-           aria-label="Color"
-           matInput
-           [formControl]="myControl"
-           [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-        {{option}}
-      </mat-option>
-    </mat-autocomplete>
-    </mat-form-field> -->
+      </mat-form-field>
 
 
-  <mat-form-field class="form-element">
-    <mat-label>Material</mat-label>
-    <input type="text"
-    [(ngModel)]="data.material"
-    placeholder="Pick one"
-    aria-label="Material"
-    matInput
-    [formControl]="myControl1"
-    [matAutocomplete]="auto">
-<mat-autocomplete #auto="matAutocomplete">
-<mat-option *ngFor="let option of filteredOptions1 | async" [value]="option">
- {{option}}
-</mat-option>
-</mat-autocomplete>
+      <mat-form-field class="form-element">
+        <mat-label>Color</mat-label>
 
-    </mat-form-field>
+        <mat-select formControlName="color">
+          <mat-option *ngFor="let option of options" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="inputForm.get('color').hasError('required')">Please select a color</mat-error>
+
+      </mat-form-field>
 
 
-    <mat-form-field class="form-element">
-      <mat-label>Description</mat-label>
-      <input matInput [(ngModel)]="data.description">
-    </mat-form-field>
- 
+      <mat-form-field class="form-element">
+        <mat-label>Material</mat-label>
+        <mat-select formControlName="material">
+          <mat-option *ngFor="let option of options1" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-select>
 
-    <!-- <mat-form-field appearance="fill">
-      <mat-label>Description</mat-label>
-      <mat-input [(ngModel)]="data.description">
-      </mat-input>
-    </mat-form-field> -->
+        <mat-error *ngIf="inputForm.get('material').hasError('required')">Please select a material</mat-error>
 
-  <div  class="col-md-12 text-center">
-    <button type="button" class="btn btn-primary" (click)="onNoClick()">No Thanks</button>
-    <button type="button" class="btn btn-primary" (click)="next()" cdkFocusInitial>Next</button>
-  </div>
-  </div>
+      </mat-form-field>
 
-  <div *ngSwitchCase="'switch'"> 
-    <div class= "container border-0 margin-10"><app-upload></app-upload></div> 
-      <div class="col-md-12 text-center">
-          <button type="button" (click)="onNoClick()" class="btn btn-primary">Cancel</button>
-          <button type="button" (click)="analyser()" class="btn btn-primary">Next</button>
-  </div>
-</div>
-<div *ngSwitchCase="'analyse'"> 
-  <div class= "container border-0 margin-10"><app-image-analyser></app-image-analyser></div> 
+
+      <mat-form-field class="form-element">
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="description">
+        <mat-error *ngIf="inputForm.get('description').hasError('required')">Please provide an accurate description
+        </mat-error>
+        <mat-error *ngIf="inputForm.get('description').hasError('minlength')">Description should be longer than twenty
+          words</mat-error>
+        <mat-error *ngIf="inputForm.get('description').hasError('maxlength')">Description shorter than fifty words
+        </mat-error>
+
+      </mat-form-field>
+
+
+    </form>
     <div class="col-md-12 text-center">
-        <button type="button" (click)="onNoClick()" class="btn btn-primary">Cancel</button>
-        <button type="button" [mat-dialog-close]="data"class="btn btn-primary">Upload</button>
-</div>
-</div>
-<!-- <div style="text-align: center;">
-    <div style="z-index:5; position : fixed; display : flex; align-content : flex-end;bottom : 10%; margin-bottom : 68px; justify-self: center; ">
-    <div class="btn-group btn-group-lg vertical-center" role="group" aria-label="Basic example">
-      <button type="button" (click)="onNoClick()" class="btn btn-primary">Cancel</button>
-      <button type="button" [mat-dialog-close]="data"class="btn btn-primary">Upload Item</button>
+      <button type="button" class="btn btn-primary" (click)="onNoClick()">
+        Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="next()" [disabled]="!inputForm.valid"
+        cdkFocusInitial>Next</button>
     </div>
+  </div>
+
+  <div *ngSwitchCase="'switch'">
+    <div class="container border-0 margin-10">
+      <app-upload></app-upload>
     </div>
-  </div> -->
- 
+    <div class="col-md-12 text-center">
+      <button type="button" (click)="previous()" class="btn btn-primary">Previous</button>
+      <button type="button" [mat-dialog-close]="data" class="btn btn-primary">Upload</button>
+    </div>
+  </div>
+
+
 </div>
-
-  <!-- <div *ngIf="ohWHat()">Content to render when condition is true.</div> -->
-
-
-  <!-- //ngSwitchCase for images -->

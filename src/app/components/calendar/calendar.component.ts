@@ -47,7 +47,7 @@ export class CalendarComponent implements OnInit {
 
   execute() {
     return gapi.client.calendar.events.insert({
-      'calendarId': 'primary',
+      'calendarId': 'swapyard.io@gmail.com',
       'resource': this.event
     })
       .then(function (response) {
@@ -60,9 +60,9 @@ export class CalendarComponent implements OnInit {
   authenticate() {
 
     return gapi.auth2.getAuthInstance()
-      .signIn({ scope: "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events" })
-      .then(function () { console.log("Sign-in successful"); },
-        function (err) { console.error("Error signing in", err); });
+      // .signIn({ scope: "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events" })
+      // .then(function () { console.log("Sign-in successful"); },
+      //   function (err) { console.error("Error signing in", err); });
   }
 
   // add in user emils
@@ -77,7 +77,7 @@ export class CalendarComponent implements OnInit {
       .then(() => {
         console.log("GAPI client loaded for API");
         return gapi.client.calendar.events.insert({
-          "calendarId": "primary",
+          "calendarId": "swapyard.io@gmail.com",
           "conferenceDataVersion": 1,
           "maxAttendees": 3,
           "sendNotifications": true,
@@ -96,7 +96,9 @@ export class CalendarComponent implements OnInit {
               "timeZone": "Europe/Dublin"
             },
             'attendees': [
-              { 'email': any[1] }
+              { 'email': any[1] ,
+
+            }
             ],
             'reminders': {
               'useDefault': false,

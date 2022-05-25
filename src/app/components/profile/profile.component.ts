@@ -42,6 +42,9 @@ export class ProfileComponent implements OnInit {
       }, () => {});
   }
 
+   //overlay item if swapped
+   //swaps to date 
+   
   editProfile():void{
     console.log(this.VAPID_PUBLIC_KEY)
     const dialogRef = this.dialog.open(
@@ -112,8 +115,10 @@ export class ProfileComponent implements OnInit {
 for(var o in this.itemArray[j].images){
       const b = this.domSanitizationService.bypassSecurityTrustUrl('data:image/jpeg;base64,'+ this.itemArray[j].images[o].data)
   this.itemArray[j].images[o].data = b
+  
 
 }}
+this.itemArray = this.itemArray.reverse()
         console.log(this.itemArray)
 
         // for(let x in data){

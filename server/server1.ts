@@ -20,10 +20,14 @@ const serverSideClient = new StreamChat(
 //create a unique match id, so like 
 
 app.post('/join', async (req, res) => {
+  console.log(  process.env.STREAM_API_KEY
+    )
+    console.log(req.body.chatId)
+
     //add another const
-  const { username } = req.body.username;
-  console.log(username)
+  const username  = req.body.username as string;
   const { chatId } = req.body.chatId;
+
 
   const token = serverSideClient.createToken(username);
 //   try {
@@ -39,14 +43,12 @@ app.post('/join', async (req, res) => {
 //   }
 
   const admin = { id: 'admin' };
-  const channel = serverSideClient.channel('messaging', chatId, {
-    name: 'Talk Shop',
-    created_by: admin,
-  });
+  const channel = serverSideClient.channel('messaging', chatId);
 
   try {
-    await channel.create();
-    await channel.addMembers([username, 'admin']);
+    await channel.addMembers([username, 'user']);
+    await channel.query();
+
   } catch (err) {
     console.log(err);
   }

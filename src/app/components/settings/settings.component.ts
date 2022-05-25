@@ -1,6 +1,7 @@
 import { ReturnStatement } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomValidators } from 'src/app/classes/custom-validators';
 import { UserServiceService } from 'src/app/services/user-service.service';
 
@@ -38,6 +39,9 @@ onPasswordChange(){
     var x = {password: this.passForm.value['password']}
     this.us.userSettings(x,sessionStorage.getItem('id')).subscribe(data=>
       console.log(data))
+      this.snackbar.open('Password changed successfully',null, {
+        duration: 3000
+      });
 
   }
 
@@ -50,8 +54,10 @@ onPasswordChange(){
         return;
     }else{
       var x = {email: this.editForm.value['email']}
-      this.us.userSettings(x,sessionStorage.getItem('id')).subscribe(data=>
-        console.log(data))
+      this.us.userSettings(x,sessionStorage.getItem('id')).subscribe()
+        this.snackbar.open('Email changed successfully',null, {
+          duration: 3000
+        });
     }
 
     // display form values on success
@@ -62,7 +68,7 @@ get f() { return this.editForm.controls; }
 get b() { return this.passForm.controls; }
 
 
-  constructor( private fb: FormBuilder, private us: UserServiceService) { }
+  constructor( private fb: FormBuilder, private us: UserServiceService, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
   

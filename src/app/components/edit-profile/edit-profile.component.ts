@@ -48,6 +48,9 @@ images: Array<any>;
 if(details.profile){
   this.us.createProfiler(this.formData, sessionStorage.getItem('id')).subscribe(data=>
     console.log(data))
+    this.snackbar.open('Profile picture changed successfully',null, {
+      duration: 3000
+    });
 }
 
 
@@ -92,7 +95,9 @@ onSubmitBio(){
 console.log(details)
   if(details){
     this.us.editProfile(details, sessionStorage.getItem('id')).subscribe(data=>console.log(data))
-    console.log(this.editForm)
+    this.snackbar.open('Bio changed successfully',null, {
+      duration: 3000
+    });
   }
 }
       
