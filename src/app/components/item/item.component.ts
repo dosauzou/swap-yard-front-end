@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -23,9 +23,14 @@ export interface DialogData {
 })
 export class ItemComponent implements OnInit {
     form: String;
-    myControl = new FormControl();
-    myControl1 = new FormControl();
+    inputForm = new FormGroup({
 
+    myControl : new FormControl('', Validators.required),
+    myControl1 : new FormControl('', Validators.required),
+    size :new FormControl('', Validators.required),
+    condition : new FormControl('', Validators.required)
+
+    })
     filteredOptions: Observable<string[]>;
   filteredOptions1: Observable<string[]>;
   options1: string[]=[];
@@ -41,6 +46,9 @@ this.options = new Array()
       this.dialogRef.close();
     }
     next(): void {
+      if (this.inputForm.invalid) {
+        return;
+      }else
       this.form = 'switch';
     }
     analyser(): void {
@@ -58,14 +66,14 @@ this.options = new Array()
       }
     
 
-    this.filteredOptions = this.myControl.valueChanges.pipe(
+    this.filteredOptions = this.inputForm['myControl'].value.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value)),
+      map(value => this._filter(value as string)),
     );
 
-    this.filteredOptions1 = this.myControl1.valueChanges.pipe(
+    this.filteredOptions1 = this.inputForm['myControl1'].value.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter1(value)),
+      map(value => this._filter1(value as string)),
     );
   }
   private _filter(value: string): string[] {

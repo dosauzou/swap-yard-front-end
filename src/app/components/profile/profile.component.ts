@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Item } from 'src/app/classes/item';
 import { ItemComponent } from '../item/item.component';
@@ -13,11 +13,14 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { SwPush } from '@angular/service-worker';
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 import { EditComponent } from '../edit/edit.component';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { User } from 'src/app/classes/user';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
+
 })
 export class ProfileComponent implements OnInit {
   item: Item
@@ -27,10 +30,13 @@ export class ProfileComponent implements OnInit {
   images: ContentInterface;
   VAPID_PUBLIC_KEY: string = process.env.publicVapidKey!;
   itemArray: any[];
+  itemtozoom: Item;
+  closeResult: string;
+  user: User;
   // readonly VAPID_PUBLIC_KEY = 'BB_WkKNOcmJQSAub5Q_A_Cg3e4_qSSgkwZ6IouAitsX59ulO6DdE3s8Ihaz2lk9WCoPuwnDMYkOEF1HVpW0yZuM';
 
-  constructor(public dialog: MatDialog, private userService: UserServiceService, private app: AppService, private http: HttpClient, private itemS: ItemService, private upload: UploadService, public domSanitizationService: DomSanitizer,   private swPush: SwPush,
-    private notifications: NotificationsService) { 
+  constructor(public sanitizer: DomSanitizer, public dialog: MatDialog, private userService: UserServiceService, private app: AppService, private http: HttpClient, private itemS: ItemService, private upload: UploadService, public domSanitizationService: DomSanitizer,   private swPush: SwPush,
+    private notifications: NotificationsService, private modalService: NgbModal) { 
     http.get('api/v1/token').subscribe(data => {
       const token = data['token'];
       }, () => {});
@@ -39,11 +45,15 @@ export class ProfileComponent implements OnInit {
   editProfile():void{
     console.log(this.VAPID_PUBLIC_KEY)
     const dialogRef = this.dialog.open(
-      EditComponent,{
-        panelClass: 'my-outlined-dialog',
+      EditProfileComponent,{
+        // panelClass: 'my-outlined-dialog',
         width: '500px',
         height: '500px',
+        panelClass: 'custom-modalbox'
       });
+  }
+  openXl(content) {
+    this.modalService.open(content, { centered: true,  windowClass: 'dark-modal',  modalDialogClass: 'dark-modal' });
   }
 
   openDialog():void{
@@ -82,7 +92,15 @@ export class ProfileComponent implements OnInit {
       });
   }
   zoomIn(item: Item){
-    console.log(item)
+    this.itemtozoom = item;
+    for(var b in this.itemtozoom){
+      console.log(this.itemtozoom)
+
+      // this.itemtozoom.images.map(p=> 'data:image/jpeg;base64,'+p.data)
+      console.log(this.itemtozoom.images)
+
+    }
+    return true
 
   }
 
@@ -128,6 +146,14 @@ for(var o in this.itemArray[j].images){
     return this.app.authenticated; }
 
   ngOnInit(): void {
+    this.userService.getUser(this.id).subscribe(data=>{
+      this.user = data as User ;
+    console.log(this.user)
+    var img = new Image()
+      this.user.profilepic.data = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,'+ this.user.profilepic.data)
+
+
+  })
     this.subscribeToNotifications();
     this.display()
   }

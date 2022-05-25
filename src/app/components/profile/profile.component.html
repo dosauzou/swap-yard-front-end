@@ -4,7 +4,7 @@
 		<div class="profile">
 			<div class="profile-image">
                 <!-- //retrieve from db, on click change from -->
-				<img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="">
+                <img [src]="user.profilepic.data"  style =" width: 180px; height: 180px; max-width: 180px; max-height: 180px;" alt="" >
 
 			</div>
 
@@ -31,7 +31,8 @@
 
 			<div class="profile-bio">
                         <!-- //send to db and retrieve fr -->
-				<p><span class="profile-real-name">{{id}}</span> Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️</p>
+                        <span class="profile-real-name">{{user.firstName}} {{user.lastName}}</span>
+                        <p class="lead">{{user.bio}}</p>
 
 			</div>
 
@@ -41,14 +42,14 @@
 
 </header>
 <main>
-    <div class="container">
+    <div class="container border-0">
         <div class="gallery">
 
             <!-- //creates a popup where it shows the rest of the details and images -->
 <mat-grid-list cols="3" rowHeight="1:1" [gutterSize]="'15px'" >
     <mat-grid-tile  
         *ngFor="let media of itemArray">
-        <div (click)="zoomIn(media)" class = "gallery-item" tabindex="0">
+        <div (click)="zoomIn(media) " (click)="openXl(content)" class = "gallery-item" tabindex="0">
             <img  [src]="media.images[0].data" class = "gallery-image">
             <div class="gallery-item-info">
 
@@ -75,23 +76,118 @@
       </button> -->
       
 </main>
-<!-- <div class="container row">
-    <div class="col-md-12">
-        <div *ngIf=retrievedImage>
-            <img [src]="retrievedImage">
-        </div>
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
-</div> -->
-<!-- 
-this.retrieveResonse = data;
-this.base64Data = this.retrieveResonse[x].data;
-console.log('hey' + this.base64Data)
-this.images = new ContentInterface
-this.images.fileName=data[x].fileName;
-this.images.fileType=data[x].fileType;
-this.images.data= 'data:'+this.images.fileType+';base64,'+ data[x].data;
-// this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-// this.images.data= 'data:image/png;base64,'+ data[x].data;
-this.mediaArray.push(this.images)
-console.log(this.mediaArray) -->
+    <div class="modal-body">
+   
+        <!-- <div style="width: 100%; display: table;">
+            <div style="display: table-row">
+                <div style="width: 600px; display: table-cell;"> Left </div>
+                <div style="display: table-cell;"> Right </div>
+            </div>
+        </div> -->
+        <div class="modal-body">
+            <ngb-accordion [closeOthers]="true" activeIds="static-1">
+                <ngb-panel id="static-1" title="More photos">
+                  <ng-template ngbPanelContent>
+                  <div class="carouselCont">
+        <ngb-carousel>
+        <ng-template ngbSlide *ngFor="let item of itemtozoom.images">
+              <img [src]="item.data" alt="itemtozoom.description" style="height:500px; width:500px;" >
+            <div class="carousel-caption">
+              <h3>"{{itemtozoom.description}}"</h3>
+              <p>Size: {{itemtozoom.size}}, Condition: {{itemtozoom.clothingCondition}}</p>
+            </div>
+          </ng-template>
+        </ngb-carousel>
+        </div>
+                  </ng-template>
+                </ngb-panel>
+                <ngb-panel id="static-2">
+                  <ng-template ngbPanelTitle>
+                    <span>Comments</span>
+                  </ng-template>
+                  <ng-template ngbPanelContent>
+                    <section style="background-color: #eee;">
+                        <div class="container border-0 my-0 py-50">
+                          <div class="row d-flex justify-content-center">
+                            <div class="col-md-12 col-lg-10 col-xl-8">
+                              <div class="card">
+                                <div class="card-body">
+                                  <div class="d-flex flex-start align-items-center">
+                                    <img class="rounded-circle shadow-1-strong me-3"
+                                      src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="60"
+                                      height="60" />
+                                    <div>
+                                      <h6 class="fw-bold text-primary mb-1">Lily Coleman</h6>
+                                      <p class="text-muted small mb-0">
+                                        Shared publicly - Jan 2020
+                                      </p>
+                                    </div>
+                                  </div>
+                      
+                                  <p class="mt-3 mb-4 pb-2">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                    quis nostrud exercitation ullamco laboris nisi ut aliquip consequat.
+                                  </p>
+                      
+                                  <div class="small d-flex justify-content-start">
+                                    <a href="#!" class="d-flex align-items-center me-3">
+                                      <i class="far fa-thumbs-up me-2"></i>
+                                      <p class="mb-0">Like</p>
+                                    </a>
+                                    <a href="#!" class="d-flex align-items-center me-3">
+                                      <i class="far fa-comment-dots me-2"></i>
+                                      <p class="mb-0">Comment</p>
+                                    </a>
+                                    <a href="#!" class="d-flex align-items-center me-3">
+                                      <i class="fas fa-share me-2"></i>
+                                      <p class="mb-0">Share</p>
+                                    </a>
+                                  </div>
+                                </div>
+                                <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+                                  <div class="d-flex flex-start w-100">
+                                    <img class="rounded-circle shadow-1-strong me-3"
+                                      src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
+                                      height="40" />
+                                    <div class="form-outline w-100">
+                                      <textarea class="form-control" id="textAreaExample" rows="4"
+                                        style="background: #fff;"></textarea>
+                                      <label class="form-label" for="textAreaExample">Message</label>
+                                    </div>
+                                  </div>
+                                  <div class="float-end mt-2 pt-1">
+                                    <button type="button" class="btn btn-primary btn-sm">Post comment</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm">Cancel</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                  </ng-template>
+                </ngb-panel>
+    
+              </ngb-accordion>
+          </div>
+        </div>
+    <div class="modal-footer">
+    </div>
+  </ng-template>
+
+
+  
+
+  <!-- <ul class="list-inline">
+    <li *ngFor="let photo of itemtozoom.images let i = index" data-toggle="modal" data-target="#myModal">
+        <a href="#myGallery" data-slide-to="i"><img class="img-thumbnail" [src]="photo.data">
+            <br>
+  Caption</a></li>
+ 
+        </ul> -->
  

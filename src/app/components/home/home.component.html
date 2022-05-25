@@ -1,3 +1,4 @@
+<ngx-spinner size="medium" type="pacman"></ngx-spinner>
 <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;" (click)="isOpen = !isOpen" type="button" cdkOverlayOrigin
   #trigger="cdkOverlayOrigin">
 
@@ -68,11 +69,6 @@
 </ng-template>
 
 
-<body>
-
-
-
-  <main>
 
 
 
@@ -140,13 +136,12 @@
     <ng-template #elseBlock>
       <div class= container style="position: relative; width: 500px">
        
-      <app-spinner></app-spinner>
-      <p class="lead" style="font-size: 25px; color: white; text-align: center;">Looks like thats all we've got... check back later or try adjust your preferences!</p>
+        <div class="text-center">
+          <div class="spinner-border" role="status">
+          </div>
+        </div>      <p class="lead" style="font-size: 25px; color: white; text-align: center;">Looks like thats all we've got... check back later or try adjust your preferences!</p>
 
     </div>
 
     </ng-template>
 
-
-  </main>
-</body>

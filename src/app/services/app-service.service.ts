@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class AppService {
@@ -10,7 +11,7 @@ export class AppService {
 
     private loggedIn = new BehaviorSubject<boolean>(localStorage.getItem("isLoggedIn") === "true");
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private _snackBar: MatSnackBar) {
     }
 
     get isLoggedIn() {
@@ -39,15 +40,20 @@ export class AppService {
                 console.log(this.authenticated)
 
             }else{
+
                 this.authenticated = false;
                 this.loggedIn.next(false)
                 localStorage.setItem("isLoggedIn", "false");
                 console.log(localStorage)
+
     
             }
 
             return callback && callback();
         }, error => {
+            let snackBarRef = this._snackBar.open('Your username or password is incorrect',null, {
+                duration: 3000
+              });
             this.authenticated = false;
             this.loggedIn.next(false)
             localStorage.setItem("isLoggedIn", "false");

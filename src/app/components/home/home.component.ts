@@ -12,6 +12,8 @@ import { SwipesService } from 'src/app/services/swipes.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Overlay } from '@angular/cdk/overlay';
+import { DislikesService } from 'src/app/services/dislikes.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-home',
@@ -36,7 +38,7 @@ export class HomeComponent implements OnInit {
   public isCollapsed1 = true;
   public isCollapsed2 = true;
 
-  lastitem: boolean = true;
+  lastitem: boolean;
   arrayProxy: any;
 
   isOpen = false;
@@ -46,6 +48,7 @@ export class HomeComponent implements OnInit {
   categoryFilter: any;
   conditionFilter: any;
   sizeFilter: any;
+  seen: any[];
 
 
   setHandler() {
@@ -58,7 +61,7 @@ export class HomeComponent implements OnInit {
   }
   //call the backedn to populate an arraylist
   constructor(private itemService: ItemService, private http: HttpClient, private itemS: ItemService, public sanitizer: DomSanitizer,
-    private swiped: SwipesService, fb: FormBuilder, private overlay: Overlay
+    private swiped: SwipesService, fb: FormBuilder, private overlay: Overlay, private dislike: DislikesService, private spinnerService: NgxSpinnerService
   ) {
     this.colorFilter = new Array()
     this.arrayCopy = new Array()
@@ -226,45 +229,43 @@ export class HomeComponent implements OnInit {
 
   display() {
 
+    this.seen = new Array()
+    this.dislike.getDislikeLikes(this.id).subscribe(data => {
+      this.seen = data as Array<number>
+      this.itemService.getItems().subscribe(
+        data => {
+          this.itemArray = data as Array<Item>
+          this.itemArray= this.itemArray.filter( ( p ) => {
+            return !this.seen.includes( p.id );
+          } );
+          console.log(this.itemArray)
+  
+          if(this.itemArray.length>0){
+          for(var j in this.itemArray){
+            for(var o in this.itemArray[j].images){
+                  const b = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,'+ this.itemArray[j].images[o].data)
+              this.itemArray[j].images[o].data = b
+            
+            }}
+          this.arrayCopy = [...this.itemArray]
+          console.log(this.arrayCopy)
+          this.arrayProxy = new Proxy(this.itemArray, this.setHandler());
+          this.colours = new Set(this.arrayCopy.map(o => o.color))
+          this.conditions = new Set(this.arrayCopy.map(o => o.clothingCondition))
+          this.sizings = new Set(this.arrayCopy.map(o => o.size))
+          this.lastitem = true;
+          }else{
+            this.lastitem = false
+          }
+      
+    })})
     //retrieve the items 
-    console.log('huh')
-    this.itemService.getItems().subscribe(
-      data => {
-        this.itemArray = data as Array<Item>
-        for(var j in this.itemArray){
-          for(var o in this.itemArray[j].images){
-                const b = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,'+ this.itemArray[j].images[o].data)
-            this.itemArray[j].images[o].data = b
-          
-          }}
-        // for (let x in data) {
-        //   console.log(data)
-        //   this.item = new Item;
-        //   this.item.images = new Array()
-        //   this.item.id = data[x].id;
-        //   this.item.color = data[x].color;
-        //   this.item.clothingCondition = data[x].clothingCondition;
-        //   this.item.material = data[x].material;
-        //   this.item.size = data[x].size;
-        //   this.item.description = data[x].description
-        //   // this.item.images.fileName = data[x].images[0].fileName;
-        //   // this.item.images.fileType = data[x].images.fileType;
-        //   // this.item.images.data = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + data[x].images.data);
-        //   this.itemArray.push(this.item)
-        // }
-
-        this.arrayCopy = [...this.itemArray]
-        console.log(this.arrayCopy)
-        this.arrayProxy = new Proxy(this.itemArray, this.setHandler());
-        this.colours = new Set(this.arrayCopy.map(o => o.color))
-        this.conditions = new Set(this.arrayCopy.map(o => o.clothingCondition))
-        this.sizings = new Set(this.arrayCopy.map(o => o.size))
-
-
-      },
+    //get user likes and dislikeds
+ ,
       error => {
         console.log("exception occured");
-      })
+      }
+
   }
 
 
@@ -273,47 +274,35 @@ export class HomeComponent implements OnInit {
   onRight() {
     this.swipe = new Swipe()
     this.item = this.arrayCopy[this.arrayCopy.length - 1]
-
     this.swipe.swipedItem = this.item
-    //all i need is for the backend to persist the swipes to a user
-    // this.itemService.findById(this.item.id).subscribe(
-    //   data => {
-    //     this.swipe.swipedItem
-    console.log(this.swipe)
-    this.arrayCopy.pop()
-    this.arrayProxy.pop()
-
     this.swiped.createSwipe(this.swipe.swipedItem.id, this.id).subscribe(data => {
       console.log(data)
     })
-
-    //should we retrieve the item first and then post to swipe, fid
-
-    //users swipe plus the users id, so
-    //post request to store the users swipes, then amethod that doesnt allow swipes to popup again
-    //store the stuff, when you reach the end change the sceen to annimation
-  }
-  // onRight(){
-  //   this.swipe = new Swipe()
-  //   this.swipe.s   this.itemArray.pop()
-  //   wipedItem = this.item
-  //   this.item = this.itemArray[this.itemArray.length-1]
-
-  //   //all i need is for the backend to persist the swipes to a user
-  //   this.swiped.createSwipe(this.item.id, this.id).subscribe(
-  //     data => {
-  //   console.log(data)
-  //   //should we retrieve the item first and then post to swipe, fid
-
-  //   //users swipe plus the users id, so
-  //   //post request to store the users swipes, then amethod that doesnt allow swipes to popup again
-  //   //store the stuff, when you reach the end change the sceen to annimation
-  // }
-  onLeft() {
+    this.arrayCopy.pop()
+    this.arrayProxy.pop()
 
     if (this.arrayCopy.length > 1) {
-      this.arrayCopy.pop()
-      this.arrayProxy.pop()
+
+      this.item = this.arrayCopy[this.arrayCopy.length - 1]
+    } else {
+      this.lastitem = false
+    }
+
+
+
+  }
+
+  onLeft() {
+    this.swipe = new Swipe()
+    this.item = this.arrayCopy[this.arrayCopy.length - 1]
+    this.swipe.swipedItem = this.item
+    this.dislike.sendDislike(this.swipe.swipedItem.id, this.id).subscribe(data => {
+      console.log(data)
+    })
+    this.arrayCopy.pop()
+    this.arrayProxy.pop()
+    if (this.arrayCopy.length > 1) {
+
       this.item = this.arrayCopy[this.arrayCopy.length - 1]
     } else {
       this.lastitem = false
@@ -322,8 +311,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.display();
+    this.display()
 
   }
+
 
 }

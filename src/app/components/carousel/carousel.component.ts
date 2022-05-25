@@ -17,6 +17,7 @@ export class CarouselComponent implements OnInit {
   itemList: any [];
   closeResult: string;
   itemTodelete: Item;
+  
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;

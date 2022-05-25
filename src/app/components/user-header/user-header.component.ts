@@ -7,6 +7,7 @@ import { Item } from 'src/app/classes/item';
 import { AppService } from 'src/app/services/app-service.service';
 import { ItemService } from 'src/app/services/item-service';
 import { UploadService } from 'src/app/services/upload-service.service';
+import { EditComponent } from '../edit/edit.component';
 import { ItemComponent } from '../item/item.component';
 // import {ProfileComponent} from 'src/app/components/profile/profile.component'
 @Component({
@@ -26,7 +27,14 @@ export class UserHeaderComponent implements OnInit {
   constructor(public dialog: MatDialog,private upload: UploadService,private itemS: ItemService, private app: AppService, private http: HttpClient, private router: Router) { }
 // openDialog(){
 //   this.u.openDialog();
-
+editProfile():void{
+  const dialogRef = this.dialog.open(
+    EditComponent,{
+      panelClass: 'custom-modalbox',
+      width: '500px',
+      height: '500px',
+    });
+}
 // }
 openDialog():void{
   this.item = new Item()
