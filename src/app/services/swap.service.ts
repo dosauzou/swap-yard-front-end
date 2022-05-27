@@ -12,7 +12,6 @@ export class SwapService {
 
 
   postSwap(match: any, any): Observable <any>{
-    console.log(MatChip)
     return this.http.post('api/v1/swap/update/'+any, match)
 
   }

@@ -67,6 +67,7 @@ export class CalendarComponent implements OnInit {
 
   // add in user emils
   initClient(any) {
+    console.log(any)
     console.log(any[0])
     console.log(any[1])
     console.log(any[2])
@@ -108,12 +109,16 @@ export class CalendarComponent implements OnInit {
           }
         })
           .then((response) => {
+            console.log(response)
+            let j = new Date(any[0])
+            var d = j.toDateString()
+            var t = j.toTimeString()
             this.swap = new Swap
-            this.swap.status = true
+            // this.swap.swapStatus = false
             this.swap.details = new SwapDetails
-            this.swap.details.date = any[0]
+            this.swap.details.date = d
             this.swap.details.location = any[2]
-            this.swap.details.time = any[1]
+            this.swap.details.time = t
             this.matchArray = new Array
             this.matchArray = any[3].slice()
 
@@ -124,8 +129,8 @@ export class CalendarComponent implements OnInit {
                 this.matchArray[x].swap = this.swap
                 this.userMatch = this.matchArray[x]
                 this.userMatch.user=this.userMatch.user.username
-                this.userMatch.itemId = this.userMatch.itemList.map(e=>e.id);
-                this.userMatch.itemList = null;
+                this.userMatch.itemId = this.userMatch.items.map(e=>e.id);
+                this.userMatch.items = null;
                 // this.setMatch(this.matchArray[x])
 
 
@@ -230,6 +235,7 @@ export class CalendarComponent implements OnInit {
       this.authenticate().then(this.initClient.bind(this.getDate(), this.argArray)).then(data => {
         console.log(data)
         this.swapService.postSwap(data, sessionStorage.getItem('id')).subscribe(data => {
+          console.log(data)
         })
       })
 

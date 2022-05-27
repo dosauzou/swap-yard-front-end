@@ -51,13 +51,11 @@ openDialog():void{
 
       this.item.color=result.color
       this.item.size=result.size
-      console.log(result.condition)
       this.item.clothingCondition = result.condition
       this.item.material=result.material
       this.item.formData = result.posts
       this.item.description = result.description
   
-      console.log(this.item.formData.getAll('files'))
       if(result){
         this.upload.uploadFile(this.item.formData)
         .subscribe(data => 
@@ -78,8 +76,7 @@ openDialog():void{
   }
 logout(){
   this.app.authenticated = false;
-  console.log(localStorage)
-  console.log(sessionStorage)
+
   localStorage.clear();
   this.router.navigateByUrl('/login');
 }

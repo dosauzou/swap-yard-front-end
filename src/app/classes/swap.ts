@@ -4,7 +4,7 @@ import { SwapDetails } from "./swap-details";
 export class Swap {
     // ---- swap class, status, items in swap, swap details
 
-    status: boolean;
+    swapStatus: string;
     items: Array<Item>
     details: SwapDetails
 

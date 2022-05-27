@@ -3,6 +3,7 @@ import { AppService } from 'src/app/services/app-service.service';
 import { User } from 'src/app/classes/user';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -14,19 +15,22 @@ export class RegisterComponent implements OnInit {
   registerForm = this.fb.group({
     firstName: ['', Validators.required],
     lastName:['', Validators.required],
-    email:['', Validators.required],
-    username:['', Validators.required],
-    phoneNo:['', Validators.required],
-    password:['', Validators.required],
+    email:['', [Validators.required,Validators.email]],
+    username:['', [Validators.required, Validators.minLength(8)]],
+    phoneNo:['', [Validators.required, Validators.pattern("^((\\+353-?)|0|353)?[0-9]{9}$")]],
+    password:['', [Validators.required, Validators.minLength(8)]],
     confPassword:['', Validators.required]
   });
   submitted: boolean;
 
-  constructor(private userService: AppService, private fb: FormBuilder, private router: Router) { }
+  constructor(private userService: AppService, private fb: FormBuilder, private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.submitted = false;
   }
+  get f(){  
+    return this.registerForm.controls;  
+  } 
 
   saveUser(){
     this.user = new User();
@@ -43,7 +47,9 @@ export class RegisterComponent implements OnInit {
     this.userService.createUser(this.user).subscribe(
     data => {console.log(data)
     this.router.navigateByUrl('/login');
-    }, error => console.log(error))
+    }, error => {console.log(error)
+    let x = this.snackbar.open("An account with this username or email already exists")}
+      )
     this.user = new User ();
   }
 

@@ -23,7 +23,7 @@ declare var gapi: any;
 })
 export class SchedulerComponent implements OnInit {
   @Input() itemArray = new Array<Match>();
-  @Input() username = '';
+  @Input() username = new Match();
 
   swap : Swap
   status: boolean;
@@ -31,6 +31,7 @@ export class SchedulerComponent implements OnInit {
   date: string;
   time: string;
   location: string;
+  name = sessionStorage.getItem('id')
 
 
 
@@ -40,28 +41,16 @@ export class SchedulerComponent implements OnInit {
 
     console.log(this.itemArray)
     for (let x in this.itemArray){
-      if(this.itemArray[x].user.username == this.username){
-
+      if(this.itemArray[x].user.username == this.username.user.username){
         this.swap = this.itemArray[x].swap;
-        console.log(this.itemArray[x])
-      
-        //if this .swap status = null
-        console.log(this.swap + 'hey')
+
 
         if(!this.swap){
           this.status = false
 
         }else
         this.status=true
-        //because swap status is false we display the thing
-
-        // this.swap.status = true;
-        // this.swap.details.date ='';
-        // this.swap.details.location = '';
-        // this.swap.details.time = '';
-
-        //persist swap to the database
-
+  
       }
       
 
@@ -70,53 +59,6 @@ export class SchedulerComponent implements OnInit {
     return this.status
 
   }
-  //if the swap hasnt been scheduled
-
-  // startDate: string;
-  // endDate: string;
-  // atendeeOne: string;
-  // atendeeTwo: string;
-  // location: string;
-  // // event: any;
-
-  // getAtendeeOne(){
-  //  return this.atendeeOne 
-  // }
-  // getAtendeeTwo(){
-  //  return this.atendeeTwo 
-  // }
-
-  // getLocation(){
-  //   return this.location
-  // }
-
-  // event = {
-  //   'summary': 'Swapyard 2022',
-  //   'location': this.getLocation,
-  //   'description': 'Swap preffered items',
-  //   'start': {
-  //     // 'dateTime': this.startDate,
-  //     'timeZone': 'Ireland/Dublin'
-  //   },
-  //   'end': {
-  //     // 'dateTime': this.endDate,
-  //     'timeZone': 'Ireland/Dublin'
-  //   },
-  //   'recurrence': [
-  //     'RRULE:FREQ=DAILY;COUNT=2'
-  //   ],
-  //   'attendees': [
-  //     {'email': this.getAtendeeOne},
-  //     {'email': this.getAtendeeTwo}
-  //   ],
-  //   'reminders': {
-  //     'useDefault': false,
-  //     'overrides': [
-  //       {'method': 'email', 'minutes': 24 * 60},
-  //       {'method': 'popup', 'minutes': 10}
-  //     ]
-  //   }
-  // };
 
   constructor() { }
 

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Match } from 'src/app/classes/match';
+import { Swap } from 'src/app/classes/swap';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { ItemComponent } from '../item/item.component';
 import { MatchHeaderComponent } from '../match-header/match-header.component';
@@ -22,6 +24,7 @@ export class NotificationComponent implements OnInit {
   scheduled: any;
   itemArray: any;
   allMatches: any;
+  complete : Array<Match>;
 
   //this ccannot be undone, you have to swap at least one item with the user
   //overlay on the swapped ited
@@ -35,10 +38,11 @@ export class NotificationComponent implements OnInit {
   //should go through image analyser on upload and when marking as done
 
 
-  constructor(private notifications: NotificationsService, public dialog: MatDialog) { }
+  constructor(private notifications: NotificationsService, public dialog: MatDialog, public sanitizer: DomSanitizer) { }
 
 
-  save(username):void{
+  save(username : Match):void{
+    console.log(username.user)
     const dialogRef = this.dialog.open(
     MatchHeaderComponent,{
       panelClass: 'my-outlined-dialog',
@@ -50,30 +54,43 @@ export class NotificationComponent implements OnInit {
     )};
 
   loadMatches(){
+
     this.match = new Match;
     this.array = new Array();
     this.itemArray = new Array()
     this.scheduled = new Array();
     this.allMatches = new Array();
+    this.complete =  new Array();
     this.notifications.doNotification(this.id).subscribe(
       data=>{
 
   for (let b in data){
-    console.log(data[b])
-  
-          this.match = new Match
-          this.match.user = data[b].user
-          this.match.swap = data[b].swap
-          this.match.itemList = data[b].items
-          this.match.chatId = data[b].chatId
+          this.match =  data[b]
+
+        if(this.match.user.profilepic)
+          this.match.user.profilepic = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,'+ this.match.user.profilepic.data)
+
           this.itemArray.push(this.match)
           this.allMatches.push(this.match)
+      if(this.match.swap){
+          switch(this.match.swap.swapStatus) {
+            case "true":
+              this.complete.push(this.match)
+              console.log("Passed");
 
-          if(!this.match.swap){
-            this.array.push(this.match)
-          }else{this.scheduled.push(this.match)
-           
-          }
+              break;
+            case "false":
+              this.scheduled.push(this.match)
+              console.log("Passed");
+
+              break;
+        
+            default:
+            }
+          }else
+          this.array.push(this.match)
+
+         
           
         
       }})

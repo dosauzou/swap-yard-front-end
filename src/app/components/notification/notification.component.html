@@ -1,5 +1,4 @@
 
-
 <mat-accordion>
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
@@ -7,9 +6,7 @@
           New swaps
         </mat-panel-title>
       </mat-expansion-panel-header>
-
         <mat-list role="list" *ngFor="let match of array">
-    
             <mat-list-item    role="listitem" >View Details
                 <!-- <li class="list-group-item">{{match.user.firstName}}></li> -->
                 <img matListAvatar src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="...">
@@ -18,7 +15,7 @@
                   <span> {{match.user.firstName}} </span>
                   <span class="demo-2"> -- {{match.user.firstName}} </span>
                 </p>
-                <button mat-icon-button (click)="save(match.user.username)">  
+                <button mat-icon-button (click)="save(match)">  
                     <mat-icon>info</mat-icon>
                 </button>
             </mat-list-item>
@@ -32,18 +29,17 @@
           Scheduled swaps
         </mat-panel-title>
       </mat-expansion-panel-header>
-
-        <mat-list role="list" *ngFor="let match of array">
+        <mat-list role="list" *ngFor="let match of scheduled">
     
             <mat-list-item    role="listitem" >View Details
                 <!-- <li class="list-group-item">{{match.user.firstName}}></li> -->
                 <img matListAvatar src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="...">
                 <h3 matLine> {{match.user.username}} </h3>
                 <p matLine>
-                  <span> {{match.user.firstName}} </span>
+                  <span> {{match.user.firstName}}</span>
                   <span class="demo-2"> -- {{match.user.firstName}} </span>
                 </p>
-                <button mat-icon-button (click)="save(match.user.username)">  
+                <button mat-icon-button (click)="save(match)">  
                     <mat-icon>info</mat-icon>
                 </button>
             </mat-list-item>
@@ -58,17 +54,24 @@
           Completed Swaps
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-list role="list" *ngFor="let match of scheduled">
+      <mat-list role="list" *ngFor="let match of complete">
     
         <mat-list-item    role="listitem" >View Details
             <!-- <li class="list-group-item">{{match.user.firstName}}></li> -->
-            <img matListAvatar src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="...">
+           
+
+            <img *ngIf="match.user.profilepic" matListAvatar [src]=match.user.profilepic alt="...">
+            <img *ngIf="!match.user.profilepic" matListAvatar src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="...">
+         
+            <!-- <img matListAvatar src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="..."> -->
+
+
             <h3 matLine> {{match.user.username}} </h3>
             <p matLine>
               <span> {{match.user.firstName}} </span>
               <span class="demo-2"> -- {{match.user.firstName}} </span>
             </p>
-            <button mat-icon-button (click)="save(match.user.username)">  
+            <button mat-icon-button (click)="save(match)">  
                 <mat-icon>info</mat-icon>
             </button>
         </mat-list-item>

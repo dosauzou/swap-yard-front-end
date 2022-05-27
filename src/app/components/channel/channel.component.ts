@@ -9,7 +9,7 @@ import { StreamChat, ChannelData, Message, User, Channel, UserFromToken } from '
   styleUrls: ['./channel.component.scss']
 })
 export class ChannelComponent implements OnInit {
-  @Input() match = '';
+  @Input() match = new Match();
   @Input() allMatches = new Array<Match>();
 
   title = 'angular-chat';
@@ -25,7 +25,7 @@ export class ChannelComponent implements OnInit {
 
 
   async joinChat() {
-
+console.log(this.match)
 
     var xchatId = this.sortArray()
     const { username } = this;
@@ -81,12 +81,11 @@ export class ChannelComponent implements OnInit {
 
     let z: Match;
     var b = this.allMatches.map(p => {
-      if (p.user.username == this.match
+      if (p.user.username == this.match.user.username
       )
         z = p
     })
 
-    console.log(z.user.username, 'this is the chat id', this.match)
 
     return z.chatId
 

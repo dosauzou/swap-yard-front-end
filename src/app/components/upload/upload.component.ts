@@ -96,7 +96,6 @@ for(var a in this.myFiles){
       }
 
     }
-    console.log(this.formData.get('files'))
     this.data.posts=this.formData
 
 

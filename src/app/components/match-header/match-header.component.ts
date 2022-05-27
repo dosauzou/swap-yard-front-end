@@ -10,13 +10,18 @@ import { NotificationComponent } from '../notification/notification.component';
   styleUrls: ['./match-header.component.scss']
 })
 export class MatchHeaderComponent implements OnInit {
+  username1: Match;
+  // username: any;
 
 
 
-  constructor(@Inject(MAT_DIALOG_DATA) public dialogData: {itemArray: Array<Match>, allMatches: Array<Match>, username: string}) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public dialogData: {itemArray: Array<Match>, allMatches: Array<Match>, username: Match}) {
+    this.username1=dialogData.username;
+  
+
+   }
 
   ngOnInit(): void {
-    console.log(this.dialogData.itemArray)
   }
 
 }

@@ -25,7 +25,7 @@ export class AppComponent {
   constructor(private app: AppService, private http: HttpClient, private router: Router, private _swPush: SwPush) {
     //checks to see if user is logged in 
 
-    this.app.authenticate(undefined, undefined);
+    // this.app.authenticate(undefined, undefined);
 
   }
 
@@ -53,12 +53,7 @@ export class AppComponent {
         this.router.navigateByUrl('/login');
     })).subscribe();
   }
-  public slides = [
-    { src: "https://image1.com" },
-    { src: "https://image2.com" },
-    { src: "https://image3.com" },
-    { src: "https://image4.com" }
-  ];
+
 }
 
 

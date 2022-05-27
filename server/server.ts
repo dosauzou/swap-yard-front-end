@@ -5,6 +5,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const webpush = require('web-push');
 const allSubscriptions : string[] = [];
+console.log( process.env.VAPID_PUBLIC_KEY)
 
 // console.log(webpush.generateVAPIDKeys()); //successfully hit the node express endpoint
 
@@ -34,11 +35,9 @@ app.listen(3000, () => {
         process.env.VAPID_PRIVATE_KEY
     );
     
-      console.log(res.body)
 
       const subscription = req.body
       allSubscriptions.push(subscription)
-      console.log(allSubscriptions)
 
  
       const notificationPayload = {

@@ -1,8 +1,30 @@
 
+    <div *ngIf="!username1.swap then thenBlock"></div>
+    <div *ngIf="username1.swap && username1.swap.swapStatus=='false' then case3Block"></div>
+    <div *ngIf="username1.swap && username1.swap.swapStatus=='true' then case2Block "></div>
 
+    <ng-template #thenBlock>
   <mat-tab-group>
     <mat-tab label="Chat"><app-channel [allMatches]="dialogData.allMatches" [match]=dialogData.username ></app-channel></mat-tab>
-    <mat-tab label="Item"><app-carousel [itemArray]="dialogData.itemArray"  [username]=dialogData.username></app-carousel></mat-tab>
+      <div class="incoming_msg">
+        <mat-tab label="Item"><app-carousel [itemArray]="dialogData.itemArray"  [username]=dialogData.username></app-carousel></mat-tab>
+      </div>
     <mat-tab label="Swap Scheduler"><app-scheduler [itemArray]="dialogData.itemArray" [username]=dialogData.username></app-scheduler></mat-tab>
   </mat-tab-group>
+</ng-template>
+
+<ng-template #case3Block>
+  <mat-tab-group>
+    <mat-tab label="Chat"><app-channel [allMatches]="dialogData.allMatches" [match]=dialogData.username ></app-channel></mat-tab>
+    <mat-tab label="Swap Scheduler"><app-scheduler [itemArray]="dialogData.itemArray" [username]=dialogData.username></app-scheduler></mat-tab>
+  </mat-tab-group>
+</ng-template>
+
+
+<ng-template #case2Block>
+  <mat-tab-group>
+    <mat-tab label="Swap Scheduler"><app-scheduler [itemArray]="dialogData.itemArray" [username]=dialogData.username></app-scheduler></mat-tab>
+  </mat-tab-group>
+</ng-template>
+
 
