@@ -16,6 +16,11 @@ export class SwapService {
 
   }
 
+  markDone(match: number): Observable <any>{
+    return this.http.post('api/v1/swap/update/markDone', match)
+
+  }
+
   postDetails(any, list): Observable <any>{
     return this.http.post('api/v1/swap/update/list/'+any, list)
 

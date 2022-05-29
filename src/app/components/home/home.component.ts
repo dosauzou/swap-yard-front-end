@@ -300,7 +300,7 @@ export class HomeComponent implements OnInit {
 
   onRight() {
     this.swipe = new Swipe()
-    // this.item = this.arrayCopy[this.arrayCopy.length - 1]
+    this.item = this.arrayCopy[this.arrayCopy.length - 1]
     this.swipe.swipedItem = this.item
     this.swiped.createSwipe(this.swipe.swipedItem.id, this.id).subscribe(data => {
       console.log(data)
@@ -321,7 +321,7 @@ export class HomeComponent implements OnInit {
 
   onLeft() {
     this.swipe = new Swipe()
-    // this.item = this.arrayCopy[this.arrayCopy.length - 1]
+    this.item = this.arrayCopy[this.arrayCopy.length - 1]
     this.swipe.swipedItem = this.item
     this.dislike.sendDislike(this.swipe.swipedItem.id, this.id).subscribe(data => {
       console.log(data)

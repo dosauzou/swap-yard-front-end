@@ -64,8 +64,14 @@ openDialog():void{
             this.item.images = data
             this.itemS.createPost(this.item, this.id)
             .subscribe(
-            data => console.log(data), 
-            error => console.log(error))
+              
+            data => {
+              console.log(data)
+              location.reload();
+
+            }, 
+            error => console.log(error),
+            )
           })
          
         }

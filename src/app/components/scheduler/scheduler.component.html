@@ -1,4 +1,3 @@
-
 <div *ngIf="getSwapStatus(); else elseBlock">
   <div>
 
@@ -9,7 +8,7 @@
         <div class="card">
 
 
-      
+
 
           <div class="invoice p-5">
 
@@ -80,7 +79,7 @@
                         <span>Color:{{ item.color}}</span>
                       </div>
                     </td>
-               
+
                   </tr>
 
                 </tbody>
@@ -114,5 +113,5 @@
   </div>
 </div>
 <ng-template #elseBlock>
-  <app-calendar [itemArray]=itemArray [swapList]="swapList"[username]=username.user.username></app-calendar>
+  <app-calendar [itemArray]=itemArray [swapList]="swapList" [username]=username.user.username></app-calendar>
 </ng-template>

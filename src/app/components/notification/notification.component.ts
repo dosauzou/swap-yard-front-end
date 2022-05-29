@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Match } from 'src/app/classes/match';
 import { Swap } from 'src/app/classes/swap';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { SwapService } from 'src/app/services/swap.service';
 import { ItemComponent } from '../item/item.component';
 import { MatchHeaderComponent } from '../match-header/match-header.component';
 import { MatchComponent } from '../match/match.component';
@@ -18,7 +20,7 @@ export class NotificationComponent implements OnInit {
   match: Match;
   x: any
   array : Array<Match>
-  username: any;
+   username: any;
   itemList: any;
   panelOpenState = true;
   scheduled: any;
@@ -27,6 +29,7 @@ export class NotificationComponent implements OnInit {
   allMatches: any;
   complete : Array<Match>;
   matchItems: any;
+  markDone: any;
 
   //this ccannot be undone, you have to swap at least one item with the user
   //overlay on the swapped ited
@@ -40,20 +43,25 @@ export class NotificationComponent implements OnInit {
   //should go through image analyser on upload and when marking as done
 
 
-  constructor(private notifications: NotificationsService, public dialog: MatDialog, public sanitizer: DomSanitizer) { }
+  constructor(private notifications: NotificationsService, public dialog: MatDialog, public sanitizer: DomSanitizer, private modalService : NgbModal, private swapService: SwapService) { }
 
 
-  save(username : Match):void{
-    console.log(username.user)
+  save(user : any):void{
+    const username = user;
     const dialogRef = this.dialog.open(
     MatchHeaderComponent,{
       panelClass: 'my-outlined-dialog',
       width: '500px',
       height: '600px',
-      data:{itemArray: this.itemArray, allMatches: this.allMatches,  username: username, matchItems: this.matchItems}
+      data:{itemArray: this.itemArray, allMatches: this.allMatches,  username: username, matchItems: this.matchItems, scheduled : this.scheduled, complete: this.complete, array: this.array}
 
     }
     )};
+
+    setItem(any){
+      this.markDone = any.swap.id;
+      console.log(this.markDone)
+    }
 
   loadMatches(){
 
@@ -65,11 +73,12 @@ export class NotificationComponent implements OnInit {
     this.complete =  new Array();
     this.notifications.doNotification(this.id).subscribe(
       data=>{
-        console.log(data)
+        const array = data
 
-  for (let b in data){
-          this.match =  data[b]
-          this.matchItems = data[b].matchItems
+  for (let b in array){
+           this.match =  array[b]
+          
+          this.matchItems = array[b].matchItems
 
         if(this.match.user.profilepic)
           this.match.user.profilepic = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,'+ this.match.user.profilepic.data)
@@ -91,14 +100,15 @@ export class NotificationComponent implements OnInit {
               case null:
                 this.array.push(this.match)
                 console.log("Passed");
-  
                 break;
         
             default:
 
             }
-          }else
-          this.array.push(this.match)
+          }else{
+            this.array.push(this.match)
+
+          }
 
          
           
@@ -106,10 +116,21 @@ export class NotificationComponent implements OnInit {
       }})
       return this.array
   }
+
+  openXl(content) {
+    this.modalService.open(content, { centered: true, windowClass: 'dark-modal', modalDialogClass: 'dark-modal' });
+  }
   ngOnInit(): void {
     this.loadMatches()
 
    
+  }
+
+  markAsDone(){
+    // this.swapService.markDone(this.markDone).subscribe(data=> console.log(data))
+    this.scheduled=this.scheduled.filter(p=>p.swap.id != this.markDone)
+    this.complete.push(this.scheduled.find(p=>p.swap.id=this.markDone));
+    location.reload();
   }
   //pass this match to the swap scheduler and say each match is going to have a swapid
 

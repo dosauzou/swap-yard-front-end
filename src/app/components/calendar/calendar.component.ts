@@ -244,6 +244,8 @@ export class CalendarComponent implements OnInit {
         console.log(data)
         this.swapService.postSwap(data, sessionStorage.getItem('id')).subscribe(data => {
           console.log(data)
+          location.reload();
+
         })
       })
 

@@ -138,6 +138,7 @@ if(this.itemArray[x].swap){
   constructor(public sanitizer: DomSanitizer, private modalService: NgbModal, private swapService :SwapService) { }
 
   ngOnInit(): void {
+    console.log(this.username, 'this is the match')
 
     console.log(this.itemArray, 'item array')
 

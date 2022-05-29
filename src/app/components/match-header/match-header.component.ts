@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, Input, OnInit, AfterContentChecked } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Match } from 'src/app/classes/match';
 import { DialogData } from '../item/item.component';
@@ -9,8 +9,8 @@ import { NotificationComponent } from '../notification/notification.component';
   templateUrl: './match-header.component.html',
   styleUrls: ['./match-header.component.scss']
 })
-export class MatchHeaderComponent implements OnInit {
-  username1: Match;
+export class MatchHeaderComponent implements OnInit  {
+  username1: any;
   swapFalse: Array <any>= new Array<any>();
   swapUnscheduled: Array <any>= new Array<any>();
   swapTrue:Array <any>= new Array<any>();
@@ -18,45 +18,28 @@ export class MatchHeaderComponent implements OnInit {
 
 
 
-  constructor(@Inject(MAT_DIALOG_DATA) public dialogData: {itemArray: Array<Match>, allMatches: Array<Match>, username: Match, matchItems: Array<any>}) {
-    this.username1=dialogData.username;
- 
+  constructor(@Inject(MAT_DIALOG_DATA) public dialogData: {itemArray: Array<Match>, allMatches: Array<Match>, username: any, matchItems: Array<any>, scheduled: any, complete: any, array: any},private cdRef : ChangeDetectorRef) {
+
 
    }
+  ngAfterContentChecked(): void {
+ 
+
+    this.cdRef.detectChanges();
+  }
 
  method(){
 
-
-
-  for(var i in this.dialogData.itemArray){
- 
-if(this.dialogData.itemArray[i].swap){
-    switch(this.dialogData.itemArray[i].swap.swapStatus) {
-      case "true" :
-      this.swapTrue.push(this.dialogData.itemArray[i])
-    break;
-    case "false" :
-    this.swapFalse.push(this.dialogData.itemArray[i])
-    break;
-    case null :
-      this.swapUnscheduled.push(this.dialogData.itemArray[i])
-    break;
-      default:
-        // this.status= false;
-      }
-    }else{
-      this.swapUnscheduled.push(this.dialogData.itemArray[i])
-
-    }
-     
-  }
+  this.username1=this.dialogData.username;
+this.swapTrue = this.dialogData.complete;
+this.swapUnscheduled =this.dialogData.array;
+this.swapFalse= this.dialogData.scheduled;
  }
 
   ngOnInit(): void {
-   this.method();
-   console.log(this.swapUnscheduled, 'this is it')
-   console.log(this.swapFalse)
+    this.method()
    console.log(this.swapTrue)
+ 
 
 
   }
