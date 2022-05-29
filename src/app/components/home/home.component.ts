@@ -10,10 +10,11 @@ import { last } from 'rxjs/operators';
 import { Swipe } from 'src/app/classes/swipe';
 import { SwipesService } from 'src/app/services/swipes.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Overlay } from '@angular/cdk/overlay';
 import { DislikesService } from 'src/app/services/dislikes.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +22,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./home.component.scss'],
 
 })
+
+//swap items are added with the plus button, then the swap is scheduled
+
 export class HomeComponent implements OnInit {
   images: ContentInterface;
   itemArray: Array<Item>
@@ -49,8 +53,17 @@ export class HomeComponent implements OnInit {
   conditionFilter: any;
   sizeFilter: any;
   seen: any[];
+  itemtozoom: Item;
 
+  // itemForm = new FormGroup ({
+  //   firstName: new FormControl(),
+  //   lastName: new FormControl(),
+  //   alias: new FormArray([ new FormControl("")])
+  // });
+  click(){
+    this.isOpen = !this.isOpen
 
+  }
   setHandler() {
     const handler = {
       get(target: any, property: any) {
@@ -61,7 +74,7 @@ export class HomeComponent implements OnInit {
   }
   //call the backedn to populate an arraylist
   constructor(private itemService: ItemService, private http: HttpClient, private itemS: ItemService, public sanitizer: DomSanitizer,
-    private swiped: SwipesService, fb: FormBuilder, private overlay: Overlay, private dislike: DislikesService, private spinnerService: NgxSpinnerService
+    private swiped: SwipesService, fb: FormBuilder, private overlay: Overlay, private dislike: DislikesService, private spinnerService: NgxSpinnerService, private modalService: NgbModal
   ) {
     this.colorFilter = new Array()
     this.arrayCopy = new Array()
@@ -86,7 +99,21 @@ export class HomeComponent implements OnInit {
       yellow: false,
     });
   }
+  openXl(content) {
+    this.modalService.open(content, { centered: true, windowClass: 'dark-modal', modalDialogClass: 'dark-modal' });
+  }
+  zoomIn(item: Item) {
+    this.itemtozoom = item;
+    for (var b in this.itemtozoom) {
+      console.log(this.itemtozoom)
 
+      // this.itemtozoom.images.map(p=> 'data:image/jpeg;base64,'+p.data)
+      console.log(this.itemtozoom.images)
+
+    }
+    return true
+
+  }
   filterByColour(selected: any) {
     if (!this.colorFilter.includes(selected)) {
       this.colorFilter.push(selected)
@@ -273,7 +300,7 @@ export class HomeComponent implements OnInit {
 
   onRight() {
     this.swipe = new Swipe()
-    this.item = this.arrayCopy[this.arrayCopy.length - 1]
+    // this.item = this.arrayCopy[this.arrayCopy.length - 1]
     this.swipe.swipedItem = this.item
     this.swiped.createSwipe(this.swipe.swipedItem.id, this.id).subscribe(data => {
       console.log(data)
@@ -281,7 +308,7 @@ export class HomeComponent implements OnInit {
     this.arrayCopy.pop()
     this.arrayProxy.pop()
 
-    if (this.arrayCopy.length > 1) {
+    if (this.arrayCopy.length > 0) {
 
       this.item = this.arrayCopy[this.arrayCopy.length - 1]
     } else {
@@ -294,14 +321,14 @@ export class HomeComponent implements OnInit {
 
   onLeft() {
     this.swipe = new Swipe()
-    this.item = this.arrayCopy[this.arrayCopy.length - 1]
+    // this.item = this.arrayCopy[this.arrayCopy.length - 1]
     this.swipe.swipedItem = this.item
     this.dislike.sendDislike(this.swipe.swipedItem.id, this.id).subscribe(data => {
       console.log(data)
     })
     this.arrayCopy.pop()
     this.arrayProxy.pop()
-    if (this.arrayCopy.length > 1) {
+    if (this.arrayCopy.length > 0) {
 
       this.item = this.arrayCopy[this.arrayCopy.length - 1]
     } else {

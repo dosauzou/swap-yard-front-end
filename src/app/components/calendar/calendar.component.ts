@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { executionAsyncResource } from 'async_hooks';
+import { Item } from 'src/app/classes/item';
 import { Match } from 'src/app/classes/match';
 import { Swap } from 'src/app/classes/swap';
 import { SwapDetails } from 'src/app/classes/swap-details';
@@ -18,6 +19,7 @@ export class CalendarComponent implements OnInit {
 
   @Input() itemArray = new Array<Match>();
   @Input() username = '';
+  @Input() swapList = new Array<Item>();
 
   locationForm = this.fb.group({
     inputAddress: ['', Validators.required],
@@ -67,11 +69,9 @@ export class CalendarComponent implements OnInit {
 
   // add in user emils
   initClient(any) {
-    console.log(any)
-    console.log(any[0])
-    console.log(any[1])
-    console.log(any[2])
 
+
+    console.log(any)
 
     gapi.client.setApiKey("AIzaSyBKHxE_AHRt9mOsUt1vaUE0lyBqeuk56ts");
     return gapi.client.load("calendar", "v3")
@@ -117,6 +117,10 @@ export class CalendarComponent implements OnInit {
             // this.swap.swapStatus = false
             this.swap.details = new SwapDetails
             this.swap.details.date = d
+
+            this.swap.items = any[5]
+            this.swap.items= this.swap.items.map(p=>p.id)
+            
             this.swap.details.location = any[2]
             this.swap.details.time = t
             this.matchArray = new Array
@@ -213,6 +217,8 @@ export class CalendarComponent implements OnInit {
 
 
   sendToCalendar(any) {
+    console.log(this.swapList, "this is the list")
+
     this.userMatch = new Match()
 
     this.process = any
@@ -224,6 +230,8 @@ export class CalendarComponent implements OnInit {
     this.argArray.push(this.getLocation())
     this.argArray.push(this.itemArray)
     this.argArray.push(this.username)
+    this.argArray.push(this.swapList)
+
     user: Match
 
 
@@ -243,6 +251,8 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.swapList, 'this is the swap lisat')
+
   }
 
 }

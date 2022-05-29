@@ -29,14 +29,16 @@ export class ProfileComponent implements OnInit {
   id = sessionStorage.getItem('id');
   images: ContentInterface;
   VAPID_PUBLIC_KEY: string = process.env.publicVapidKey!;
-  itemArray: any[];
+  itemArray: any[] = new Array();
   itemtozoom: Item;
   closeResult: string;
-  user: User;
+  user: User =new User();
   // readonly VAPID_PUBLIC_KEY = 'BB_WkKNOcmJQSAub5Q_A_Cg3e4_qSSgkwZ6IouAitsX59ulO6DdE3s8Ihaz2lk9WCoPuwnDMYkOEF1HVpW0yZuM';
 
   constructor(public sanitizer: DomSanitizer, public dialog: MatDialog, private userService: UserServiceService, private app: AppService, private http: HttpClient, private itemS: ItemService, private upload: UploadService, public domSanitizationService: DomSanitizer, private swPush: SwPush,
     private notifications: NotificationsService, private modalService: NgbModal) {
+     
+
     http.get('api/v1/token').subscribe(data => {
       const token = data['token'];
     }, () => { });
@@ -124,6 +126,7 @@ export class ProfileComponent implements OnInit {
       error => {
         console.log("exception occured");
       })
+      return this.itemArray
   }
 
   subscribeToNotifications = () => {
@@ -139,20 +142,22 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  returnUser(){
+    
+  }
 
   ngOnInit(): void {
-    this.itemArray = new Array()
-    this.user=new User()
+    var b;
+    this.itemArray = this.display()
     this.userService.getUser(this.id).subscribe(data => {
       this.user = data as User;
-      console.log(this.user)
       var img = new Image()
       if(this.user.profilepic)
       this.user.profilepic.data = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + this.user.profilepic.data)
 
-
     })
-    this.display()
+
+    
     this.subscribeToNotifications();
 
   }

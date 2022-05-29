@@ -27,21 +27,7 @@
 
   </div>
   </div>
-  <div class="mb-3 mt-3">
-    <span class="label text-white">Confirm Password</span>
-    <input [ngClass]="{ 'is-invalid': submitted1 && b.confPass.errors }"  type="password" class="form-control" id="inputPassword4" placeholder="Password" formControlName = "confPass">
-    <div
-    *ngIf="submitted1 && b.confPass.errors"
-    class="invalid-feedback"
-  >
-    <div *ngIf="b.confPass.errors.required">
-      Confirm Password is required
-    </div>
-    <div *ngIf="b.confPass.errors.mustMatch">
-      Password and confirm not match
-    </div>
-  </div>
-  </div>
+
   </div>
 <button  type="submit" class="btn btn-primary btn-lg btn-block">Change password</button>
 </form>

@@ -57,7 +57,7 @@
 </div>
             <div>
     <label for="password" class="form-label">Enter Password: </label>
-    <input id="password" type="text" class="form-control"
+    <input id="password" type="password" class="form-control"
     formControlName ="password">
     <div *ngIf="f.password.touched && f.username.invalid" class="alert alert-danger">  
 
@@ -67,10 +67,5 @@
 </div>
     </div>
 
-    <div>
-    <label for="confPassword" class="form-label">Confirm Password: </label>
-    <input id="confPassword" type="text" class="form-control"
-    formControlName ="confPassword">
-    </div>
     <button type="submit" class="btn btn-primary" [disabled]="!registerForm.valid">Submit</button>
 </form>

@@ -1,21 +1,108 @@
 <mat-toolbar color="black">
-  <span  class="fill-remaining-space" style="width: 100%;text-align: center">Swap Items with {{username.user.username}}</span>
+  <span class="fill-remaining-space" style="width: 100%;text-align: center">Swap Items with
+    {{username.user.username}}</span>
 </mat-toolbar>
-<div fxLayout='row' fxLayoutWrap class="cards">
-<mat-card class="example-card" fxFlex="20" *ngFor="let item of itemList">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Michael Kors top</mat-card-title>
-    </mat-card-header>
-    <img mat-card-image [src]="item.images[0].data" >
- 
-    <mat-card-actions>
-      <button mat-fab color (click)="open(content)" (click)="setItem(item)">        	<mat-icon>thumb_down</mat-icon>
-      </button>
-    </mat-card-actions>
-  </mat-card>
 
-  <ng-template #content let-modal>
+
+<mat-accordion>
+  <mat-expansion-panel *ngIf="!containsAll" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Step 1
+      </mat-panel-title>
+      <mat-panel-description>
+        Select items you want to add to this swap
+      </mat-panel-description>
+
+    </mat-expansion-panel-header>
+    <mat-card class="example-card" fxFlex="20" *ngFor="let item of itemList">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+      </mat-card-header>
+      <img mat-card-image [src]="item.images[0].data">
+
+      <mat-card-actions>
+        <button mat-fab color (click)="setItem(item)"> <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+            fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+            <path
+              d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+          </svg>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-expansion-panel>
+  <mat-expansion-panel *ngIf="!containsAll" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Step 2
+      </mat-panel-title>
+      <mat-panel-description>
+        Review these items
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-card class="example-card" fxFlex="20" *ngFor="let item of swapList">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+      </mat-card-header>
+      <img mat-card-image [src]="item.images[0].data">
+
+      <mat-card-actions>
+        <button mat-fab color (click)="removeItem(item)"> <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+            fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+            <path
+              d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+            <path fill-rule="evenodd"
+              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+          </svg>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+    <div [ngSwitch]="swapList.length">
+    <button *ngSwitchDefault (click)="pushItems()" type="button" class="btn btn-secondary btn-lg btn-block" >Add selection</button>
+
+  <button *ngSwitchCase ="0" (click)="pushItems()" type="button" class="btn btn-secondary btn-lg btn-block" disabled="true">Add selection</button>
+
+    </div>
+
+  </mat-expansion-panel>
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Step 3
+      </mat-panel-title>
+      <mat-panel-description>
+        Schedule your swap
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div [ngSwitch]="itemList.length">
+
+      <div *ngSwitchCase ="0">
+
+    <div [ngSwitch]="userEditMade">
+    <div *ngSwitchDefault>
+      <span class="lead">The other user must add their items</span>
+      </div>
+
+    <div *ngSwitchCase ="true">
+        <ng-template  matExpansionPanelContent>
+       <app-scheduler [itemArray]="itemArray" [swapList]="swapList" [username]=username></app-scheduler>
+   </ng-template>
+    </div>
+    </div>
+    </div>
+    <div *ngSwitchCase ="1">
+      <ng-template  matExpansionPanelContent>
+        <span class="lead">All users must add their items</span>
+      </ng-template>
+  </div>
+    </div>
+ 
+
+
+  </mat-expansion-panel>
+</mat-accordion>
+
+<!-- <ng-template #content let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Deleting item..</h4>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
@@ -26,7 +113,4 @@
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" (click)="deleteItem()">Yes</button>
     </div>
-  </ng-template>
-  
-  
-  
+  </ng-template> -->

@@ -23,8 +23,10 @@ export class NotificationComponent implements OnInit {
   panelOpenState = true;
   scheduled: any;
   itemArray: any;
+  chatId: any;
   allMatches: any;
   complete : Array<Match>;
+  matchItems: any;
 
   //this ccannot be undone, you have to swap at least one item with the user
   //overlay on the swapped ited
@@ -48,7 +50,7 @@ export class NotificationComponent implements OnInit {
       panelClass: 'my-outlined-dialog',
       width: '500px',
       height: '600px',
-      data:{itemArray: this.itemArray, allMatches: this.allMatches,  username: username}
+      data:{itemArray: this.itemArray, allMatches: this.allMatches,  username: username, matchItems: this.matchItems}
 
     }
     )};
@@ -63,9 +65,11 @@ export class NotificationComponent implements OnInit {
     this.complete =  new Array();
     this.notifications.doNotification(this.id).subscribe(
       data=>{
+        console.log(data)
 
   for (let b in data){
           this.match =  data[b]
+          this.matchItems = data[b].matchItems
 
         if(this.match.user.profilepic)
           this.match.user.profilepic = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,'+ this.match.user.profilepic.data)
@@ -84,8 +88,14 @@ export class NotificationComponent implements OnInit {
               console.log("Passed");
 
               break;
+              case null:
+                this.array.push(this.match)
+                console.log("Passed");
+  
+                break;
         
             default:
+
             }
           }else
           this.array.push(this.match)

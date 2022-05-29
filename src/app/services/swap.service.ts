@@ -15,5 +15,10 @@ export class SwapService {
     return this.http.post('api/v1/swap/update/'+any, match)
 
   }
+
+  postDetails(any, list): Observable <any>{
+    return this.http.post('api/v1/swap/update/list/'+any, list)
+
+  }
   constructor(public http: HttpClient) { }
 }

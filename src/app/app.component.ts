@@ -37,7 +37,6 @@ export class AppComponent {
       // JSON.parse(o)
 
       if( o == 'true'){
-        console.log(o)
         return true
 
       }else return false

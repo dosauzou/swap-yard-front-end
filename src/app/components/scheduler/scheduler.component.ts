@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { throws } from 'assert';
+import { truncateSync } from 'fs';
+import { Item } from 'src/app/classes/item';
 import { Match } from 'src/app/classes/match';
 import { Swap } from 'src/app/classes/swap';
 declare var gapi: any;
@@ -22,17 +25,17 @@ declare var gapi: any;
   styleUrls: ['./scheduler.component.scss']
 })
 export class SchedulerComponent implements OnInit {
-  @Input() itemArray = new Array<Match>();
+  @Input() itemArray = new Array<any>();
   @Input() username = new Match();
 
-  swap : Swap
-  status: boolean;
+  swap : any
+  status: boolean = true;
   itemList: any [];
   date: string;
   time: string;
   location: string;
   name = sessionStorage.getItem('id')
-
+  @Input() swapList = new Array<Item>();
 
 
   //check if swap is already in the database
@@ -42,28 +45,43 @@ export class SchedulerComponent implements OnInit {
     console.log(this.itemArray)
     for (let x in this.itemArray){
       if(this.itemArray[x].user.username == this.username.user.username){
-        this.swap = this.itemArray[x].swap;
+      if(this.itemArray[x].swap){
 
+        this.swap = this.itemArray[x].swap
+        console.log(this.swap.swapItems)
 
-        if(!this.swap){
-          this.status = false
+        for(var l in this.swap.swapItems){
+          for(var j in this.swap.swapItems[l].images){
 
-        }else
-        this.status=true
+          console.log('these are the images')
+
+          this.swap.swapItems[l].images[j].data = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,'+ this.swap.swapItems[l].images[j].data)
+          }
+        }
+        switch(this.itemArray[x].swap.swapStatus) {
+          case "true" || "false":
+          this.status = true;
+            break;
+            case null:
+              this.status =false
+              break;
+      
+          default:
+            // this.status= false;
+          }
+        }else this.status =false
   
       }
       
 
     }
-    console.log('this is the status:'+ this.swap)
     return this.status
 
   }
 
-  constructor() { }
+  constructor(public sanitizer: DomSanitizer,) { }
 
   ngOnInit(): void {
-   this.getSwapStatus
   }
 
 }

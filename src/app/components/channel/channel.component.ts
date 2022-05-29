@@ -86,6 +86,7 @@ console.log(this.match)
         z = p
     })
 
+    console.log(z.chatId, 'this is the chatId')
 
     return z.chatId
 

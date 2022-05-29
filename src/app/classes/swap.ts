@@ -5,7 +5,7 @@ export class Swap {
     // ---- swap class, status, items in swap, swap details
 
     swapStatus: string;
-    items: Array<Item>
+    items: Array<any>
     details: SwapDetails
 
 

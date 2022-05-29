@@ -17,12 +17,7 @@ export class SettingsComponent implements OnInit {
   password: new FormControl('', [
     Validators.required,
     Validators.minLength(6)
-  ]),
-    confPass: new FormControl('', [Validators.required])
-  },
-
-  CustomValidators.mustMatch('password', 'confPass')
-);
+  ])});
  editForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
 
