@@ -18,8 +18,17 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+            "customWebpackConfig": {
+              "path": "extra-webpack.config.js",
+              "mergeStrategies": {"optimization":"replace"},
+              "replaceDuplicatePlugins": true
+
+           },
+           "allowedCommonJsDependencies": [
+            "lodash"
+         ],
             "outputPath": "dist/Swapyard",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -28,29 +37,38 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest"
+  
+ 
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/styles.scss",  
               "node_modules/slick-carousel/slick/slick.scss",
-              "node_modules/slick-carousel/slick/slick-theme.scss"
+              "node_modules/ngx-spinner/animations/pacman.css", 
+                "node_modules/slick-carousel/slick/slick-theme.scss"
             ],
             "scripts": [
-              "node_modules/slick-carousel/slick/slick.min.js"]
+              "node_modules/jquery/dist/jquery.js",
+
+              "node_modules/slick-carousel/slick/slick.min.js"
+            ],
+            "serviceWorker": true,
+            "ngswConfigPath": "ngsw-config.json"
           },
           "configurations": {
             "production": {
               "budgets": [
-                {
+               {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "10mb",
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "5kb",
+                  "maximumError": "5kb"
                 }
               ],
               "fileReplacements": [
@@ -74,6 +92,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+        },
           "configurations": {
             "production": {
               "browserTarget": "Swapyard:build:production"
@@ -89,7 +110,7 @@
           "options": {
             "browserTarget": "Swapyard:build"
           }
-        },
+        }, 
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -100,13 +121,19 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest",
+              "src/manifest.webmanifest"
+         
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [  "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+          ]
           }
         }
       }

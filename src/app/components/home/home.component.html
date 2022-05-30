@@ -1,1 +1,195 @@
-<p>home works!</p>
+<div class="flex-shrink-0 p-3 bg-white" style="width: 280px;" (click)="isOpen = !isOpen" type="button" cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin">
+
+  <a class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+    <svg class="bi me-2" width="30" height="24">
+      <use xlink:href="#bootstrap" />
+    </svg>
+    
+    <span class="fs-5 fw-semibold">Refine Items</span>
+  </a>
+</div>
+<!-- This template displays the overlay content and is connected to the button -->
+
+<ng-template cdkConnectedOverlay [cdkConnectedOverlayOpen]="isOpen" [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayPositions]="[{originX: 'start', overlayX: 'start', overlayY: 'top', originY: 'bottom'}]">
+  <ul class="example-list">
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" (click)="collapse.toggle()"
+        [attr.aria-expanded]="!isCollapsed">
+        Colour
+      </button>
+      <section class="example-section" [formGroup]="colour">
+
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <div class="collapse show" id="home-collapse" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+            <li class="form-check" *ngFor=" let colour of colours">
+              <p>
+                <mat-checkbox  *ngIf="colorFilter.includes(colour)" checked="true"   (click)=filterByColour(colour) value="{{colour}" class="form-check">{{colour}}
+                </mat-checkbox>
+                <mat-checkbox  *ngIf="!colorFilter.includes(colour)"  (click)=filterByColour(colour) value="{{colour}" class="form-check">{{colour}}
+                </mat-checkbox>
+              </p>
+            </li>
+          </div>
+        </ul>
+      </section>
+    </li>
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" (click)="collapse2.toggle()"
+        [attr.aria-expanded]="!isCollapsed2" aria-controls="collapseExample">
+        Size
+      </button>
+      <div #collapse2="ngbCollapse" [(ngbCollapse)]="isCollapsed2">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li class="form-check" *ngFor=" let size of sizings">
+            <p>
+              <mat-checkbox *ngIf="sizeFilter.includes(size)" checked="true"  (click)=filterBySize(size) value="{{size}" class="form-check">{{size}}
+              </mat-checkbox>
+              <mat-checkbox *ngIf="!sizeFilter.includes(size)"  (click)=filterBySize(size) value="{{size}" class="form-check">{{size}}
+              </mat-checkbox>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" (click)="collapse1.toggle()"
+        [attr.aria-expanded]="!isCollapsed1">
+        Category
+      </button>
+      <div #collapse1="ngbCollapse" [(ngbCollapse)]="isCollapsed1">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li class="form-check" *ngFor=" let condition of conditions">
+            <p>
+              <mat-checkbox *ngIf="conditionFilter.includes(condition)" checked="true" (click)=filterByCondition(condition) value="{{condition}" class="form-check">{{condition}}
+              </mat-checkbox>
+
+              <mat-checkbox *ngIf="!conditionFilter.includes(condition)" (click)=filterByCondition(condition) value="{{condition}" class="form-check">{{condition}}
+              </mat-checkbox>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</ng-template>
+
+
+
+
+
+
+
+    <div *ngIf="lastitem; else elseBlock">
+      <div class="main-div height: 0px">
+
+       
+
+        <!-- ng for works, url is not safe though?? -->
+        <mat-card class="example-card">
+          <mat-card-header>
+            <!-- <div mat-card-avatar class="example-header-image"> -->
+              <!-- <div></div> -->
+            <!-- </div> -->
+            <!-- <mat-card-title>{{id}}</mat-card-title> -->
+            <!-- <mat-card-subtitle>{{this.item.size}}</mat-card-subtitle> -->
+          </mat-card-header>
+
+          <img mat-card-image [src]="arrayCopy[arrayCopy.length-1].images[0].data" class="card-size"
+            alt="Photo of a Shiba Inu">
+          <mat-card-content>
+            <!-- <p>
+              {{arrayCopy[arrayCopy.length-1].description}}
+            </p> -->
+          </mat-card-content>
+            <!-- sert likes (click)="onRight() -->
+            <mat-accordion>
+              <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title style="text-align: center;">
+                                        See Details
+
+                  </mat-panel-title>
+                  <mat-panel-description >
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>Size: {{arrayCopy[arrayCopy.length-1].size}}</p>
+                <p>Condition: {{arrayCopy[arrayCopy.length-1].clothingCondition}}</p>
+                <p>Color: {{arrayCopy[arrayCopy.length-1].color}}</p>
+                <p>Material: {{arrayCopy[arrayCopy.length-1].material}}</p>
+
+              </mat-expansion-panel>
+            </mat-accordion>
+         
+         <mat-card-actions style="text-align: center;">   
+            <div class="btn-group btn-group-lg" role="group" aria-label="...">   <div class="button" (click)="onLeft()">
+          <button mat-fab color="black" aria-label="Example icon button with a delete icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+          </button>
+        </div>
+    
+        <button mat-fab color="black" (click)="zoomIn(arrayCopy[arrayCopy.length-1])" (click)="openXl(content)" aria-label="Example icon button with a delete icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+          </svg>
+        </button>              <div class="button">
+            <button mat-fab color="black"  (click)="onRight()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+              </svg>
+            </button>
+          </div>
+      </div>
+          </mat-card-actions>
+
+        </mat-card>
+    
+
+        <!-- //onclick button, should store ther Swipe -->
+      
+      </div>
+    </div>
+
+    <ng-template #elseBlock>
+      <div class= container style="position: relative; width: 500px">
+       
+        <div class="text-center">
+          <div class="spinner-border" role="status">
+          </div>
+        </div>      <p class="lead" style="font-size: 25px; color: white; text-align: center;">Looks like thats all we've got... check back later or try adjust your preferences!</p>
+
+    </div>
+
+    </ng-template>
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+    
+        <!-- <div style="width: 100%; display: table;">
+                <div style="display: table-row">
+                    <div style="width: 600px; display: table-cell;"> Left </div>
+                    <div style="display: table-cell;"> Right </div>
+                </div>
+            </div> -->
+        <div class="modal-body">
+          <div class="carouselCont">
+            <ngb-carousel>
+              <ng-template ngbSlide *ngFor="let item of itemtozoom.images">
+                <img [src]="item.data" alt="itemtozoom.description" style="height:500px; width:500px;">
+                <div class="carousel-caption">
+                  <h3>"{{itemtozoom.description}}"</h3>
+                  <p>Size: {{itemtozoom.size}}, Condition: {{itemtozoom.clothingCondition}}</p>
+                </div>
+              </ng-template>
+            </ngb-carousel>
+          </div>
+        </div>
+      <div class="modal-footer">
+      </div>
+    </ng-template>
+    

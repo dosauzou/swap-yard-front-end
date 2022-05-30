@@ -1,0 +1,80 @@
+
+
+
+<div [ngSwitch]="getProcess()" class = "container">
+<!-- <mat-sidenav-container class="example-container" >
+    <mat-sidenav *ngIf="click" #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')"
+                 (closed)="events.push('close!')" >
+      Sidenav content
+    </mat-sidenav> -->
+<div *ngSwitchDefault>
+    <mat-toolbar color="black">
+        <span  class="fill-remaining-space" style="width: 100%;text-align: center">Choose a date</span>
+      </mat-toolbar>
+        <mat-card class="demo-inline-calendar-card">
+            <mat-calendar [(selected)]="selected"></mat-calendar>
+          </mat-card>
+          <button (click)= setProcess(time) type="button" class="btn btn-secondary btn-lg btn-block">Select a time</button>
+        </div>
+
+        <div class="float-container" *ngSwitchCase ="'time'">
+    
+            <mat-toolbar color="black">
+                <span  class="fill-remaining-space" style="width: 100%;text-align: center">Choose a time</span>
+              </mat-toolbar>
+              <div class = float-child>
+            <ngb-timepicker [(ngModel)]="meetingTime"></ngb-timepicker>
+              </div>
+              <div class = float-child>
+                <p>Your meeting is on {{getStringDate()}}.</p>
+
+            <p>At the selected time: {{meetingTime.hour}}: {{meetingTime.minute}}.</p>
+        </div>
+            <hr>
+            <button (click)= setProcess(location) type="button" class="btn btn-secondary btn-lg btn-block">Select a location</button>
+        </div>
+        <div *ngSwitchCase ="'location'">
+            <mat-toolbar color="black">
+                <span  class="fill-remaining-space" style="width: 100%;text-align: center">Confirm details</span>
+              </mat-toolbar>
+              <form>
+                <div class="form-group row">
+                  <label for="staticEmail" class="col-sm-2 col-form-label">Atendee</label>
+                  <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" [value]=getUserEmails()>
+                  </div>
+                </div>
+                <form [formGroup] = "locationForm"  (ngSubmit)="sendToCalendar(confirm)">
+                  <div class="mb-3 mt-3">
+                    <label for="inputAddress">Address</label>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" formControlName ="inputAddress">
+                  </div>
+                  <div class="mb-3">
+                    <label for="inputCity">Town</label>
+                    <input type="text" class="form-control" id="inputCity" formControlName ="inputCity">
+                  </div>
+                  <div class="mb-3">
+                    <label for="inputState">County</label>
+                    <input type="text" class="form-control" id="inputCounty" formControlName ="inputCounty">
+                  </div>
+                  <div class="mb-3">
+                    <label for="inputZip">Postcode</label>
+                    <input type="text" class="form-control" id="inputZip"formControlName ="inputZip">
+                  </div>
+             
+
+                  <button type="submit" class="btn btn-secondary btn-lg btn-block">Schedule swap</button>
+
+    </form>
+
+  </form>
+</div>
+
+
+
+        <div *ngSwitchCase ="'confirm'">
+        <span class="lead">    Swap is confirmed</span>
+        </div>
+        </div>
+
+ 

@@ -1,0 +1,90 @@
+<header>
+
+	<div class="container">
+
+		<div class="profile">
+
+			<div class="profile-image">
+
+                <div *ngIf="user && user.profilepic then thenBlock else elseBlock"></div>
+                <ng-template #thenBlock><img [src]="user.profilepic"
+                    style=" width: 180px; height: 180px; max-width: 180px; max-height: 180px;" alt="">
+                </ng-template>
+                <ng-template #elseBlock>
+                  <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="">     </ng-template>
+          
+
+			</div>
+
+			<div class="profile-user-settings">
+
+				<h1 class="profile-user-name">{{user.username}}</h1>
+
+			</div>
+
+			<div class="profile-stats">
+
+				<ul>
+					<li><span class="profile-stat-count">{{user.items.length }}  Posts</span></li>
+					<li><span class="profile-stat-count">{{totalSwaps}}</span> Swaps</li>
+				
+				</ul>
+
+			</div>
+
+			<div class="profile-bio">
+
+				<p>{{user.bio}}</p>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</header>
+
+<main>
+
+	<div class="container">
+
+		<div class="gallery">
+            
+
+			<div *ngFor="let item of user.items" class="gallery-item" tabindex="0">
+
+				<img src="data:image/jpeg;base64,{{item.images[0].data}}" class="gallery-image" alt="" style="max-height: 350px;">
+
+				<div class="gallery-item-info">
+
+					<ul>
+						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i>{{item.swipes.length}}</li>
+					</ul>
+
+				</div>
+
+			</div>
+
+			
+
+		
+
+		
+
+		
+
+		
+
+		
+
+			
+
+			
+
+			
+
+		</div>
+
+	</div>
+
+</main>

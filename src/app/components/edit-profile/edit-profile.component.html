@@ -1,0 +1,30 @@
+
+<mat-dialog-content >
+
+
+<form [formGroup] = "editForm"  (ngSubmit)="onSubmit()">    
+  <div class="form-row">
+      <div class="form-group">
+        <div>
+          <span class="label text-white">Profile picture</span>
+          <input type="file" class="file-input"
+          (change)="onFileSelected($event)" #fileUpload class="form-control form-control-lg" id="formFileLg" type="file" formControlName ="profilepic"[ngClass]="{ 'is-invalid': submitted && f.profilepic.errors }"  id="inputEmail4">
+          <div *ngIf="submitted && f.profilepic.errors" class="invalid-feedback">
+            <div *ngIf="f.profilepic.errors.required"> <small class="label text-white">JPEG/PNG Image is required</small></div>
+            </div>
+            </div>
+            </div>
+            </div>
+  
+
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Set profile picture</button>
+          </form>
+
+  <form [formGroup] = "bioForm"  (ngSubmit)="onSubmitBio()">    
+    <div class="form-group">
+    <span class="label text-white">Bio</span>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName ="bio"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary btn-lg btn-block">Set Bio</button>
+</form>
+</mat-dialog-content>

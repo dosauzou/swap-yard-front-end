@@ -1,3 +1,136 @@
-<div class="form-check mb-3">
-    <button  mat-raised-button (click)="openDialog()">Add new item</button>
+<div [ngSwitch]="loaded" class = "container">
+  <div *ngSwitchCase=true>
+  <header>
+  <div class="container">
+    <div class="profile">
+      <div class="profile-image">
+        <!-- //retrieve from db, on click change from -->
+
+        <div *ngIf="user && user.profilepic then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock><img [src]="user.profilepic.data"
+            style=" width: 180px; height: 180px; max-width: 180px; max-height: 180px;" alt="">
+        </ng-template>
+        <ng-template #elseBlock>
+          <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="">     </ng-template>
+  
+      </div>
+
+      <div class="profile-user-settings">
+        <!-- // set to retieve for db -->
+        <h1 class="profile-user-name">{{id}}</h1>
+        <!-- //add on click -->
+        <button class="btn profile-edit-btn" mat-raised-button (click)="editProfile()">Edit Profile</button>
+
+        <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog"
+            aria-hidden="true"></i></button>
+
+      </div>
+
+      <div class="profile-stats">
+
+        <ul>
+          <!-- //retrieve from db -->
+          <li><span class="profile-stat-count">{{itemArray.length}}</span> Posts</li>
+          <li><span class="profile-stat-count">{{totalSwaps}}</span> Swaps</li>
+        </ul>
+
+      </div>
+
+      <div class="profile-bio">
+        <!-- //send to db and retrieve fr -->
+        <span class="profile-real-name">{{user.firstName}} {{user.lastName}}</span>
+        <p class="lead">{{user.bio}}</p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</header>
+<main>
+  <div class="container border-0">
+    <div class="gallery">
+
+      <!-- //creates a popup where it shows the rest of the details and images -->
+      <mat-grid-list cols="3" rowHeight="1:1" [gutterSize]="'15px'">
+        <mat-grid-tile *ngFor="let media of itemArray">
+          <div (click)="zoomIn(media) " (click)="openXl(content)" class="gallery-item" tabindex="0">
+            <img [src]="media.images[0].data" class="gallery-image">
+            <div class="gallery-item-info">
+
+              <ul>
+                <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart"
+                    aria-hidden="true"></i> {{media.swipes.length}}</li>
+              </ul>
+
+            </div>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </div>
+  <!-- <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+
+  <!-- <button class="button button-primary" (click)="subscribeToNotifications()">
+        Subscribe
+      </button> -->
+
+</main>
 </div>
+<div *ngSwitchDefault>
+  <ngx-spinner  bdColor="rgba(187, 170, 179, 0.79) "type="pacman"></ngx-spinner>
+
+</div>
+</div>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+
+    <!-- <div style="width: 100%; display: table;">
+            <div style="display: table-row">
+                <div style="width: 600px; display: table-cell;"> Left </div>
+                <div style="display: table-cell;"> Right </div>
+            </div>
+        </div> -->
+    <div class="modal-body">
+      <div class="carouselCont">
+        <ngb-carousel>
+          <ng-template ngbSlide *ngFor="let item of itemtozoom.images">
+            <img [src]="item.data" alt="itemtozoom.description" style="height:500px; width:500px;">
+            <div class="carousel-caption">
+              <h3>"{{itemtozoom.description}}"</h3>
+              <p>Size: {{itemtozoom.size}}, Condition: {{itemtozoom.clothingCondition}}</p>
+            </div>
+          </ng-template>
+        </ngb-carousel>
+      
+      </div>
+    </div>
+  <div class="modal-footer">
+    <button (click)="openXl(delete)"mat-mini-fab color="warn" aria-label="Example icon button with a filter list icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+      <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+    </svg>
+</button>
+  </div>
+</ng-template>
+
+<ng-template #delete let-modal>
+  <div class="modal-header">
+    Are you sure you want to remove...?
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary btn-lg btn-block" (click)="deleteItem()"type="button" aria-label="Example icon button with a filter list icon"> Yes
+    </button>
+  </div>
+</ng-template>
+

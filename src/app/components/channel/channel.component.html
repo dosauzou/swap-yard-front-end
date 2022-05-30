@@ -1,0 +1,71 @@
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+  crossorigin="anonymous"
+/>
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+  type="text/css"
+  rel="stylesheet"
+/>
+<!-- <section style="background-color: #eee;"> -->
+    <!-- <div class="container py-5"> -->
+<!-- Toolbar -->
+<div class="content" role="main">
+
+    <div class="messaging">
+      <!-- <div class="inbox_msg">
+        <div class="inbox_people"> -->
+        </div>
+        <!-- <div class="mesgs"> -->
+          <div class="msg_history" style="overflow: scroll; height: xyz;" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+            <li class="message" *ngFor="let message of messages">
+              <div
+                *ngIf="
+                  message.user?.id !== b.id;
+                  then incoming_msg;
+                  else outgoing_msg
+                "
+              ></div>
+              
+              <ng-template #incoming_msg>
+                <div class="incoming_msg">
+      
+                  <div class="received_msg">
+                    <div class="received_withd_msg">
+                      <p>{{ message.text }}</p>
+                    </div>
+
+                  </div>
+                  
+
+                </div>
+              </ng-template>
+              <ng-template #outgoing_msg>
+                <div class="outgoing_msg">
+                  <div class="sent_msg">
+                    <p>{{ message.text }}</p>
+                  </div>
+                </div>
+              </ng-template>
+            </li>
+          </div>
+          <div class="type_msg">
+            <form class="input_msg_write" (ngSubmit)="sendMessage()">
+              <input
+                type="text"
+                class="write_msg"
+                placeholder="Type a message"
+                name="newMessage"
+                [(ngModel)]="newMessage"
+              />
+              <button class="msg_send_btn" type="button" (click)="sendMessage()">
+                <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+              </button>
+            </form>
+          </div>
+        <!-- </div>
+      </div> -->
+    <!-- </div>
+</div> -->

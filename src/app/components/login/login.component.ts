@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/classes/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserServiceService } from 'src/app/services/user-service.service';
-
+import {AppService} from 'src/app/services/app-service.service';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,77 +13,46 @@ import { UserServiceService } from 'src/app/services/user-service.service';
 })
 export class LoginComponent implements OnInit {
   user: User = new User();
+  credentials = {username: '', password: ''};
+
 
   loginForm = this.fb.group({
-    email: ['', Validators.required],
+    username: ['', Validators.required],
     password: ['', Validators.required]
+    
   })
-  submitted: boolean;
-  errorMessage = 'Invalid Credentials';
-  successMessage: string;
-  invalidLogin = false;
-  loginSuccess = false;
 
-  constructor(private fb: FormBuilder,private userService: UserServiceService, private route: ActivatedRoute,
-    private router: Router,
-    private authenticationService: AuthenticationService) { }
+  submitted: boolean;
+
+
+  constructor(private app: AppService, private http: HttpClient, private router: Router, private fb: FormBuilder) {
+    localStorage.clear()
+    sessionStorage.clear()
+  }
 
   ngOnInit(): void {
+  
     this.submitted = false;
   }
 
-  saveUser(){
-    this.user = new User();
-    this.user.email = this.email?.value;
-    this.user.password = this.password?.value;
-    this.save();
-  }
+    onSubmit() {
+      this.credentials.password= this.getPassword;
+      this.credentials.username = this.getUsername
 
-  save(){
-    this.userService.loginUser(this.user).subscribe(
-      data=>{
-        console.log("response recieved");
-        this.router.navigate(["/home"])
-
-     } ,
-      error => { 
-        console.log("exception occured");
-    })
-  }
+      this.app.authenticate(this.credentials, () =>  {
+          this.router.navigateByUrl('/profile');
+      });
+      return false;
   
-    //   (    data: any) => console.log(data), (error: any) => console.log(error))
-    // this.user = new User ();
+    }
 
-    
-  
-
-  get email(){
-    return this.loginForm.get('email');
+  get getPassword(){
+    return this.loginForm.get('password')?.value;
   }
-  get password(){
-    return this.loginForm.get('password');
+  get getUsername(){
+    return this.loginForm.get('username')?.value;
   }
-  onSubmit(){
-    this.saveUser();
-    console.log(this.loginForm.value);
-  }
-
-  addUserForm(){
-    this.submitted=false;
-    this.loginForm.reset();
-  }
-
-  handleLogin() {
-  //   this.authenticationService.authenticationService(this.username, this.password)
-  //     this.loginSuccess = true;
-  //     this.successMessage = 'Login Successful.';
-  //     this.router.navigate(['/hello-world']);
-  //   }, () => {
-  //     this.invalidLogin = true;
-  //     this.loginSuccess = false;
-  //   });      
-  // }
-
-
 }
-}
+
+//Login works fine, now we need to get session details
+//On Login the header should change

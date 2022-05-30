@@ -1,2 +1,19 @@
-<app-header></app-header>
-<app-profile></app-profile>
+<body class="d-flex flex-column h-100">
+
+<div *ngIf="getAuth() then thenBlock else elseBlock"></div>
+<ng-template #thenBlock><app-user-header></app-user-header></ng-template>
+<ng-template #elseBlock><app-header></app-header></ng-template>
+<!-- <container-element [ngSwitch]="getAuth()">
+    <ng-container *ngSwitchCase="true"><app-user-header></app-user-header></ng-container>
+    <ng-container *ngSwitchDefault><app-header></app-header></ng-container>
+     <some-element *ngSwitchDefault>...</some-element> -->
+<!-- Footer -->
+<!-- Footer -->
+
+<footer class="footer mt-auto py-3 bg-light" >
+    <div class="custom-container" >
+      <span class="text-muted">Swapyard IO Designed and Built by Diana Osauzou</span>
+    </div>
+  </footer>
+</body>
+  <!-- Footer -->

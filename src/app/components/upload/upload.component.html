@@ -1,32 +1,23 @@
 <input type="file" class="file-input"
-(change)="onFileSelected($event)" #fileUpload>
+ multiple (change)="onFileSelected($event)" #fileUpload>
+<div style="z-index:5; position : fixed;display : flex; align-self : flex-start;top : 20%; margin-bottom : 68px;">
 
 <div class="file-upload">
-
-{{fileName || "No file uploaded yet."}}
-
-<button mat-mini-fab color="primary" class="upload-btn"
-(click)="fileUpload.click()">
- <mat-icon>attach_file</mat-icon>
+<button mat-fab color="primary" class="upload-btn"
+(click)="fileUpload.click()"> 
+ <mat-icon >attach_file</mat-icon>
 </button>
 </div>
 
-<div class="container row">>
-        <div class="col-md-6">
-            <input type="text" class="form-control" id="name" placeholder="image name" [(ngModel)]="imageName"
-                name="name" />
-        </div>
-        <div class="col-md-6">
-            <input type="button" (click)="getImage()" value="Get Image">
-        </div>
-    </div>
-    
-    <div class="container row">
-        <div class="col-md-12">
-            <div *ngIf=retrievedImage>
-                <img [src]="retrievedImage">
-                
-                <img [src]="domSanitizationService.bypassSecurityTrustUrl(retrievedImage)" >
 
-            </div>
-        </div>
+</div>
+<div *ngIf="getArray then thenBlock else elseBlock"> </div>
+<ng-template #thenBlock>
+    <carousel  [height] = "250" [width] = "400" [arrows]="true"
+    [images]="images" [dots]="true" [freeScroll]="true">
+</carousel></ng-template>
+
+<ng-template #elseBlock>
+    <p class="lead text-center">You haven't added any images, click the paperclip to get started.</p>
+</ng-template>
+    

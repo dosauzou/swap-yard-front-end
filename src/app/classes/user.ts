@@ -5,5 +5,8 @@ export class User {
   username: String;
   password: String;
   phoneNo: String;
+  bio: String;
+  me: any;
+  profilepic: any;
 
 }

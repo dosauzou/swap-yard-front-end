@@ -1,8 +1,17 @@
-import {HttpClient, HttpParams, HttpRequest, HttpEvent} from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import {Input, Output, EventEmitter, OnChanges} from '@angular/core'
+import { HttpClient, HttpParams, HttpRequest, HttpEvent } from '@angular/common/http';
+import { Component, Inject, OnInit } from '@angular/core';
+import { Input, Output, EventEmitter, OnChanges } from '@angular/core'
 import { UserServiceService } from 'src/app/services/user-service.service';
-import {DomSanitizer} from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ItemComponent, DialogData } from '../item/item.component';
+import { Swatch } from 'node-vibrant/lib/color';
+const Vibrant = require('node-vibrant');
+var namer = require('color-namer')
+import * as mobilenet from '@tensorflow-models/mobilenet';
+import { async } from 'rxjs';
+import { Image } from 'node-vibrant/lib/typing';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-upload',
@@ -10,60 +19,96 @@ import {DomSanitizer} from '@angular/platform-browser';
   styleUrls: ['./upload.component.scss']
 })
 export class UploadComponent implements OnInit {
-
+  model: any;
+  loading: boolean;
   fileName = '';
   retrieveResonse: any;
   blobData: any;
   retrievedImage: any;
   imageName: any;
   contentArray: any[];
+  selectedFiles: FileList;
+  progressInfos: never[];
+  base64data: any;
+  list: any[];
+  imgSrc: any;
+  predictions: any;
+  myFiles: any;
+images: Array<any>;
+  getArray: boolean = false;
+  fileLists: any;
+  formData: FormData = new FormData();
 
-  constructor(private http: HttpClient, private userService: UserServiceService, public domSanitizationService: DomSanitizer) {}
+  //Classifications and colours
 
-  ngOnInit(): void {
+  constructor(private http: HttpClient, private userService: UserServiceService, public domSanitizationService: DomSanitizer,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private _sanitizer: DomSanitizer,private formBuilder: FormBuilder) { }
+
+  async ngOnInit(): Promise<void> {
+    this.loading = true;
+    this.model = await mobilenet.load();
+    this.loading = false;
+        this.myFiles=new Array()
+        this.images= new Array()
+        // this.formData = this.formBuilder.group({
+        //   files   : []
+        // });
   }
 
-  onFileSelected(event){
+  onNoClick() {
 
-    const file:File = event.target.files[0];
+  };
 
+
+
+  //Using color-namer api
+
+
+  async onFileSelected(event) {
+    for (var i = 0; i < event.target.files.length; i++) { 
+      this.myFiles.push(event.target.files[i]);
+  }
+  console.log(this.myFiles)
+this.fileLists = new Array()
+for(var a in this.myFiles){
+  var image = new Image()
+    const file: File = event.target.files[a];
     if (file) {
+      // this.formData: FormData = new FormData();
 
-        this.fileName = file.name;
+      this.formData.append('files', file);
 
-        const formData = new FormData();
+      this.fileName = file.name;
+       this.fileLists.push(file)
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      
+      image.src = await this.toBase64(file) as string
+      var o = {path: image.src}
 
-        formData.append("file", file);
-        console.log()
+      this.images.push(o)
+ 
 
-        // const upload$ = this.http.post("/api/thumbnail-upload", formData);
+      this.getArray = true
 
-        // upload$.subscribe();
-        this.userService.uploadFile(formData).subscribe(
-          data=>{
-            console.log("response recieved");
-    
-         } ,
-          error => { 
-            console.log("exception occured");
-    console.log(file);
-          })
-        }
+
       }
-      getImage() {
 
-            this.userService.getFile(this.imageName).subscribe(
-              res=>{
-                this.retrieveResonse = res;
-                this.blobData = this.retrieveResonse.data;
-                this.retrievedImage = 'data:image/jpeg;base64,' + this.blobData;
-                console.log(this.retrievedImage);
-
-              });
-            }
-
-          
     }
+    this.data.posts=this.formData
+
+
+  }
+
+  toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+     reader.readAsDataURL(file);
+     reader.onload = () => resolve(reader.result);
+     reader.onerror = error => reject(error);
+
+   });
+
+}
 
 
 

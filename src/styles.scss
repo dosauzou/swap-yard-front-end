@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~bootstrap/dist/css/bootstrap.min.css';
+@import "~bootstrap/dist/css/bootstrap.css";
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap");
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
@@ -9,19 +9,30 @@
   margin: 0;
   padding: 0;
 }
-
 body {
   font-family: "Poppins", sans-serif;
 }
-
+.custom-modalbox > mat-dialog-container {
+  background-color: dimgray!important;
+}
 .container {
   max-width: 500px;
   margin: 30px auto;
   overflow: auto;
   min-height: 300px;
-  border: 1px solid steelblue;
+  border: 0px;
   padding: 30px;
   border-radius: 5px;
+}
+@mixin make-container() {
+  width: auto;
+  max-width: 680px;
+  padding: 0 15px;
+}
+
+// Usage
+.custom-container {
+  @include make-container();
 }
 .btn {
   display: inline-block;
@@ -80,3 +91,6 @@ body {
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.my-outlined-dialog {
+  outline: 2px solid purple;
+}
