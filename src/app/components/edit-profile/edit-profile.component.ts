@@ -1,8 +1,11 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { any } from '@tensorflow/tfjs-core';
 import { UserServiceService } from 'src/app/services/user-service.service';
 import {MatSnackBar, MatSnackBarModule, _SnackBarContainer} from '@angular/material/snack-bar';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DialogData, ItemComponent } from '../item/item.component';
+import { ProfileComponent } from '../profile/profile.component';
 
 @Component({
   selector: 'app-edit-profile',
@@ -52,7 +55,10 @@ if(details.profile){
     this.snackbar.open('Profile picture changed successfully',null, {
       duration: 3000
     });
-}
+    this.dialogRef.close()
+    setTimeout(function() {
+      location.reload();
+    }, 1000);}
 
 
 
@@ -96,14 +102,21 @@ onSubmitBio(){
 console.log(details)
   if(details){
     this.us.editProfile(details, sessionStorage.getItem('id')).subscribe(data=>console.log(data))
+    
     this.snackbar.open('Bio changed successfully',null, {
       duration: 3000
+      
     });
+    this.dialogRef.close()
+    setTimeout(function() {
+      location.reload();
+    }, 1000);
   }
+ 
 }
       
 
-  constructor( private fb: FormBuilder, private us: UserServiceService, private snackbar: MatSnackBar) { }
+  constructor( private fb: FormBuilder, private us: UserServiceService, private snackbar: MatSnackBar,   public dialogRef: MatDialogRef<ProfileComponent>) { }
 
   ngOnInit(): void {
     this.editForm = this.fb.group({

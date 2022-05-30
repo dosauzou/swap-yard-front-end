@@ -124,32 +124,13 @@
 
 <ng-template #delete let-modal>
   <div class="modal-header">
-    Removing...
+    Are you sure you want to remove...?
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
 
-    <!-- <div style="width: 100%; display: table;">
-            <div style="display: table-row">
-                <div style="width: 600px; display: table-cell;"> Left </div>
-                <div style="display: table-cell;"> Right </div>
-            </div>
-        </div> -->
-    <div class="modal-body">
-       
- Are you sure you want to remove?
-      </div>
   <div class="modal-footer">
     <button class="btn btn-secondary btn-lg btn-block" (click)="deleteItem()"type="button" aria-label="Example icon button with a filter list icon"> Yes
     </button>
   </div>
 </ng-template>
 
-
-
-<!-- <ul class="list-inline">
-    <li *ngFor="let photo of itemtozoom.images let i = index" data-toggle="modal" data-target="#myModal">
-        <a href="#myGallery" data-slide-to="i"><img class="img-thumbnail" [src]="photo.data">
-            <br>
-  Caption</a></li>
- 
-        </ul> -->

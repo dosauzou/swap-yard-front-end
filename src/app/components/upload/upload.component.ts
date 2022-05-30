@@ -37,7 +37,7 @@ export class UploadComponent implements OnInit {
 images: Array<any>;
   getArray: boolean = false;
   fileLists: any;
-  formData: FormData;
+  formData: FormData = new FormData();
 
   //Classifications and colours
 
@@ -68,7 +68,6 @@ images: Array<any>;
     for (var i = 0; i < event.target.files.length; i++) { 
       this.myFiles.push(event.target.files[i]);
   }
-  this.formData = new FormData()
   console.log(this.myFiles)
 this.fileLists = new Array()
 for(var a in this.myFiles){

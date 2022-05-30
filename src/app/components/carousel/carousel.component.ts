@@ -11,34 +11,34 @@ import { SwapService } from 'src/app/services/swap.service';
   styleUrls: ['./carousel.component.scss']
 })
 export class CarouselComponent implements OnInit {
-  
+
   @Input() itemArray = new Array<any>();
-  @Input() username :any;
+  @Input() username: any;
   @Input() matchItems = new Array<any>();
 
 
-  itemList: any [];
+  itemList: any[];
   closeResult: string;
   itemTodelete: Item;
-  swapList: any[]  = new Array();
+  swapList: any[] = new Array();
   panelOpenState = false;
 
   itemToAdd: any;
   _lazyContent: string;
-  containsAll: boolean =false;
-  pushed: boolean =false;
+  containsAll: boolean = false;
+  pushed: boolean = false;
   chatId: any;
   userEditMade: boolean = false;
-  yourEditMade: boolean=true;
-get lazyContent() {
+  yourEditMade: boolean = true;
+  get lazyContent() {
     if (!this._lazyContent) {
-        this._lazyContent = fetchContent();
+      this._lazyContent = fetchContent();
     }
     return this._lazyContent;
-}
-  
+  }
+
   open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -54,82 +54,80 @@ get lazyContent() {
       return `with: ${reason}`;
     }
   }
-  setItem(item: Item){
+  setItem(item: Item) {
     console.log(item)
     this.itemToAdd = item;
     this.swapList.push(this.itemToAdd)
     this.swapList = [...this.swapList]
-    this.itemList = this.itemList.filter(p=> p.id != item.id)
+    this.itemList = this.itemList.filter(p => p.id != item.id)
 
   }
-pushItems(){
-  this.swapService.postDetails(sessionStorage.getItem('id'),{items: this.swapList.map(p=>p.id), user: this.username.user.username, chatId: this.chatId}).subscribe(data=> console.log(data))
-  this.swapList = new Array()
-  this.pushed=true;
+  pushItems() {
+    this.swapService.postDetails(sessionStorage.getItem('id'), { items: this.swapList.map(p => p.id), user: this.username.user.username, chatId: this.chatId }).subscribe(data => console.log(data))
+    this.swapList = new Array()
+    this.pushed = true;
 
-}
-  removeItem(item: Item){
-    this.swapList = this.swapList.filter(p=> p.id != item.id)
+  }
+  removeItem(item: Item) {
+    this.swapList = this.swapList.filter(p => p.id != item.id)
     this.itemList.push(item);
-    this.itemList =[...this.itemList]
+    this.itemList = [...this.itemList]
   }
 
-  deleteItem(){
+  deleteItem() {
     console.log(this.itemToAdd)
   }
 
-modifySwap(){
-  this.swapList
-  //once the items are swapped they are removed from circulation
-}
-  sortArray(){
+  modifySwap() {
+    this.swapList
+    //once the items are swapped they are removed from circulation
+  }
+  sortArray() {
 
-    for (let x in this.itemArray){
-  //if the swap items contains the other users items then u can schedule
-  console.log(this.itemArray[x].swap.swapItems.map(p=>p.swipes.map(p=> p.userId)))
-  console.log(this.username, 'this is the user')
+    for (let x in this.itemArray) {
+      //if the swap items contains the other users items then u can schedule
+      console.log(this.username, 'this is the user')
 
-      if(this.itemArray[x].user.username == this.username.user.username){
+      if (this.itemArray[x].user.username == this.username.user.username) {
         this.chatId = this.itemArray[x].chatId;
-        
-        console.log(this.itemArray[x].swap.swapItems)
 
         console.log(this.itemArray[x])
-        for(var j in this.matchItems){
-          console.log(this.matchItems.map(p=>p.id))
+        for (var j in this.matchItems) {
+          console.log(this.matchItems.map(p => p.id))
           console.log(this.matchItems[j].id)
-if(this.itemArray[x].swap){
-  if(this.itemArray[x].swap.swapItems)
-
-
-          if(this.itemArray[x].swap.swapItems.map(p=>p.id).includes(this.matchItems[j].id)){
-                      this.userEditMade = true;
-
-          }
-            console.log(parseInt(sessionStorage.getItem('userId')))
-            var swipes = this.itemArray[x].swap.swapItems.map(p=>p.swipes)
-            for(var h in swipes){
-              if(swipes[h].userId==parseInt(sessionStorage.getItem('userId'))){
-                this.yourEditMade = false;
+          if (this.itemArray[x].swap) {
+            if (this.itemArray[x].swap.swapItems)
+              if (this.itemArray[x].swap.swapItems.map(p => p.id).includes(this.matchItems[j].id)) {
+                this.userEditMade = true;
 
               }
+              var k = new Array();
+            console.log(parseInt(sessionStorage.getItem('userId')))
+            var swipes = this.itemArray[x].swap.swapItems.map(p => p.swipes)
+            for (var h in swipes) {
+              swipes[h].map(p=> k.push(p.userId))
             
 
+            }
+            if (!k.includes(parseInt(sessionStorage.getItem('userId')))) {
+              this.yourEditMade = false;
 
-}
-console.log(this.yourEditMade)
 
+            }
+
+            console.log(this.yourEditMade)
+
+          }
         }
-      }
-      //   if(this.itemArray[x].items.swap){
-      //   if(this.itemArray[x].items.map(p=> p.id).every(p =>{
+        //   if(this.itemArray[x].items.swap){
+        //   if(this.itemArray[x].items.map(p=> p.id).every(p =>{
 
-      //     return this.itemArray[x].swap.swapItems.map(p=> p.id).includes(p)
-      //   }))  {
-      //     this.containsAll = true;
-      //     console.log(this.containsAll)
-      //   }
-      // }
+        //     return this.itemArray[x].swap.swapItems.map(p=> p.id).includes(p)
+        //   }))  {
+        //     this.containsAll = true;
+        //     console.log(this.containsAll)
+        //   }
+        // }
 
 
         // }
@@ -138,9 +136,9 @@ console.log(this.yourEditMade)
         console.log(this.itemArray[x].swap)
 
         // this.itemList = new Array();
-        this.itemList=new Array()
-        for(let b in this.itemArray[x].items){
-          this.itemArray[x].items[b].images[0].data = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,'+this.itemArray[x].items[b].images[0].data);
+        this.itemList = new Array()
+        for (let b in this.itemArray[x].items) {
+          this.itemArray[x].items[b].images[0].data = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,' + this.itemArray[x].items[b].images[0].data);
           console.log(this.itemArray[x].items[b].images[0].data)
         }
         this.itemList = this.itemArray[x].items
@@ -154,7 +152,7 @@ console.log(this.yourEditMade)
     }
   }
 
-  constructor(public sanitizer: DomSanitizer, private modalService: NgbModal, private swapService :SwapService) { }
+  constructor(public sanitizer: DomSanitizer, private modalService: NgbModal, private swapService: SwapService) { }
 
   ngOnInit(): void {
     console.log(this.username, 'this is the match')

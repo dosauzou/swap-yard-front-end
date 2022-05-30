@@ -57,8 +57,18 @@ export class ProfileComponent implements OnInit {
       // panelClass: 'my-outlined-dialog',
       width: '500px',
       height: '500px',
-      panelClass: 'custom-modalbox'
+      panelClass: 'custom-modalbox',
+      data: {user: this.user},
+
     });
+    dialogRef.afterClosed().subscribe(result=>{
+       console.log(result),
+
+      this.user.profilepic.data=result.profilepic.data
+    }
+     
+      // this.user.p
+    )
   }
   openXl(content) {
     this.modalService.open(content, { centered: true, windowClass: 'dark-modal', modalDialogClass: 'dark-modal' });
