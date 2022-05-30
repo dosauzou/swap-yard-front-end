@@ -9,8 +9,9 @@
         <mat-list role="list" *ngFor="let match of array">
             <mat-list-item    role="listitem" >View Details
                 <!-- <li class="list-group-item">{{match.user.firstName}}></li> -->
-                <img matListAvatar src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="...">
-                <h3 matLine> {{match.user.username}} </h3>
+                <img *ngIf="match.user.profilepic" matListAvatar [src]=match.user.profilepic alt="...">
+                <img *ngIf="!match.user.profilepic" matListAvatar src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="...">
+                             <h3 matLine> {{match.user.username}} </h3>
                 <p matLine>
                   <span> {{match.user.firstName}} </span>
                   <span class="demo-2"> -- {{match.user.firstName}} </span>
@@ -33,8 +34,9 @@
     
             <mat-list-item    role="listitem" >View Details
                 <!-- <li class="list-group-item">{{match.user.firstName}}></li> -->
-                <img matListAvatar src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="...">
-                <h3 matLine> {{match.user.username}} </h3>
+                <img *ngIf="match.user.profilepic" matListAvatar [src]=match.user.profilepic alt="...">
+                <img *ngIf="!match.user.profilepic" matListAvatar src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="...">
+                             <h3 matLine> {{match.user.username}} </h3>
                 <p matLine>
                   <span> {{match.user.firstName}}</span>
                   <span class="demo-2"> -- {{match.user.firstName}} </span>

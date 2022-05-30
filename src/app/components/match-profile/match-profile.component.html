@@ -1,36 +1,40 @@
-
 <header>
+
 	<div class="container">
+
 		<div class="profile">
+
 			<div class="profile-image">
-                <!-- //retrieve from db, on click change from -->
-				<img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="">
+
+                <div *ngIf="user && user.profilepic then thenBlock else elseBlock"></div>
+                <ng-template #thenBlock><img [src]="user.profilepic"
+                    style=" width: 180px; height: 180px; max-width: 180px; max-height: 180px;" alt="">
+                </ng-template>
+                <ng-template #elseBlock>
+                  <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="">     </ng-template>
+          
 
 			</div>
 
 			<div class="profile-user-settings">
-                    <!-- // set to retieve for db -->
-				<h1 class="profile-user-name">{{username}}</h1>
-                    <!-- //add on click -->
-                    <button class="btn profile-edit-btn" mat-raised-button color="primary">Follow</button> || 
+
+				<h1 class="profile-user-name">{{user.username}}</h1>
 
 			</div>
 
-
 			<div class="profile-stats">
 
-				<ul>   
-                    <!-- //retrieve from db -->
-					<li><span class="profile-stat-count">0</span> posts</li>
-					<li><span class="profile-stat-count">188</span> followers</li>
-					<li><span class="profile-stat-count">206</span> following</li>
+				<ul>
+					<li><span class="profile-stat-count">{{user.items.length }}  Posts</span></li>
+					<li><span class="profile-stat-count">{{totalSwaps}}</span> Swaps</li>
+				
 				</ul>
 
 			</div>
 
 			<div class="profile-bio">
-                        <!-- //send to db and retrieve fr -->
-				<p><span class="profile-real-name">Polly</span> Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️</p>
+
+				<p>{{user.bio}}</p>
 
 			</div>
 
@@ -39,29 +43,48 @@
 	</div>
 
 </header>
+
 <main>
-    <div class="container">
-        <div class="gallery">
 
-            <!-- //creates a popup where it shows the rest of the details and images -->
-<mat-grid-list cols="3" rowHeight="1:1" [gutterSize]="'15px'" >
-    <!-- <mat-grid-tile 
-        *ngFor="let media of mediaArray">
-        <div class = "gallery-item" tabindex="0">
-            <img [src]="media.data" class = "gallery-image">
-            <div class="gallery-item-info">
+	<div class="container">
 
-                <ul>
-                    <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 56</li>
-                    <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 2</li>
-                </ul>
+		<div class="gallery">
+            
 
-            </div>
-        </div>
-        </mat-grid-tile> -->
-  </mat-grid-list>
-  </div>
-    </div>
+			<div *ngFor="let item of user.items" class="gallery-item" tabindex="0">
 
-    
+				<img src="data:image/jpeg;base64,{{item.images[0].data}}" class="gallery-image" alt="" style="max-height: 350px;">
+
+				<div class="gallery-item-info">
+
+					<ul>
+						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i>{{item.swipes.length}}</li>
+					</ul>
+
+				</div>
+
+			</div>
+
+			
+
+		
+
+		
+
+		
+
+		
+
+		
+
+			
+
+			
+
+			
+
+		</div>
+
+	</div>
+
 </main>

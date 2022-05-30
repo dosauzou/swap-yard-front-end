@@ -130,6 +130,7 @@ export class ImageAnalyserComponent implements OnInit {
       setTimeout(async () => {
         this.predictions = await this.model.classify(image);
         for (var i in this.predictions) {
+          console.log(this.predictions[i])
           if (this.predictions[i].probability > 0.5) {
             this.categories.push(this.predictions[i])
   

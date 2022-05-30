@@ -47,17 +47,17 @@ export class CalendarComponent implements OnInit {
   user: Promise<void | Match>;
 
 
-  execute() {
-    return gapi.client.calendar.events.insert({
-      'calendarId': 'primary',
-      'resource': this.event
-    })
-      .then(function (response) {
-        // Handle the results here (response.result has the parsed body).
-        console.log("Response", response);
-      },
-        function (err) { console.error("Execute error", err); });
-  }
+  // execute() {
+  //   return gapi.client.calendar.events.insert({
+  //     'calendarId': 'primary',
+  //     'resource': this.event
+  //   })
+  //     .then(function (response) {
+  //       // Handle the results here (response.result has the parsed body).
+  //       console.log("Response", response);
+  //     },
+  //       function (err) { console.error("Execute error", err); });
+  // }
 
   authenticate() {
 

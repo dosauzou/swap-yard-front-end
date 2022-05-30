@@ -13,7 +13,7 @@ import { SwapService } from 'src/app/services/swap.service';
 export class CarouselComponent implements OnInit {
   
   @Input() itemArray = new Array<any>();
-  @Input() username = new Match();
+  @Input() username :any;
   @Input() matchItems = new Array<any>();
 
 
@@ -29,6 +29,7 @@ export class CarouselComponent implements OnInit {
   pushed: boolean =false;
   chatId: any;
   userEditMade: boolean = false;
+  yourEditMade: boolean=true;
 get lazyContent() {
     if (!this._lazyContent) {
         this._lazyContent = fetchContent();
@@ -85,10 +86,13 @@ modifySwap(){
 
     for (let x in this.itemArray){
   //if the swap items contains the other users items then u can schedule
-      
+  console.log(this.itemArray[x].swap.swapItems.map(p=>p.swipes.map(p=> p.userId)))
+  console.log(this.username, 'this is the user')
+
       if(this.itemArray[x].user.username == this.username.user.username){
         this.chatId = this.itemArray[x].chatId;
         
+        console.log(this.itemArray[x].swap.swapItems)
 
         console.log(this.itemArray[x])
         for(var j in this.matchItems){
@@ -98,8 +102,23 @@ if(this.itemArray[x].swap){
   if(this.itemArray[x].swap.swapItems)
 
 
-          if(this.itemArray[x].swap.swapItems.map(p=>p.id).includes(this.matchItems[j].id))
-          this.userEditMade = true;
+          if(this.itemArray[x].swap.swapItems.map(p=>p.id).includes(this.matchItems[j].id)){
+                      this.userEditMade = true;
+
+          }
+            console.log(parseInt(sessionStorage.getItem('userId')))
+            var swipes = this.itemArray[x].swap.swapItems.map(p=>p.swipes)
+            for(var h in swipes){
+              if(swipes[h].userId==parseInt(sessionStorage.getItem('userId'))){
+                this.yourEditMade = false;
+
+              }
+            
+
+
+}
+console.log(this.yourEditMade)
+
         }
       }
       //   if(this.itemArray[x].items.swap){

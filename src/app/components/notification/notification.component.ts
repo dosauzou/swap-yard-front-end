@@ -127,7 +127,7 @@ export class NotificationComponent implements OnInit {
   }
 
   markAsDone(){
-    // this.swapService.markDone(this.markDone).subscribe(data=> console.log(data))
+    this.swapService.markDone(this.markDone).subscribe(data=> console.log(data))
     this.scheduled=this.scheduled.filter(p=>p.swap.id != this.markDone)
     this.complete.push(this.scheduled.find(p=>p.swap.id=this.markDone));
     location.reload();

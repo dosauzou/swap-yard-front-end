@@ -38,7 +38,7 @@ this.swapFalse= this.dialogData.scheduled;
 
   ngOnInit(): void {
     this.method()
-   console.log(this.swapTrue)
+   console.log(this.username1)
  
 
 

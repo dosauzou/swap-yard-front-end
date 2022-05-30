@@ -39,12 +39,13 @@ images: Array<any>;
 
   onSubmit(){
     this.submitted = true;
-
+console.log('this is submitting')
 
         // this.formData: FormData = new FormData();
 
     
    var details = {bio: this.editForm.value['bio'], profile:  this.formData}
+   console.log(details.profile)
 if(details.profile){
   this.us.createProfiler(this.formData, sessionStorage.getItem('id')).subscribe(data=>
     console.log(data))

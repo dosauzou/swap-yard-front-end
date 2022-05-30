@@ -16,4 +16,8 @@ export class ItemService{
     createPost(item: object, id:any): Observable <object>{
         return this.http.post('api/v1/newItem/' + id, item);
       }
+
+      deleteItem(any): Observable <object>{
+        return this.http.post('api/v1/deleteItem/',any);
+      }
 }

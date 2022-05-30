@@ -15,6 +15,7 @@ import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 import { EditComponent } from '../edit/edit.component';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { User } from 'src/app/classes/user';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-profile',
@@ -32,11 +33,13 @@ export class ProfileComponent implements OnInit {
   itemArray: any[] = new Array();
   itemtozoom: Item;
   closeResult: string;
-  user: User =new User();
+  user: any =new User();
+  totalSwaps: any;
+  loaded: boolean = false;
   // readonly VAPID_PUBLIC_KEY = 'BB_WkKNOcmJQSAub5Q_A_Cg3e4_qSSgkwZ6IouAitsX59ulO6DdE3s8Ihaz2lk9WCoPuwnDMYkOEF1HVpW0yZuM';
 
   constructor(public sanitizer: DomSanitizer, public dialog: MatDialog, private userService: UserServiceService, private app: AppService, private http: HttpClient, private itemS: ItemService, private upload: UploadService, public domSanitizationService: DomSanitizer, private swPush: SwPush,
-    private notifications: NotificationsService, private modalService: NgbModal) {
+    private notifications: NotificationsService, private modalService: NgbModal, private items: ItemService, private spinner: NgxSpinnerService) {
      
 
     http.get('api/v1/token').subscribe(data => {
@@ -108,9 +111,17 @@ export class ProfileComponent implements OnInit {
 
   }
 
+  deleteItem(){
+    this.itemArray=this.itemArray.filter(p=>p !=this.itemtozoom)
+    console.log(this.itemtozoom)
+    this.modalService.dismissAll();
+    this.itemS.deleteItem(this.itemtozoom.id).subscribe(data=> console.log(data))
+  }
+
   display() {
     this.userService.getPosts(this.id).subscribe(
       data => {
+        console.log(data)
         this.itemArray = data as Array<Item>;
         for (var j in this.itemArray) {
           for (var o in this.itemArray[j].images) {
@@ -126,6 +137,7 @@ export class ProfileComponent implements OnInit {
       error => {
         console.log("exception occured");
       })
+
       return this.itemArray
   }
 
@@ -147,16 +159,22 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    var b;
+    this.spinner.show();
+
     this.itemArray = this.display()
     this.userService.getUser(this.id).subscribe(data => {
-      this.user = data as User;
+      this.user = data ;
+      sessionStorage.setItem('userId',this.user.id)
+      console.log(this.user)
+      if(data['matches']){
+        this.totalSwaps=data['matches'].filter(p=>p.swap !==null && p.swap.swapStatus==='true').length
+      }
       var img = new Image()
       if(this.user.profilepic)
       this.user.profilepic.data = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + this.user.profilepic.data)
+      this.loaded=true;
 
     })
-
     
     this.subscribeToNotifications();
 

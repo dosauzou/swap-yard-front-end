@@ -74,7 +74,10 @@
         Schedule your swap
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <div [ngSwitch]="itemList.length">
+    <div [ngSwitch]="swapList.length">
+      <div *ngSwitchDefault>
+        <span class="lead">The other user must add their items</span>
+        </div>
 
       <div *ngSwitchCase ="0">
 
@@ -84,15 +87,29 @@
       </div>
 
     <div *ngSwitchCase ="true">
+      <div [ngSwitch]="yourEditMade">
+
+        <div *ngSwitchDefault>
+
         <ng-template  matExpansionPanelContent>
        <app-scheduler [itemArray]="itemArray" [swapList]="swapList" [username]=username></app-scheduler>
-   </ng-template>
+      </ng-template>
+
+        </div>
+        <div *ngSwitchCase=false>
+
+          <ng-template  matExpansionPanelContent>
+            <span class="lead">You haven't made your changes</span>
+          </ng-template>
+  
+          </div>
+   </div>
     </div>
     </div>
     </div>
     <div *ngSwitchCase ="1">
       <ng-template  matExpansionPanelContent>
-        <span class="lead">All users must add their items</span>
+        <app-scheduler [itemArray]="itemArray" [swapList]="swapList" [username]=username></app-scheduler>
       </ng-template>
   </div>
     </div>

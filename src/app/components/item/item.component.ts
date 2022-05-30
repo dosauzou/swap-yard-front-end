@@ -81,7 +81,7 @@ this.data.condition = this.inputForm.value.condition
   
       }
       this.options1.push('Cotton', 'Leather', 'Rayon', 'Polyester', 'Silk',
-       'Wool', 'Satin', 'Suede', 'Terry Cotton', 'Velvet', 'Spandex/Viscose')
+       'Wool', 'Satin', 'Suede', 'Terry Cotton', 'Velvet', 'Spandex/Viscose','Acrylic','Muslin','Denim')
 
     
 
