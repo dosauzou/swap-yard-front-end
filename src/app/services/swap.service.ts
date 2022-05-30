@@ -15,7 +15,10 @@ export class SwapService {
     return this.http.post('api/v1/swap/update/'+any, match)
 
   }
+  unmatch(match: any, any): Observable <any>{
+    return this.http.post('api/v1/swap/update/unmatch/'+sessionStorage.getItem('id')+'/'+any, match)
 
+  }
   markDone(match: number): Observable <any>{
     return this.http.post('api/v1/swap/update/markDone', match)
 

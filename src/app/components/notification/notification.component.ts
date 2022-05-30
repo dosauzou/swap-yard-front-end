@@ -30,6 +30,8 @@ export class NotificationComponent implements OnInit {
   complete : Array<Match>;
   matchItems: any;
   markDone: any;
+  item: any;
+  matchuser: any;
 
   //this ccannot be undone, you have to swap at least one item with the user
   //overlay on the swapped ited
@@ -48,6 +50,7 @@ export class NotificationComponent implements OnInit {
 
   save(user : any):void{
     const username = user;
+    this.matchuser = user;
     const dialogRef = this.dialog.open(
     MatchHeaderComponent,{
       panelClass: 'my-outlined-dialog',
@@ -60,6 +63,7 @@ export class NotificationComponent implements OnInit {
 
     setItem(any){
       this.markDone = any.swap.id;
+      this.matchuser = any
       console.log(this.markDone)
     }
 
@@ -125,7 +129,10 @@ export class NotificationComponent implements OnInit {
 
    
   }
-
+unmatch(){
+  console.log(this.matchuser)
+this.swapService.unmatch(this.markDone,this.matchuser.user.username).subscribe(data=> console.log(data))
+}
   markAsDone(){
     this.swapService.markDone(this.markDone).subscribe(data=> console.log(data))
     this.scheduled=this.scheduled.filter(p=>p.swap.id != this.markDone)

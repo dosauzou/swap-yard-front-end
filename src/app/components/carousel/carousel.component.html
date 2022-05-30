@@ -104,7 +104,7 @@
               </div>
               <div *ngSwitchCase=false>
                 <div [ngSwitch]="pushed">
-                  <div *ngSwitchDefault>
+                  <div *ngSwitchCase=false>
 
                     <ng-template matExpansionPanelContent>
                       <span class="lead">You haven't made your changes</span>
