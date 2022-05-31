@@ -45,7 +45,7 @@ openDialog():void{
       panelClass: 'my-outlined-dialog',
       width: '500px',
       height: '500px',
-              data:{color: this.item.color, size: this.item.size, material: this.item.material, condition: this.item.clothingCondition, posts: this.item.formData, description: this.item.description},
+              data:{color: this.item.color, size: this.item.size, material: this.item.material, condition: this.item.clothingCondition, posts: this.item.formData, description: this.item.description, category: this.item.category},
     });
     dialogRef.afterClosed().subscribe(result => {
 
@@ -55,6 +55,7 @@ openDialog():void{
       this.item.material=result.material
       this.item.formData = result.posts
       this.item.description = result.description
+      this.item.category = result.category
   
       if(result){
         this.upload.uploadFile(this.item.formData)

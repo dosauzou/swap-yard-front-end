@@ -54,9 +54,27 @@
       </div>
     </li>
     <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" (click)="collapse3.toggle()"
+        [attr.aria-expanded]="!isCollapsed3" aria-controls="collapseExample">
+        Category
+      </button>
+      <div #collapse3="ngbCollapse" [(ngbCollapse)]="isCollapsed3">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li class="form-check" *ngFor=" let category of categories">
+            <p>
+              <mat-checkbox *ngIf="categoryFilter.includes(category)" checked="true"  (click)=filterByCategory(category) value="{{category}}" class="form-check">{{category}}
+              </mat-checkbox>
+              <mat-checkbox *ngIf="!categoryFilter.includes(category)"  (click)=filterByCategory(category) value="{{category}}" class="form-check">{{category}}
+              </mat-checkbox>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li class="mb-1">
       <button class="btn btn-toggle align-items-center rounded collapsed" (click)="collapse1.toggle()"
         [attr.aria-expanded]="!isCollapsed1">
-        Category
+        Condition
       </button>
       <div #collapse1="ngbCollapse" [(ngbCollapse)]="isCollapsed1">
         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">

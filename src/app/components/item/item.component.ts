@@ -14,6 +14,7 @@ export interface DialogData {
   condition: String;
   description: String;
   posts: FormData;
+  category: string;
 }
 
 @Component({
