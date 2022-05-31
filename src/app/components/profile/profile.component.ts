@@ -154,10 +154,9 @@ export class ProfileComponent implements OnInit {
   subscribeToNotifications = () => {
 
     console.log(this.VAPID_PUBLIC_KEY, 'this is the key')
-
     if (this.swPush.isEnabled) {
       this.swPush.requestSubscription({
-        serverPublicKey: 'BMwTeZiOSrNUh-d5AYOUFegEMHVno-Dxx35aaa7LYuJzuFRjP8PubSbKq-C9eJ_czO1Q2d7bW-j5UylM1DV3qJA'
+        serverPublicKey: 'BL1P9L_Pf9Ml70GJjcV9vDXXKAlOrLp-jtlTvMZ-V0Zxc1q6jDaF_tnd8e6jdpOE0Dmx3-uhFhwYOXuRcgWz4BU',
       })
         .then(sub => this.notifications.addPushSubscriber(sub, this.id).subscribe())
         .catch(err => console.error("Could not subscribe to notifications", err));

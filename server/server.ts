@@ -7,7 +7,6 @@ const webpush = require('web-push');
 const allSubscriptions : string[] = [];
 console.log( process.env.VAPID_PUBLIC_KEY)
 
-// console.log(webpush.generateVAPIDKeys()); //successfully hit the node express endpoint
 
 
 app.use(bodyParser.json());
