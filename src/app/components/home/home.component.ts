@@ -138,7 +138,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  // FILTER BY CONDITIONS
+  // FILTER BY ALL POSSIBLE CONDITIONS AND ALLOW FOR CROSS MATCHING
   filterByAll() {
 
     if (this.colorFilter.length != 0 && this.conditionFilter.length != 0 && this.sizeFilter.length != 0 && this.categoryFilter.length != 0) {

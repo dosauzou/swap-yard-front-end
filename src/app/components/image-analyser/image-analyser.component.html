@@ -3,16 +3,18 @@
 
       
 <p><span class="lead"> Select a category...</span></p>
-<mat-form-field appearance="fill">
+<mat-form-field  [formControl]="cat" appearance="fill">
         <mat-label>Choose an option</mat-label>
-        <select matNativeControl [disabled]="disableSelect.value">
+        <select [(ngModel)]="data.category" matNativeControl [disabled]="disableSelect.value">
           <option value="" selected></option>
           <option value="Dress">Dress</option>
           <option value="Bottoms">Bottoms</option>
           <option value="Tops">Tops</option>
-          <option value="Jackets">Jackets</option>
+          <option  value="Jackets">Jackets</option>
+          
         </select>
       </mat-form-field>
+
       <form>
         <div [ngSwitch]="predicted" >
             <div *ngSwitchDefault>
@@ -24,7 +26,7 @@
                <p><span class="lead"> The image analyser predicts..</span></p> 
     
                 <div *ngFor="let item of categories">
-                    <p><mat-checkbox [formControl]="disableSelect" (click)=setItem(item)>{{item}}</mat-checkbox></p>          
+                    <p><mat-checkbox [formControl]="disableSelect" (click)=setItem(item) (click)="getCategory()">{{item}}</mat-checkbox></p>          
                  </div>      
                 </div>
       

@@ -35,12 +35,17 @@ export class ImageAnalyserComponent implements OnInit {
   colors: any;
   colorlist: Colorlist
   predicted: boolean;
+  
+ cat = new FormControl();
+  categor: any;
 
   constructor(public dialogRef: MatDialogRef<ItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
       this.item = data as unknown as any;
-
+      data.category = this.cat.value
      }
+
+    
      getColours(data): any {
        
       var b: { category: any; image: HTMLImageElement; };
@@ -75,14 +80,24 @@ export class ImageAnalyserComponent implements OnInit {
        this.getCategories(image)
       })
 
-      
-
+    
     }
+    getCategory(){
+      var x;
+        if(!this.categor){
+          x= this.cat.value;
+          
+        }else{
+          x = this.categor
+        }
+        this.data.category = x;
+        console.log(x)
+    }
+
     setItem(any){
-      this.data.category = any;
-      console.log(this.data.category)
-
-
+      if(!this.categor){
+        this.categor = any
+      }else this.categor=null
     }
 
      toBase64 = file => new Promise((resolve, reject) => {
