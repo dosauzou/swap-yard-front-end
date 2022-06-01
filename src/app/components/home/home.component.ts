@@ -230,7 +230,6 @@ export class HomeComponent implements OnInit {
 
                   item.size === this.sizeFilter.find(e => e === item.size)
                   &&
-
                   item.color === this.colorFilter.find(e => e === item.color)
 
                 )
@@ -249,14 +248,13 @@ export class HomeComponent implements OnInit {
                     this.arrayCopy = this.arrayProxy.filter(item =>
 
 
-
                       item.category === this.categoryFilter.find(e => e === item.category)
                       &&
 
                       item.color === this.colorFilter.find(e => e === item.color)
 
                     )
-                  }   if (this.conditionFilter.length != 0 && this.categoryFilter.length != 0) {
+                  }  else if (this.conditionFilter.length != 0 && this.categoryFilter.length != 0) {
                     this.arrayCopy = this.arrayProxy.filter(item =>
 
 
