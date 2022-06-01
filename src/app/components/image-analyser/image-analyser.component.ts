@@ -7,7 +7,7 @@ var namer = require('color-namer')
 import * as mobilenet from '@tensorflow-models/mobilenet';
 import { async } from 'rxjs';
 import { Image } from 'node-vibrant/lib/typing';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { getArrayFromDType } from '@tensorflow/tfjs-core/dist/util_base';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { normalizePassiveListenerOptions } from '@angular/cdk/platform';
@@ -22,6 +22,7 @@ export interface Colorlist {basic: any; roygbiv: any; pantone: any; ntc: any; ht
 
 export class ImageAnalyserComponent implements OnInit {
   list: any[];
+  disableSelect = new FormControl(false);
   predictions: any;
   model: any;
   item: any;
@@ -29,16 +30,22 @@ export class ImageAnalyserComponent implements OnInit {
   possibleCategory: any[];
   loading: boolean;
   myFiles: any[];
-  categories: any;
+  categories: Set<any> = new Set();
   b: { category: any ; image: HTMLImageElement; };
   colors: any;
   colorlist: Colorlist
+  predicted: boolean;
+  
+ cat = new FormControl();
+  categor: any;
 
   constructor(public dialogRef: MatDialogRef<ItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
       this.item = data as unknown as any;
-
+      data.category = this.cat.value
      }
+
+    
      getColours(data): any {
        
       var b: { category: any; image: HTMLImageElement; };
@@ -70,12 +77,27 @@ export class ImageAnalyserComponent implements OnInit {
       this.colors = x.category
       console.log(this.colors)
 
-      this.b = this.getCategories(image)
-      console.log(this.b)
+       this.getCategories(image)
       })
 
+    
+    }
+    getCategory(){
+      var x;
+        if(!this.categor){
+          x= this.cat.value;
+          
+        }else{
+          x = this.categor
+        }
+        this.data.category = x;
+        console.log(x)
+    }
 
-
+    setItem(any){
+      if(!this.categor){
+        this.categor = any
+      }else this.categor=null
     }
 
      toBase64 = file => new Promise((resolve, reject) => {
@@ -126,16 +148,25 @@ export class ImageAnalyserComponent implements OnInit {
   
   //using tensorflow js
     getCategories(image) {
-      this.categories = new Array()
       setTimeout(async () => {
         this.predictions = await this.model.classify(image);
-        for (var i in this.predictions) {
-          console.log(this.predictions[i])
-          if (this.predictions[i].probability > 0.5) {
-            this.categories.push(this.predictions[i])
-  
-          }
-        }
+        this.predictions = this.predictions.sort((a, b) => (a.probability < b.probability) ? 1 : -1)
+        console.log(this.predictions[0])
+        if(this.predictions[0].probability>0.5){
+          console.log(this.predictions[0])
+          this.categories.add(this.predictions[0].className)
+          this.predicted=true
+        }else this.predicted=false
+
+        // for (var i in this.predictions) {
+
+        //   console.log(this.predictions[i])
+        //   this.categories.push(this.predictions[i])
+
+          
+        // }
+        // this.categories = this.categories.sort((a, b) => (a.probability < b.probability) ? 1 : -1)
+       
       });
       return this.categories
     }
@@ -149,7 +180,7 @@ export class ImageAnalyserComponent implements OnInit {
         
         var info = [...this.item.posts.getAll('files')]
         var b =0;
-        while(b<=info.length-1){
+        while(b<info.length){
           var data = await this.toBase64(info[b])
           console.log(data)
 

@@ -16,7 +16,6 @@ import { RouterModule } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import { UploadComponent } from './components/upload/upload.component';
 import { FormsModule } from '@angular/forms';
-import { ImageGridComponent } from './components/image-grid/image-grid.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { ProfileComponent } from './components/profile/profile.component';
 import { WebcamComponent, WebcamModule } from 'ngx-webcam';
@@ -39,18 +38,13 @@ import { MatchComponent } from './components/match/match.component';
 import { MatchHeaderComponent } from './components/match-header/match-header.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { MatchProfileComponent } from './components/match-profile/match-profile.component';
-import { ChatComponent } from './components/chat/chat.component';
-import { UnmatchComponent } from './components/unmatch/unmatch.component';
 import { UnaryOperator } from '@angular/compiler';
-import { DisplayItemComponent } from './components/display-item/display-item.component';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { SettingsComponent } from './components/settings/settings.component';
 import { EditComponent } from './components/edit/edit.component';
-import {FooterComponent} from 'src/app/components/footer/footer.component'
 import {NgbCollapse, NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { StatusComponent } from './components/status/status.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { ChannelComponent } from './components/channel/channel.component';
@@ -78,7 +72,6 @@ export class XhrInterceptor implements HttpInterceptor {
     HeaderComponent,
     HomeComponent,
     UploadComponent,
-    ImageGridComponent,
     ProfileComponent,
     WebcamCaptureComponent,
     ImageAnalyserComponent,
@@ -91,13 +84,10 @@ export class XhrInterceptor implements HttpInterceptor {
     MatchHeaderComponent,
     EditProfileComponent,
     MatchProfileComponent,
-    ChatComponent,
-    UnmatchComponent,
-    DisplayItemComponent,
+
     SettingsComponent,
     EditComponent,
-    FooterComponent,
-    StatusComponent,
+
     CalendarComponent,
     SchedulerComponent,
     ChannelComponent

@@ -41,6 +41,8 @@ export class HomeComponent implements OnInit {
   public isCollapsed = true;
   public isCollapsed1 = true;
   public isCollapsed2 = true;
+  public isCollapsed3 = true;
+
 
   lastitem: boolean;
   arrayProxy: any;
@@ -54,13 +56,14 @@ export class HomeComponent implements OnInit {
   sizeFilter: any;
   seen: any[];
   itemtozoom: Item;
+  categories: Set<string>;
 
   // itemForm = new FormGroup ({
   //   firstName: new FormControl(),
   //   lastName: new FormControl(),
   //   alias: new FormArray([ new FormControl("")])
   // });
-  click(){
+  click() {
     this.isOpen = !this.isOpen
 
   }
@@ -80,6 +83,7 @@ export class HomeComponent implements OnInit {
     this.arrayCopy = new Array()
     this.conditionFilter = new Array()
     this.sizeFilter = new Array()
+    this.categoryFilter = new Array()
 
     this.size = fb.group({
       6: 6,
@@ -134,10 +138,25 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  // FILTER BY CONDITIONS
+  // FILTER BY ALL POSSIBLE CONDITIONS AND ALLOW FOR CROSS MATCHING
   filterByAll() {
 
-    if (this.colorFilter.length != 0 && this.conditionFilter.length != 0 && this.sizeFilter != 0) {
+    if (this.colorFilter.length != 0 && this.conditionFilter.length != 0 && this.sizeFilter.length != 0 && this.categoryFilter.length != 0) {
+      this.arrayCopy = this.arrayProxy.filter(item =>
+
+        item.clothingCondition === this.conditionFilter.find(e => e === item.clothingCondition)
+
+        &&
+        item.size === this.sizeFilter.find(e => e === item.size)
+        &&
+
+        item.color === this.colorFilter.find(e => e === item.color)
+        &&
+
+        item.category === this.categoryFilter.find(e => e === item.category)
+
+      )
+    } else if (this.colorFilter.length != 0 && this.conditionFilter.length != 0 && this.sizeFilter != 0) {
       this.arrayCopy = this.arrayProxy.filter(item =>
 
         item.clothingCondition === this.conditionFilter.find(e => e === item.clothingCondition)
@@ -148,19 +167,23 @@ export class HomeComponent implements OnInit {
 
         item.color === this.colorFilter.find(e => e === item.color)
 
+
       )
     } else
-      if (this.conditionFilter.length != 0 && this.sizeFilter != 0) {
+      if (this.conditionFilter.length != 0 && this.sizeFilter.length != 0 && this.categoryFilter.length != 0) {
         this.arrayCopy = this.arrayProxy.filter(item =>
 
           item.clothingCondition === this.conditionFilter.find(e => e === item.clothingCondition)
 
           &&
           item.size === this.sizeFilter.find(e => e === item.size)
+          &&
+
+          item.category === this.categoryFilter.find(e => e === item.category)
 
         )
       } else
-        if (this.colorFilter.length != 0 && this.sizeFilter != 0) {
+        if (this.colorFilter.length != 0 && this.sizeFilter.length != 0 && this.categoryFilter.length != 0) {
           this.arrayCopy = this.arrayProxy.filter(item =>
 
 
@@ -169,49 +192,133 @@ export class HomeComponent implements OnInit {
             &&
 
             item.color === this.colorFilter.find(e => e === item.color)
+            &&
+
+            item.category === this.categoryFilter.find(e => e === item.category)
 
           )
         } else
-          if (this.colorFilter.length != 0 && this.conditionFilter != 0) {
+          if (this.colorFilter.length != 0 && this.conditionFilter.length != 0 && this.categoryFilter.length != 0) {
             this.arrayCopy = this.arrayProxy.filter(item =>
 
               item.clothingCondition === this.conditionFilter.find(e => e === item.clothingCondition)
 
               &&
 
-
               item.color === this.colorFilter.find(e => e === item.color)
+              &&
+
+              item.category === this.categoryFilter.find(e => e === item.category)
 
             )
-          } else if (this.colorFilter.length == 0 && this.conditionFilter.length == 0 && this.sizeFilter == 0) {
-            this.arrayCopy = [...this.arrayProxy]
           }
+          else
+            if (this.conditionFilter.length != 0 && this.sizeFilter.length != 0) {
+              this.arrayCopy = this.arrayProxy.filter(item =>
 
+                item.clothingCondition === this.conditionFilter.find(e => e === item.clothingCondition)
 
-          else {
-            this.arrayCopy = this.arrayProxy.filter(item =>
+                &&
+                item.size === this.sizeFilter.find(e => e === item.size)
 
-              item.clothingCondition === this.conditionFilter.find(e => e === item.clothingCondition)
-
-              ||
-              item.size === this.sizeFilter.find(e => e === item.size)
-              ||
-
-              item.color === this.colorFilter.find(e => e === item.color)
-
-            )
-
-           
-
-          } if(this.arrayCopy.length==0){
-            this.lastitem = false
-          }else
-          this.lastitem = true
+              )
+            } else
+              if (this.colorFilter.length != 0 && this.sizeFilter.length != 0) {
+                this.arrayCopy = this.arrayProxy.filter(item =>
 
 
 
-    console.log(this.arrayCopy)
+                  item.size === this.sizeFilter.find(e => e === item.size)
+                  &&
+                  item.color === this.colorFilter.find(e => e === item.color)
 
+                )
+              } else
+                if (this.categoryFilter.length != 0 && this.sizeFilter.length != 0) {
+                  this.arrayCopy = this.arrayProxy.filter(item =>
+
+                    item.size === this.sizeFilter.find(e => e === item.size)
+
+                    &&
+                    item.category === this.categoryFilter.find(e => e === item.category)
+
+                  )
+                } else
+                  if (this.colorFilter.length != 0 && this.categoryFilter.length != 0) {
+                    this.arrayCopy = this.arrayProxy.filter(item =>
+
+
+                      item.category === this.categoryFilter.find(e => e === item.category)
+                      &&
+
+                      item.color === this.colorFilter.find(e => e === item.color)
+
+                    )
+                  }  else if (this.conditionFilter.length != 0 && this.categoryFilter.length != 0) {
+                    this.arrayCopy = this.arrayProxy.filter(item =>
+
+
+
+                      item.clothingCondition === this.conditionFilter.find(e => e === item.clothingCondition)
+                      &&
+
+                      item.category === this.categoryFilter.find(e => e === item.category)
+
+                    )
+                  } else
+                    if (this.colorFilter.length != 0 && this.conditionFilter.length != 0) {
+                      this.arrayCopy = this.arrayProxy.filter(item =>
+
+                        item.clothingCondition === this.conditionFilter.find(e => e === item.clothingCondition)
+
+                        &&
+
+
+                        item.color === this.colorFilter.find(e => e === item.color)
+
+                      )
+                    } else if (this.colorFilter.length == 0 && this.conditionFilter.length == 0 && this.sizeFilter.length == 0 && this.categoryFilter.length == 0) {
+                      this.arrayCopy = [...this.arrayProxy]
+                    }
+                    else {
+                      this.arrayCopy = this.arrayProxy.filter(item =>
+
+                        item.clothingCondition === this.conditionFilter.find(e => e === item.clothingCondition)
+
+                        ||
+                        item.size === this.sizeFilter.find(e => e === item.size)
+                        ||
+
+                        item.color === this.colorFilter.find(e => e === item.color)
+                        ||
+
+                        item.category === this.categoryFilter.find(e => e === item.category))
+                    } if (this.arrayCopy.length == 0) {
+                      this.lastitem = false
+                    } else
+      this.lastitem = true
+
+
+
+  }
+  filterByCategory(selected: any) {
+    if (!this.categoryFilter.includes(selected)) {
+      this.categoryFilter.push(selected)
+      console.log(this.categoryFilter)
+
+      // this.itemArray  = this.arrayProxy.filter(item => item.clothingCondition === this.conditionFilter.find(e => e === item.clothingCondition))
+      this.filterByAll()      //filter the
+    }
+    else {
+      for (var i = 0; i < this.categoryFilter.length; i++) {
+        if (this.categoryFilter[i] === selected) {
+          this.categoryFilter.splice(i, 1)
+          i--
+        }
+      }
+
+      this.filterByAll()      //filter the
+    }
   }
 
   filterByCondition(selected: any) {
@@ -262,33 +369,38 @@ export class HomeComponent implements OnInit {
       this.itemService.getItems().subscribe(
         data => {
           this.itemArray = data as Array<Item>
-          this.itemArray= this.itemArray.filter( ( p ) => {
-            return !this.seen.includes( p.id );
-          } );
+          this.itemArray = this.itemArray.filter((p) => {
+            return !this.seen.includes(p.id);
+          });
           console.log(this.itemArray)
-  
-          if(this.itemArray.length>0){
-          for(var j in this.itemArray){
-            for(var o in this.itemArray[j].images){
-                  const b = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,'+ this.itemArray[j].images[o].data)
-              this.itemArray[j].images[o].data = b
+
+          if (this.itemArray.length > 0) {
+            for (var j in this.itemArray) {
+              for (var o in this.itemArray[j].images) {
+                const b = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + this.itemArray[j].images[o].data)
+                this.itemArray[j].images[o].data = b
+
+              }
+            }
+            this.arrayCopy = [...this.itemArray]
+            console.log(this.arrayCopy)
+            this.arrayProxy = new Proxy(this.itemArray, this.setHandler());
+            this.colours = new Set(this.arrayCopy.map(o => o.color))
+            this.conditions = new Set(this.arrayCopy.map(o => o.clothingCondition))
+            this.categories = new Set(this.arrayCopy.filter(p=>p.category!=null).map(p=>p.category))
+            console.log(this.categories)
             
-            }}
-          this.arrayCopy = [...this.itemArray]
-          console.log(this.arrayCopy)
-          this.arrayProxy = new Proxy(this.itemArray, this.setHandler());
-          this.colours = new Set(this.arrayCopy.map(o => o.color))
-          this.conditions = new Set(this.arrayCopy.map(o => o.clothingCondition))
-          this.sizings = new Set(this.arrayCopy.map(o => o.size))
-          this.lastitem = true;
-          }else{
+            this.sizings = new Set(this.arrayCopy.map(o => o.size))
+            this.lastitem = true;
+          } else {
             this.lastitem = false
           }
-      
-    })})
-    //retrieve the items 
-    //get user likes and dislikeds
- ,
+
+        })
+    })
+      //retrieve the items 
+      //get user likes and dislikeds
+      ,
       error => {
         console.log("exception occured");
       }

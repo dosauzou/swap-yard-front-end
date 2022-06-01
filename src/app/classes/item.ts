@@ -12,6 +12,7 @@ export class Item {
         formData : FormData;
         images: Array<ContentInterface>;
         id: Number;
+        category: string;
 
 }
     

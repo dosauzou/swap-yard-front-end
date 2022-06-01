@@ -1,1 +1,37 @@
-<p>image-analyser works!</p>
+<p><span class="lead"> Select a category...</span></p>
+<mat-form-field [formControl]="cat" appearance="fill">
+    <mat-label>Choose an option</mat-label>
+    <select [(ngModel)]="data.category" matNativeControl [disabled]="disableSelect.value">
+        <option value="" selected></option>
+        <option value="Dress">Dress</option>
+        <option value="Bottoms">Bottoms</option>
+        <option value="Tops">Tops</option>
+        <option value="Jackets">Jackets</option>
+
+    </select>
+</mat-form-field>
+
+<form>
+    <div [ngSwitch]="predicted">
+        <div *ngSwitchDefault>
+            <div class="spinner-border" role="status">
+            </div>
+        </div>
+        <div *ngSwitchCase=true>
+
+            <p><span class="lead"> The image analyser predicts..</span></p>
+
+            <div *ngFor="let item of categories">
+                <p>
+                    <mat-checkbox [formControl]="disableSelect" (click)=setItem(item) (click)="getCategory()">{{item}}
+                    </mat-checkbox>
+                </p>
+            </div>
+        </div>
+
+        <div *ngSwitchCase=false>
+
+            <span class="lead"> The image analyser couldn't predict this...</span>
+        </div>
+
+    </div>
